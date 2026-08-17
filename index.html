@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas des axiomes — Axiome Zéro</title>
+<style>
+:root{
+  --void:#05080f; --panel:#0a1018; --panel2:#0d1621;
+  --hair:rgba(120,180,230,.14); --hair2:rgba(120,180,230,.28);
+  --cyan:#4fd6ff; --cyan-dim:#2b7fa0; --amber:#ffb547; --amber-dim:#7a5a22;
+  --ink:#d7e6f2; --ink-dim:#7d94a8; --ink-faint:#4a5c6d;
+  --f-desc:200 80% 58%; --f-norm:32 90% 58%; --f-meta:280 60% 66%; --f-trans:210 12% 62%;
+  --grid-line:rgba(79,214,255,.05);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--void);color:var(--ink);font-family:"Rajdhani","Segoe UI",system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.bgfx{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:linear-gradient(var(--grid-line) 1px,transparent 1px) 0 0/100% 34px,linear-gradient(90deg,var(--grid-line) 1px,transparent 1px) 0 0/34px 100%,radial-gradient(1400px 700px at 70% -20%, rgba(79,214,255,.08), transparent 60%)}
+.mono{font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace}
+.wrap{position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:0 22px}
+
+.topbar{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(5,8,15,.97),rgba(5,8,15,.88));-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--hair)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:56px;flex-wrap:wrap}
+.brand{font-weight:700;letter-spacing:.16em;font-size:14px;display:flex;align-items:center;gap:9px;text-transform:uppercase}
+.brand small{color:var(--ink-dim);font-weight:500;letter-spacing:.1em}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+nav.tabs{display:flex;gap:2px;flex-wrap:wrap}
+nav.tabs button{background:none;border:none;color:var(--ink-dim);cursor:pointer;font-family:inherit;font-size:12px;letter-spacing:.13em;text-transform:uppercase;padding:11px 12px;border-bottom:2px solid transparent;transition:.15s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+nav.tabs button:hover{color:var(--ink)}
+nav.tabs button.on{color:var(--cyan);border-bottom-color:var(--cyan)}
+
+section.view{display:none;padding:38px 0 20px}
+section.view.on{display:block;animation:fade .3s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.eyebrow{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--cyan-dim);margin-bottom:12px}
+h1{font-size:32px;font-weight:700;line-height:1.12;letter-spacing:.01em;margin-bottom:14px}
+h2{font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin-bottom:14px}
+.lead{color:var(--ink-dim);font-size:15.5px;line-height:1.66;max-width:820px}
+.lead b{color:var(--ink)}
+
+.corner{position:relative;border:1px solid var(--hair2);background:linear-gradient(180deg,var(--panel),var(--panel2));border-radius:14px}
+.block{padding:22px}
+.hero{margin-bottom:26px}
+
+/* statut bar segmentée */
+.statusbar{display:flex;width:100%;height:34px;border-radius:9px;overflow:hidden;border:1px solid var(--hair2);margin:6px 0 10px}
+.statusbar .seg{display:flex;align-items:center;justify-content:center;font-size:11px;font-family:"JetBrains Mono",monospace;color:var(--void);font-weight:700;min-width:26px;transition:.2s}
+.seg-valide{background:linear-gradient(180deg,#79e0a4,#4bbe82)}
+.seg-confirme{background:linear-gradient(180deg,#7fc4ff,#4a90d0)}
+.seg-candidat{background:linear-gradient(180deg,#ffce7a,#e0a03d)}
+.seg-reserve{background:linear-gradient(180deg,#a6b3c0,#79899a)}
+.statuskey{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px}
+.statuskey .k{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-dim)}
+.statuskey .k i{width:11px;height:11px;border-radius:3px;flex-shrink:0}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+.kpi{padding:18px 16px;text-align:left;border-radius:12px}
+.kpi .n{font-size:34px;font-weight:700;color:var(--cyan);line-height:1}
+.kpi.amber .n{color:var(--amber)}
+.kpi .l{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);margin-top:6px}
+
+.panelgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:11px}
+.bar-row .lbl{width:104px;font-size:12px;color:var(--ink-dim);letter-spacing:.04em;flex-shrink:0}
+.bar-track{flex:1;height:16px;background:rgba(255,255,255,.04);border:1px solid var(--hair);position:relative;overflow:hidden;border-radius:8px}
+.bar-fill{height:100%;border-radius:8px}
+.bar-fill.desc{background:linear-gradient(90deg,hsl(var(--f-desc)/.85),hsl(var(--f-desc)/.45))}
+.bar-fill.norm{background:linear-gradient(90deg,hsl(var(--f-norm)/.85),hsl(var(--f-norm)/.45))}
+.bar-fill.meta{background:linear-gradient(90deg,hsl(var(--f-meta)/.85),hsl(var(--f-meta)/.45))}
+.bar-fill.trans{background:linear-gradient(90deg,hsl(var(--f-trans)/.85),hsl(var(--f-trans)/.45))}
+.bar-fill.cyan{background:linear-gradient(90deg,var(--cyan),var(--cyan-dim))}
+.bar-row .val{width:26px;text-align:right;font-family:"JetBrains Mono",monospace;color:var(--ink);font-size:13px}
+.legend-note{font-size:12.5px;color:var(--ink-dim);margin-top:12px;line-height:1.65}
+.legend-note b{color:var(--ink)}
+.manifesto{max-width:820px}
+.manifesto p{color:var(--ink-dim);font-size:15px;line-height:1.7;margin-bottom:14px}
+.manifesto p b{color:var(--ink)}
+.manifesto h3{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan-dim);margin:24px 0 10px}
+.sig{font-style:italic;color:var(--ink-faint);font-size:13.5px;margin-top:8px}
+
+/* term glossary — hover + tap */
+.term{border-bottom:1px dotted var(--cyan-dim);cursor:help;position:relative}
+.term:hover,.term.tapped{color:var(--cyan)}
+.term .tip{visibility:hidden;opacity:0;position:absolute;bottom:135%;left:50%;transform:translateX(-50%);width:250px;max-width:78vw;background:#0c1520;border:1px solid var(--hair2);border-radius:10px;padding:11px 13px;font-size:12.5px;line-height:1.55;color:var(--ink);letter-spacing:0;text-transform:none;font-weight:400;z-index:60;transition:.16s;box-shadow:0 12px 30px rgba(0,0,0,.6);pointer-events:none}
+.term .tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--hair2)}
+.term:hover .tip,.term.tapped .tip{visibility:visible;opacity:1}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:24px 0 22px}
+.toolbar .grp{display:flex;gap:4px;padding:5px;border:1px solid var(--hair);background:var(--panel);border-radius:10px;flex-wrap:wrap}
+.grp-lbl{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);align-self:center;padding:0 4px;font-family:"JetBrains Mono",monospace}
+.chip{background:none;border:1px solid transparent;color:var(--ink-dim);cursor:pointer;font-family:inherit;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;padding:7px 12px;transition:.14s;border-radius:7px;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.chip:hover{color:var(--ink)}
+.chip.on{color:var(--void);background:var(--cyan);font-weight:600}
+.chip.amber.on{background:var(--amber)}
+.count{margin-left:auto;font-size:12px;color:var(--ink-dim);letter-spacing:.08em}
+.count b{color:var(--cyan)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px}
+.card{position:relative;padding:18px 17px 16px;cursor:pointer;display:flex;flex-direction:column;
+  background:linear-gradient(157deg,hsl(var(--fam)/calc(.15 + var(--reach)*.20)),hsl(var(--fam)/calc(.03 + var(--reach)*.06))),var(--panel);
+  border:1px solid hsl(var(--fam)/calc(.28 + var(--reach)*.34));border-radius:18px;
+  transition:transform .16s ease, box-shadow .16s ease, filter .16s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.card:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(0,0,0,.55),0 0 0 1px hsl(var(--fam)/.5) inset;filter:brightness(1.08)}
+.card:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.card .fam{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:hsl(var(--fam)/.95);display:flex;align-items:center;gap:7px}
+.card .fam::before{content:"";width:7px;height:7px;background:hsl(var(--fam)/.95);transform:rotate(45deg);flex-shrink:0}
+.card .nm{font-size:16.5px;font-weight:600;line-height:1.22;margin:12px 0 14px;letter-spacing:.01em}
+.card .meta{margin-top:auto;display:flex;flex-direction:column;gap:7px}
+.mrow{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11.5px;border-top:1px solid var(--hair);padding-top:6px}
+.mrow .k{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);font-family:"JetBrains Mono",monospace;flex-shrink:0}
+.mrow .v{color:var(--ink);font-size:11px;text-align:right}
+.reach{display:flex;gap:3px}
+.reach i{width:14px;height:4px;background:var(--hair);transform:skewX(-20deg);border-radius:1px}
+.reach i.on{background:hsl(var(--fam)/.9)}
+.pill{display:block;width:100%;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:6px 8px;border-radius:8px;text-align:center;margin-top:11px;font-family:"JetBrains Mono",monospace;line-height:1.3;white-space:normal}
+.cardtags{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.minitag{display:inline-flex;align-items:center;gap:4px;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;font-family:"JetBrains Mono",monospace;padding:3px 6px;border-radius:5px}
+.minitag.couple{color:#ff9a6a;border:1px solid rgba(255,120,80,.4)}
+.minitag.vert{color:var(--cyan);border:1px solid rgba(79,214,255,.4)}
+.minitag.open{color:var(--amber);border:1px solid rgba(255,181,71,.4)}
+.s-etabli,.s-valide{background:rgba(80,220,140,.13);color:#79e0a4;border:1px solid rgba(80,220,140,.32)}
+.s-confirme{background:rgba(79,180,255,.12);color:#7fc4ff;border:1px solid rgba(79,180,255,.30)}
+.s-candidat{background:rgba(255,181,71,.12);color:var(--amber);border:1px solid rgba(255,181,71,.30)}
+.s-conteste{background:rgba(255,120,80,.13);color:#ff9a6a;border:1px solid rgba(255,120,80,.32)}
+.s-reserve{background:rgba(150,160,175,.10);color:#a6b3c0;border:1px solid rgba(150,160,175,.26)}
+
+.anagrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.matrix-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+.matrix-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.matrix{width:100%;border-collapse:separate;border-spacing:4px;margin-top:6px;font-size:12px;min-width:440px}
+.matrix th,.matrix td{padding:5px;text-align:center;vertical-align:top}
+.matrix th{color:var(--ink-dim);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+.matrix td.axis{color:var(--ink-dim);text-align:right;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;padding-right:8px;vertical-align:middle}
+.mcell{min-height:52px;border:1px solid var(--hair);border-radius:9px;padding:5px;display:flex;flex-direction:column;gap:3px;background:rgba(255,255,255,.015)}
+.mcell.void{background:repeating-linear-gradient(45deg,rgba(255,120,80,.12) 0 6px,transparent 6px 12px);border-color:rgba(255,120,80,.4);align-items:center;justify-content:center;color:#ff9a6a;font-size:18px;font-weight:700}
+.mchip{font-size:10px;line-height:1.2;padding:4px 5px;border-radius:6px;text-align:left;cursor:pointer;border:1px solid transparent;transition:.12s;touch-action:manipulation}
+.mchip:hover{filter:brightness(1.2);border-color:currentColor}
+.mchip.f-Descriptive{background:hsl(var(--f-desc)/.14);color:hsl(var(--f-desc)/.95)}
+.mchip.f-Normative{background:hsl(var(--f-norm)/.14);color:hsl(var(--f-norm)/.95)}
+.mchip.f-Métaphysique{background:hsl(var(--f-meta)/.16);color:hsl(var(--f-meta)/1)}
+.mchip.f-Transversal{background:hsl(var(--f-trans)/.16);color:hsl(var(--f-trans)/1)}
+
+.rel-block{padding:20px;margin-bottom:16px;border-radius:14px}
+.rel-block h3{font-size:16px;color:var(--ink);margin-bottom:4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rel-block .axis-tag{font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:5px;font-family:"JetBrains Mono",monospace}
+.axis-h{background:rgba(79,180,255,.12);color:#7fc4ff;border:1px solid rgba(79,180,255,.3)}
+.axis-v{background:rgba(255,181,71,.13);color:var(--amber);border:1px solid rgba(255,181,71,.3)}
+.rel-block p{color:var(--ink-dim);font-size:13.5px;line-height:1.6;margin:8px 0}
+.rel-block .img{color:var(--ink-faint);font-size:13px;font-style:italic;border-left:2px solid var(--hair2);padding-left:12px;margin-top:8px}
+.rel-ex{font-size:12.5px;color:var(--ink);margin-top:10px}
+.rel-solid{display:inline-block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-family:"JetBrains Mono",monospace;padding:2px 7px;border-radius:5px;margin-left:6px}
+.solid-etabli{background:rgba(80,220,140,.13);color:#79e0a4}
+.solid-form{background:rgba(79,180,255,.12);color:#7fc4ff}
+.solid-spec{background:rgba(255,181,71,.12);color:var(--amber)}
+
+.method-step{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--hair)}
+.method-step:last-child{border-bottom:none}
+.method-step .num{font-family:"JetBrains Mono",monospace;font-size:15px;color:var(--cyan-dim);flex-shrink:0;width:74px;text-align:right;padding-top:3px}
+.method-step h3{font-size:16px;color:var(--ink);margin-bottom:6px;letter-spacing:.02em}
+.method-step p{font-size:13.5px;color:var(--ink-dim);line-height:1.62}
+.method-step .img{color:var(--ink-faint);font-style:italic;font-size:12.5px;margin-top:6px}
+
+.exp-banner{border:1px solid rgba(255,181,71,.5);background:repeating-linear-gradient(45deg,rgba(255,181,71,.07) 0 12px,transparent 12px 24px),var(--panel);padding:18px 20px;margin-bottom:24px;display:flex;gap:16px;align-items:flex-start;border-radius:14px}
+.exp-banner .ico{font-size:26px;line-height:1}
+.exp-banner h2{color:var(--amber);margin-bottom:6px}
+.exp-banner p{color:var(--ink-dim);font-size:13.5px;max-width:760px}
+.exp-card{padding:18px 20px;margin-bottom:14px;border-left:3px solid var(--amber);border-radius:0 12px 12px 0;background:var(--panel)}
+.exp-card h3{font-size:15.5px;letter-spacing:.02em;color:var(--amber);margin-bottom:6px}
+.exp-card p{font-size:13.5px;color:var(--ink-dim);line-height:1.62}
+.spec-tag{display:inline-block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);border:1px solid rgba(255,181,71,.4);padding:2px 7px;border-radius:5px;margin-bottom:8px;font-family:"JetBrains Mono",monospace}
+
+.guide-card{padding:20px;margin-bottom:16px;border-radius:14px}
+.guide-card h3{font-size:16px;color:var(--cyan);margin-bottom:10px;letter-spacing:.02em}
+.guide-card p{font-size:13.5px;color:var(--ink-dim);line-height:1.62;margin-bottom:8px}
+.guide-card .why{font-size:12.5px;color:var(--ink-faint);border-left:2px solid var(--hair2);padding-left:12px;margin-top:8px;line-height:1.55}
+.guide-card .why b{color:var(--ink-dim)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(3,6,12,.82);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.modal.on{display:flex;animation:fade .2s}
+.sheet{max-width:600px;width:100%;max-height:88vh;overflow:auto;-webkit-overflow-scrolling:touch;padding:0;border-radius:16px}
+.sheet-hd{padding:22px 22px 18px;border-bottom:1px solid var(--hair2);position:relative}
+.sheet-hd .fam{font-size:10px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px}
+.sheet-hd h3{font-size:23px;font-weight:700;letter-spacing:.01em;padding-right:40px}
+.sheet-hd .x{position:absolute;top:18px;right:18px;background:none;border:1px solid var(--hair2);color:var(--ink-dim);width:34px;height:34px;cursor:pointer;font-size:16px;transition:.15s;border-radius:8px;touch-action:manipulation}
+.sheet-hd .x:hover{color:var(--cyan);border-color:var(--cyan)}
+.sheet-bd{padding:20px 22px 26px}
+.sheet-bd .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.sheet-bd .field{margin-bottom:16px}
+.sheet-bd .field .k{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan-dim);margin-bottom:5px;font-family:"JetBrains Mono",monospace}
+.sheet-bd .field .t{font-size:14.5px;color:var(--ink);line-height:1.6}
+.sheet-bd .field.open .k{color:var(--amber)}
+.sheet-bd .field.open .t{color:#ffce9a}
+.tag{font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border:1px solid var(--hair2);color:var(--ink-dim);font-family:"JetBrains Mono",monospace;border-radius:6px}
+
+footer{border-top:1px solid var(--hair);padding:26px 0 70px;color:var(--ink-faint);font-size:12px;line-height:1.7;margin-top:20px}
+footer b{color:var(--ink-dim)}
+.anchor{display:inline-flex;align-items:center;gap:6px;color:var(--ink-faint);cursor:pointer;font-size:13px;padding:6px 4px;border:none;background:none;font-family:inherit;transition:.2s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.anchor:hover{color:var(--cyan)}
+
+@media(max-width:880px){
+  .anagrid,.panelgrid,.grid2{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px){
+  .wrap{padding:0 15px}
+  h1{font-size:24px}
+  .topbar .wrap{padding-top:6px;padding-bottom:6px}
+  nav.tabs{width:100%;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
+  nav.tabs button{padding:9px 10px;font-size:11px;white-space:nowrap;flex-shrink:0}
+  .cards{grid-template-columns:1fr 1fr;gap:13px}
+  .card{padding:15px 13px 13px}
+  .card .nm{font-size:14px;margin:10px 0 12px}
+  .kpi .n{font-size:27px}
+  .method-step{flex-direction:column;gap:4px}
+  .method-step .num{text-align:left;width:auto}
+  .statuskey{gap:10px}
+}
+@media(max-width:390px){.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="bgfx"></div>
+
+<div class="topbar"><div class="wrap">
+  <div class="brand"><span class="dot"></span>Axiome Zéro <small>· Atlas v0.5</small></div>
+  <nav class="tabs" id="tabs">
+    <button class="on" data-view="dash">Accueil</button>
+    <button data-view="coll">Collection</button>
+    <button data-view="guide">Comprendre</button>
+    <button data-view="meth">La méthode</button>
+    <button data-view="ana">Analyse</button>
+    <button data-view="rel">Relations</button>
+    <button data-view="exp">Expérimental</button>
+  </nav>
+</div></div>
+
+<!-- ACCUEIL -->
+<section class="view on" id="dash"><div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">// axiome zéro · atlas des axiomes</div>
+    <h1>Débusquer les points de départ cachés du savoir</h1>
+    <p class="lead">Derrière chaque théorie se cachent des <span class="term" data-g="dep">axiomes</span> — ce qu'elle admet sans le démontrer. <b>Axiome Zéro</b> est un outil qui les déshabille, les nomme et les range. Il ne dit jamais si une théorie est <b>vraie</b> ; il révèle sur quoi elle <b>parie</b>. L'<b>Atlas</b>, c'est la classification de ce travail : une collection à parcourir, à interroger, à critiquer.</p>
+  </div>
+
+  <div class="block corner" style="margin-bottom:20px">
+    <h2>Où en est chaque axiome</h2>
+    <div class="statusbar" id="statusBar"></div>
+    <div class="statuskey" id="statusKey"></div>
+    <p class="legend-note">La plupart des axiomes ne sont pas « validés » — et c'est normal. Cet atlas est un travail en cours : chaque axiome porte son <span class="term" data-g="Confirmé">degré de certitude</span>, affiché franchement, jamais maquillé.</p>
+  </div>
+
+  <div class="block corner" style="margin-bottom:26px">
+    <h2>Un axiome, au hasard</h2>
+    <p class="legend-note" style="margin-top:0;margin-bottom:14px">Tiré parmi les plus solides. Touchez la carte pour ouvrir sa fiche — ou rechargez la page pour en découvrir un autre.</p>
+    <div class="cards" id="demoCard" style="grid-template-columns:minmax(240px,320px)"></div>
+  </div>
+
+  <div class="block corner">
+    <div class="manifesto">
+      <h2 style="margin-bottom:16px">Le projet, en toute honnêteté</h2>
+      <p>Je travaille seul sur ce projet. Je suis sculpteur sur bois de formation, autodidacte pour tout le reste, sans bagage en philosophie ni en sciences. C'est mon premier projet mené avec une intelligence artificielle — un domaine que je ne maîtrise pas non plus. J'ai exploré ces idées de mon côté, pour le plaisir de chercher. Ce n'est pas sans appréhension que je le partage.</p>
+      <p>Tout est parti d'une curiosité pour les présupposés — ces idées qu'on admet sans les démontrer, ces axiomes cachés au fond des théories. J'ai tiré ce fil, un peu par jeu. En creusant avec l'aide des intelligences artificielles, j'ai pris conscience qu'il y avait là tout un monde — un trou de lapin, avec un univers entier caché dedans. Ça m'a passionné.</p>
+      <p>Ce qui m'a frappé en chemin, c'est que bien des désaccords ne portent pas sur les faits : les gens partent, sans le savoir, d'évidences différentes. <b>Nommer ces évidences aide à voir d'où vient vraiment le désaccord.</b></p>
+
+      <h3>Ce que ce projet est</h3>
+      <p>Il se compose de deux parties distinctes. La première est une <b>méthode de détection des axiomes</b>, reposant sur un panel d'intelligences artificielles — l'outil que j'avais à ma portée pour mener ce travail seul. Elle est originale, mais faillible : elle reste soumise aux biais propres aux IA. J'ai mis en place des garde-fous pour tenter de les contrôler, sans prétendre les avoir éliminés.</p>
+      <p>La seconde est l'<b>Atlas des axiomes</b> : le résultat de ce travail, sous forme visuelle et classée. Sa vocation est éducative et exploratoire — donner à voir, à parcourir et à interroger ce qui a été trouvé. L'ensemble est évolutif et fait pour être examiné, testé et corrigé.</p>
+
+      <h3>Ce que ce projet n'est pas</h3>
+      <p>Ce n'est pas un travail académique : il n'a ni institution ni validation par les pairs derrière lui. Il ne prétend pas dire la vérité, ni être complet ou définitif — l'absence d'un axiome ne prouve pas qu'il n'existe pas.</p>
+      <p>Nommer le point de départ d'une théorie, d'une croyance ou d'une morale, ce n'est pas la juger. L'outil décrit un point d'appui ; il ne dit pas s'il est vrai ou faux, et il ne juge pas ceux qui s'y appuient. Il rend simplement visible quelque chose qui, le plus souvent, n'était jamais dit.</p>
+      <p class="sig">C'est un travail à critiquer, pas une vérité à croire.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- COLLECTION -->
+<section class="view" id="coll"><div class="wrap">
+  <div class="eyebrow">// collection · <span id="totalTag"></span> axiomes</div>
+  <h1>La collection</h1>
+  <p class="lead">Chaque axiome est une carte. La <span class="term" data-g="Descriptive">couleur</span> donne sa famille, le nombre de barres sa <span class="term" data-g="Spécialisée">portée</span>. Le statut est écrit franchement. Touchez une carte pour ouvrir sa fiche.</p>
+  <div class="toolbar">
+    <div class="grp" id="famFilter">
+      <span class="grp-lbl">Famille</span>
+      <button class="chip on" data-fam="all">Toutes</button>
+      <button class="chip" data-fam="Descriptive">Descriptive</button>
+      <button class="chip" data-fam="Normative">Normative</button>
+      <button class="chip" data-fam="Métaphysique">Métaphysique</button>
+      <button class="chip" data-fam="Transversal">Transversale</button>
+    </div>
+    <div class="grp" id="statFilter">
+      <span class="grp-lbl">Statut</span>
+      <button class="chip on" data-stat="all">Tous</button>
+      <button class="chip" data-stat="validé">Validé</button>
+      <button class="chip" data-stat="confirmé">Confirmé</button>
+      <button class="chip" data-stat="candidat">Candidat</button>
+    </div>
+    <div class="count">visibles <b id="visCount">0</b></div>
+  </div>
+  <div class="cards" id="cardGrid"></div>
+</div></section>
+
+<!-- COMPRENDRE LE TABLEAU -->
+<section class="view" id="guide"><div class="wrap">
+  <div class="eyebrow">// comprendre · clé de lecture</div>
+  <h1>Comprendre le tableau</h1>
+  <p class="lead">Chaque axiome est rangé selon trois axes et un statut. Voici ce que chaque classement veut dire — et <b>pourquoi</b> il a été choisi ainsi. Ces choix sont réfléchis, mais faillibles : ils font partie du travail à critiquer.</p>
+
+  <h2 style="margin-top:30px">Les trois familles</h2>
+  <div class="grid2">
+    <div class="guide-card corner"><h3>Descriptive</h3><p>Dit comment le monde <b>est</b> — physique, biologie, cognition. Son étalon de vérité est la preuve empirique : on peut, en principe, aller vérifier.</p></div>
+    <div class="guide-card corner"><h3>Normative</h3><p>Dit ce qui a de la <b>valeur</b>, est légitime ou bon — morale, droit, esthétique. On ne la teste pas contre le monde, mais contre la cohérence de sa propre structure.</p></div>
+    <div class="guide-card corner"><h3>Métaphysique</h3><p>Dit ce qui <b>existe</b> au-delà de l'observable. Filet empirique très réduit : c'est la famille où il faut le plus de prudence, et où l'outil se surveille le plus.</p></div>
+    <div class="guide-card corner"><h3>Transversale</h3><p>Présente dans presque toutes les théories, quel que soit le domaine — comme la causalité ou le réalisme. Elle traverse les autres familles.</p></div>
+  </div>
+  <div class="guide-card corner" style="margin-top:16px"><p class="why"><b>Pourquoi trois familles ?</b> Elles ne sont pas un découpage décidé d'avance. Elles sont apparues en pratique, parce que chacune exige un <b>étalon de preuve différent</b>. La famille métaphysique, en particulier, a été ajoutée le jour où un axiome a refusé d'entrer dans les deux autres. Un quatrième type pourrait émerger si un axiome futur résistait aux trois.</p></div>
+
+  <h2 style="margin-top:30px">La portée — dans combien de domaines</h2>
+  <div class="guide-card corner">
+    <p><b>Universelle</b> → présent partout, sans exception connue. &nbsp;<b>Générale</b> → dans la plupart des grands domaines (au moins quatre, même très éloignés). &nbsp;<b>Spécialisée</b> → propre à une famille de théories. &nbsp;<b>Contextuelle</b> → seulement dans des cas précis.</p>
+    <p class="why"><b>Attention :</b> la portée n'est <b>pas</b> un rang de valeur. Un axiome universel n'est pas « meilleur » qu'un axiome contextuel — il sert juste dans plus d'endroits. Sur les cartes, l'intensité de la couleur suit la portée : plus saturé = plus large, jamais « plus important ».</p>
+  </div>
+
+  <h2 style="margin-top:30px">La dépendance — ce qu'il faut pour qu'il apparaisse</h2>
+  <div class="guide-card corner">
+    <p>Certains axiomes n'ont besoin de <b>rien</b> pour se poser. D'autres n'ont de sens que s'il existe déjà un <b>mécanisme</b> (une sélection, une régulation), ou un <b>agent réel</b> qui agit, ou même une <b>chaîne d'intentions</b> entre plusieurs agents. Plus haut encore : une organisation mentale interne, ou un cadre de normes.</p>
+    <p class="why"><b>Pourquoi cet axe ?</b> Il évite de confondre « fréquent » et « fondamental ». Un axiome rare mais profond ne doit pas paraître secondaire juste parce qu'il apparaît peu. La portée dit « où », la dépendance dit « à quelle condition » — deux questions différentes qu'un seul chiffre écraserait.</p>
+  </div>
+
+  <h2 style="margin-top:30px">Les statuts — le degré de certitude</h2>
+  <div class="guide-card corner">
+    <p><b>Validé / Établi</b> → confirmé plusieurs fois, sans contre-exemple sérieux. &nbsp;<b>Confirmé</b> → recoupé, mais pas encore éprouvé à fond. &nbsp;<b>Candidat</b> → repéré, à creuser. &nbsp;<b>Candidat contesté</b> → repéré, mais objet d'un vrai débat. &nbsp;<b>En réserve</b> → pas encore travaillé. &nbsp;<b>Dissous</b> → s'est révélé n'être que la conséquence d'un autre.</p>
+    <p class="why">Un axiome <b>monte</b> par confirmations indépendantes (candidat → confirmé → validé), ou se <b>dissout</b> s'il n'était pas vraiment autonome. Le statut est toujours affiché tel quel — c'est le sujet même de l'atlas : montrer l'état réel, y compris quand il est inconfortable.</p>
+  </div>
+</div></section>
+
+<!-- MÉTHODE -->
+<section class="view" id="meth"><div class="wrap">
+  <div class="eyebrow">// la méthode · l'outil de détection</div>
+  <h1>La méthode</h1>
+  <p class="lead">Axiome Zéro, c'est deux choses distinctes : le <b>tableau</b> (ce qui a été trouvé) et la <b>méthode</b> (la façon de le trouver). Voici la méthode. C'est la démarche la plus rigoureuse que j'ai su inventer avec mes moyens pour traiter ce problème sérieusement. Elle n'a aucune validation institutionnelle ; elle est faillible, et faite pour être critiquée et améliorée.</p>
+
+  <div class="block corner" style="margin-top:24px">
+    <h2>Quatre outils</h2>
+    <div class="method-step">
+      <div class="num">01</div>
+      <div><h3><span class="term" data-g="déshabillage">Déshabillage</span></h3><p>On prend une théorie et on retire ses couches une à une, jusqu'à trouver le présupposé nu en dessous — celui qu'elle n'énonce jamais mais sans lequel elle s'effondre.</p><p class="img">C'est le geste de base : une théorie à la fois, à froid.</p></div>
+    </div>
+    <div class="method-step">
+      <div class="num">02</div>
+      <div><h3><span class="term" data-g="chalutage">Chalutage</span></h3><p>On passe des dizaines de théories en revue d'un coup, filet large, pour repérer les axiomes qui reviennent d'un domaine à l'autre. Rapide, moins rigoureux — ça sert à repérer des pistes, pas à conclure.</p><p class="img">Le chalut racle horizontalement le fond, pour voir ce qui remonte.</p></div>
+    </div>
+    <div class="method-step">
+      <div class="num">03</div>
+      <div><h3><span class="term" data-g="sondage vertical">Sondage vertical</span></h3><p>On descend droit sur une seule question : cet axiome en présuppose-t-il un autre pour avoir un sens ? On teste une dépendance orientée, à sens unique.</p><p class="img">Là où le chalut racle à plat, le sondage descend mesurer une profondeur en un point.</p></div>
+    </div>
+    <div class="method-step">
+      <div class="num">04</div>
+      <div><h3><span class="term" data-g="carottage">Carottage</span></h3><p>Le plus rare. On ne teste plus un axiome, mais la <b>structure</b> elle-même : les familles, les catégories qu'on suppose sont-elles réelles, ou est-ce qu'on les a plaquées ? L'outil qui se retourne sur son propre cadre.</p><p class="img">On prélève une carotte pour lire si les strates supposées existent vraiment.</p></div>
+    </div>
+  </div>
+
+  <div class="block corner" style="margin-top:18px">
+    <h2>La méthode se méfie d'elle-même</h2>
+    <p class="legend-note" style="margin-top:0">Une IA est un condensé du savoir humain — avec ses propres angles morts. Lui demander de trouver les présupposés cachés, c'est un peu demander au poisson de cartographier l'eau. D'où des garde-fous, écrits <b>avant</b> les résultats : ne jamais valider sur une seule voix, croiser plusieurs IA indépendantes, se méfier du plaisir de « compléter » un tableau, ne jamais colorer un résultat en « bonne » ou « mauvaise » nouvelle, analyser à froid avant de consulter la littérature. Aucun de ces garde-fous n'élimine les biais — ils les rendent visibles. Le jugement final reste humain, et extérieur : c'est ce qui donne sa valeur au travail.</p>
+  </div>
+</div></section>
+
+<!-- ANALYSE -->
+<section class="view" id="ana"><div class="wrap">
+  <div class="eyebrow">// analyse · exploration</div>
+  <h1>Analyse</h1>
+  <p class="lead">Une carte croisée des axiomes : leur <span class="term" data-g="Spécialisée">portée</span> (en lignes) contre leur <span class="term" data-g="dep">dépendance</span> (en colonnes). La position dit quelque chose — et certains coins sont vides pour une vraie raison.</p>
+  <div class="block corner" style="margin-top:22px">
+    <h2>Portée × dépendance</h2>
+    <div class="matrix-tools" id="mStatFilter">
+      <span class="grp-lbl">Afficher</span>
+      <button class="chip on" data-mstat="solide">Validé + Confirmé</button>
+      <button class="chip" data-mstat="all">Tous statuts</button>
+    </div>
+    <div class="matrix-wrap"><table class="matrix" id="matrix"></table></div>
+    <p class="legend-note">La case <b style="color:#ff9a6a">∅</b> (portée universelle + forte dépendance) est un <b>vide structurel</b> : ce n'est pas un manque de données, c'est une impossibilité. Un axiome qui a besoin d'un agent ou d'un mécanisme pour exister ne peut pas, par définition, être présent dans <i>toute</i> théorie. Par défaut, seuls les axiomes solides sont placés — car dans une carte croisée, la position d'un axiome incertain fausserait le dessin d'ensemble.</p>
+  </div>
+  <div class="panelgrid" style="margin-top:18px">
+    <div class="block corner"><h2>Répartition par portée</h2><div id="reachBars"></div></div>
+    <div class="block corner"><h2>Répartition par statut</h2><div id="statBars"></div></div>
+  </div>
+</div></section>
+
+<!-- RELATIONS -->
+<section class="view" id="rel"><div class="wrap">
+  <div class="eyebrow">// relations · liens entre axiomes</div>
+  <h1>Les relations entre axiomes</h1>
+  <p class="lead">Les axiomes ne vivent pas isolés : ils s'appellent, se renforcent, ou s'excluent. Quatre types de liens ont été identifiés — trois <b>symétriques</b> (les deux axiomes sont à égalité) et un <b>orienté</b> (l'un dépend de l'autre). Chaque lien porte son degré de solidité, comme les axiomes.</p>
+
+  <div class="rel-block corner" style="margin-top:24px">
+    <h3>Confirmation croisée <span class="axis-tag axis-h">symétrique</span></h3>
+    <p>Le même axiome réapparaît dans des théories qui n'ont rien à voir entre elles. Chaque réapparition le renforce.</p>
+    <p class="img">Comme un même mot qu'on retrouverait dans dix langues sans lien : le signe qu'il touche quelque chose de profond.</p>
+  </div>
+
+  <div class="rel-block corner">
+    <h3>Divergence de départ <span class="axis-tag axis-h">symétrique</span></h3>
+    <p>Deux théories choisissent des points de départ opposés, sans qu'aucune ait tort. Elles ne se contredisent pas — elles ont parié différemment au départ.</p>
+    <p class="img">Deux routes qui partent dans des directions opposées depuis le même carrefour.</p>
+  </div>
+
+  <div class="rel-block corner">
+    <h3>Couple contraint <span class="axis-tag axis-h">symétrique</span></h3>
+    <p>Deux axiomes qui ne peuvent pas être vrais <b>en même temps</b>. Aucun n'est faux : c'est leur cohabitation qui est impossible. Il faut choisir.</p>
+    <p class="rel-ex">Exemple <span class="rel-solid solid-etabli">établi</span> : <b>réalisme physique</b> × <b>localité causale</b>. Le théorème de Bell prouve qu'on ne peut garder les deux — l'expérience a tranché.</p>
+    <p class="rel-ex" style="color:var(--ink-dim)">Piste <span class="rel-solid solid-spec">spéculatif</span> : fréquentiste × bayésien (interprétations des probabilités), pas encore testée à fond.</p>
+  </div>
+
+  <div class="rel-block corner">
+    <h3>Présuppose sans dériver <span class="axis-tag axis-v">orienté</span></h3>
+    <p>La seule relation à <b>sens unique</b>. Un axiome B a besoin d'un axiome A pour même avoir un sens — mais ne s'en déduit pas. A n'a pas besoin de B.</p>
+    <p class="img">Pour parler de « faute », il faut déjà une « norme ». Mais l'existence d'une norme n'implique aucune faute. La flèche ne va que dans un sens.</p>
+    <p class="rel-ex">Exemple <span class="rel-solid solid-form">formalisé</span> : la <b>physicalité de l'information</b> présuppose un <b>ordre nomologique</b> (un monde réglé) — sans pouvoir s'en déduire.</p>
+  </div>
+</div></section>
+
+<!-- EXPÉRIMENTAL -->
+<section class="view" id="exp"><div class="wrap">
+  <div class="eyebrow">// expérimental · réflexions ouvertes</div>
+  <h1>Expérimental</h1>
+  <div class="exp-banner">
+    <div class="ico">⚗</div>
+    <div><h2>Zone de réflexion, pas de résultats</h2><p>Ce qui suit est ouvert, spéculatif, non tranché. Ce ne sont pas des conclusions de l'atlas — ce sont des questions que le travail soulève et que l'outil, seul, ne peut pas régler. À lire comme un carnet de bord, pas comme un verdict.</p></div>
+  </div>
+
+  <div class="exp-card">
+    <div class="spec-tag">question de fond</div>
+    <h3>Le monde, ou notre pensée ?</h3>
+    <p>Les motifs qu'on observe — ces axiomes qui reviennent, ces couples qui s'excluent — reflètent-ils une structure du <b>monde</b> lui-même, ou une structure de la <b>pensée humaine</b> qui fabrique les théories ? L'outil analyse des théories, c'est-à-dire des produits finis de l'esprit, pas le monde directement. Il ne peut donc pas trancher cette question — mais il la pose avec une force nouvelle.</p>
+  </div>
+
+  <div class="exp-card">
+    <div class="spec-tag">étude du tableau</div>
+    <h3>L'axiographie</h3>
+    <p>Et si on étudiait le tableau lui-même comme un objet ? Sa forme, ses trous, la façon dont les axiomes se distribuent. Un terrain de jeu exploratoire, explicitement mis à part du travail sérieux — des observations, pas des faits établis.</p>
+  </div>
+
+  <div class="exp-card">
+    <div class="spec-tag">interprétation</div>
+    <h3>Le vide structurel comme prédiction</h3>
+    <p>Le coin vide de la carte croisée (portée universelle + forte dépendance) est peut-être plus qu'une case vide : peut-être une <b>impossibilité de principe</b>, une frontière que le réel interdit de franchir. Si c'est vrai, l'absence devient une information — presque une prédiction.</p>
+  </div>
+
+  <div class="exp-card">
+    <div class="spec-tag">hypothèse</div>
+    <h3>Des familles fermées, d'autres sans fond</h3>
+    <p>Certaines familles d'axiomes semblent <b>finies</b> — le noyau physique et logique paraît proche d'être complet. D'autres semblent <b>sans fond</b> — le normatif, le social, dépendent de constructions humaines potentiellement illimitées. Si cette différence est réelle, l'outil aurait deux natures : un inventaire qu'on peut clore ici, un détecteur qu'on applique indéfiniment là. Plausible, non démontré.</p>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <p><b>Atlas des axiomes</b> — représentation visuelle et exploratoire d'un travail en cours. Les statuts, familles et relations sont affichés tels qu'ils sont au moment de la génération — évolutifs, faillibles, offerts à la critique. L'outil décrit des présupposés ; il ne juge pas ceux qui les adoptent.</p>
+  <p style="margin-top:12px"><button class="anchor" id="secretAnchor" aria-label="ancre">⚓</button></p>
+</div></footer>
+
+<div class="modal" id="modal"><div class="sheet corner" id="sheet"></div></div>
+
+<script>
+const AX = [{"n": "Déterminisme / hasard", "f": "Transversal", "p": "Universelle", "d": "Aucune", "s": "établi", "desc": "Le monde est-il entièrement fixé par ses causes, ou du vrai hasard existe-t-il ?", "ex": "Un dé « truqué » par les lois vs un dé vraiment imprévisible.", "q": "Tout événement est-il déterminé par ses antécédents ?", "src": "Transversal à toute théorie."}, {"n": "Réalisme physique", "f": "Transversal", "p": "Universelle", "d": "Aucune", "s": "établi", "couple": 1, "desc": "Les propriétés physiques ont-elles une valeur définie avant qu'on les mesure ?", "ex": "La lune est-elle là quand personne ne la regarde ?", "q": "Le monde existe-t-il indépendamment de l'observation ?", "src": "Transversal. Forme un couple contraint avec la localité causale (théorème de Bell) : on ne peut garder les deux à la fois.", "rel": "couple"}, {"n": "Causalité", "f": "Transversal", "p": "Universelle", "d": "Aucune", "s": "établi", "desc": "Les choses arrivent par des causes — rien ne surgit sans lien à ce qui précède.", "ex": "On cherche toujours « pourquoi » un phénomène se produit.", "q": "Tout effet a-t-il une cause ?", "src": "Transversal à toute science."}, {"n": "Réductionnisme / émergence forte", "f": "Transversal", "p": "Universelle", "d": "Aucune", "s": "validé", "desc": "Le tout se ramène-t-il à ses parties, ou fait-il émerger quelque chose d'irréductible ?", "ex": "La conscience = des neurones, ou quelque chose en plus ?", "q": "Peut-on tout expliquer par les niveaux inférieurs ?", "src": "Confirmé notamment par le conflit Durkheim / contrat social."}, {"n": "Opérationnalisme", "f": "Transversal", "p": "Générale", "d": "Aucune", "s": "établi", "desc": "Un concept ne vaut que par la procédure qui le mesure.", "ex": "« La température, c'est ce que lit le thermomètre. »", "q": "Un concept se réduit-il à sa mesure ?", "src": "Physique, psychométrie."}, {"n": "Granularité espace-temps", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "établi", "desc": "L'espace et le temps sont-ils continus ou faits de grains minimaux ?", "ex": "Peut-on couper une durée à l'infini ?", "q": "Existe-t-il une échelle minimale ?", "src": "Gravité quantique, mécanique quantique."}, {"n": "Localité causale", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "confirmé", "couple": 1, "desc": "Rien ne se propage plus vite que la lumière ; les causes sont locales.", "ex": "Une action ici ne change pas instantanément là-bas.", "q": "Toute influence est-elle locale ?", "src": "Relativité. Forme un couple contraint avec le réalisme physique (théorème de Bell).", "rel": "couple"}, {"n": "Substantivalisme", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "confirmé", "desc": "L'espace est-il une chose réelle, ou juste des relations entre objets ?", "ex": "Un espace vide existe-t-il, ou n'y a-t-il que des distances ?", "q": "L'espace a-t-il une existence propre ?", "src": "Débat Newton / Leibniz."}, {"n": "Téléologie locale", "f": "Descriptive", "p": "Générale", "d": "Mécanisme (sélection/régulation)", "s": "confirmé", "desc": "Un système tend vers un état sans qu'aucune intention ne le dirige.", "ex": "L'évolution « optimise » sans plan.", "q": "Une finalité peut-elle émerger sans agent ?", "src": "Confirmé dans 6 domaines."}, {"n": "Équilibration locale sans sélection", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "validé", "desc": "Un équilibre s'atteint par pur ajustement, sans tri ni régulateur.", "ex": "L'osmose ; une panne en cascade qui finit par se stabiliser.", "q": "L'équilibre exige-t-il un mécanisme de sélection ?", "src": "Validé (4/5 IA, chalutage dilué)."}, {"n": "Agentivité", "f": "Descriptive", "p": "Spécialisée", "d": "Agent réel", "s": "confirmé", "desc": "Certaines explications supposent un sujet qui agit vraiment.", "ex": "Un choix, pas seulement une réaction chimique.", "q": "Y a-t-il de vrais agents ?", "src": "Action intentionnelle."}, {"n": "Modularité de l'esprit", "f": "Descriptive", "p": "Spécialisée", "d": "Organisation cognitive interne", "s": "confirmé", "desc": "L'esprit est-il fait de modules innés, ou d'un apprentissage général ?", "ex": "Le langage : faculté dédiée ou apprise ?", "q": "L'esprit a-t-il une architecture innée ?", "src": "Débat empirisme vs innatisme."}, {"n": "Individualisme / Holisme", "f": "Descriptive", "p": "Spécialisée", "d": "Agent réel", "s": "validé", "desc": "Le social se réduit-il aux individus, ou le tout prime-t-il ?", "ex": "Une société = la somme des gens, ou un fait propre ?", "q": "L'individu ou le collectif est-il premier ?", "src": "Validé (4 domaines)."}, {"n": "Régulation cybernétique à consigne fixe", "f": "Descriptive", "p": "Générale", "d": "Mécanisme (sélection/régulation)", "s": "confirmé", "desc": "Un système régule vers une cible fixée d'avance.", "ex": "Un thermostat vise une température de consigne.", "q": "La cible est-elle prédéterminée ?", "src": "Confirmé ; 4e domaine (politique monétaire) trouvé par chalutage filet large 5/5. Portée passée de Spécialisée à Générale (provisoire)."}, {"n": "Superposition des états", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "Un système quantique peut être dans plusieurs états à la fois.", "ex": "Le chat de Schrödinger, vivant et mort.", "q": "Les états peuvent-ils coexister ?", "src": "Mécanique quantique. Signal encore faible/instable, un panel supplémentaire est requis."}, {"n": "Mesure comme interaction irréductible", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "Mesurer, c'est interagir — l'acte modifie ce qu'il mesure.", "ex": "Observer une particule change son état.", "q": "La mesure est-elle neutre ?", "src": "Mécanique quantique. Lien à Heisenberg non tranché."}, {"n": "Non-individualité des entités quantiques", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "validé", "desc": "Deux particules identiques n'ont pas d'identité propre distincte.", "ex": "Échanger deux électrons ne change rien.", "q": "Les entités ont-elles une identité individuelle ?", "src": "Mécanique quantique. Validé."}, {"n": "Correspondance classique-quantique", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "validé", "desc": "Le quantique doit redonner le classique à grande échelle.", "ex": "Les lois de Newton comme limite du quantique.", "q": "Les régimes doivent-ils se raccorder ?", "src": "Principe de correspondance. Validé."}, {"n": "Invariance spatiale des lois", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "validé", "desc": "Les lois physiques sont les mêmes en tout lieu.", "ex": "La gravité marche pareil ici et dans une autre galaxie.", "q": "Les lois varient-elles selon l'endroit ?", "src": "Validé (chalutage 5 IA, scission 5/5). Fonde le principe cosmologique et le copernicien."}, {"n": "Invariance temporelle des lois", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "validé", "desc": "Les lois physiques sont les mêmes à toute époque.", "ex": "Les lois d'hier valent encore demain.", "q": "Les lois changent-elles avec le temps ?", "src": "Validé (chalutage 5 IA, scission 5/5). Fonde l'uniformitarisme et la médecine légale."}, {"n": "Principe cosmologique", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "L'univers est homogène et isotrope à grande échelle.", "ex": "Aucun lieu de l'univers n'est spécial.", "q": "La matière est-elle répartie uniformément ?", "src": "Confirmé. Dépendance tranchée AUTONOME : le lien supposé vers le copernicien n'est pas soutenu (0/4), et la littérature montre une dérivation en sens inverse — pas une présupposition."}, {"n": "Principe copernicien", "f": "Descriptive", "p": "Spécialisée", "d": "Agent réel", "s": "confirmé", "desc": "Notre position d'observateur n'a rien de privilégié.", "ex": "On n'est pas au centre de l'univers.", "q": "L'observateur est-il quelconque ?", "src": "Confirmé. Sondage vertical dédié (6 voix) : lien vers l'invariance spatiale réfuté (1/6) ; lien vers l'observateur indécis (3/6, panel divisé relationnel vs autonome). Question ouverte assumée.", "open": "Le panel est divisé : le copernicien est-il relationnel (il présuppose un observateur) ou un fait autonome sur l'univers ? Non tranché."}, {"n": "Récurrence de l'intention", "f": "Normative", "p": "Contextuelle", "d": "Chaîne d'intentions récursives", "s": "confirmé", "desc": "Certaines situations exigent que chacun anticipe l'intention de l'autre, en boucle.", "ex": "« Je sais que tu sais que je sais… »", "q": "Faut-il des intentions imbriquées ?", "src": "Préconditions multiples (chaîne d'intentions + cadre normatif)."}, {"n": "Réalisme moral / constructivisme", "f": "Normative", "p": "Spécialisée", "d": "Cadre normatif", "s": "validé", "desc": "Les valeurs morales sont-elles découvertes (réelles) ou construites ?", "ex": "« Torturer est mal » : un fait, ou une convention ?", "q": "La morale est-elle objective ?", "src": "Validé (4 confirmations)."}, {"n": "Raison comme cause", "f": "Métaphysique", "p": "Spécialisée", "d": "Agent réel", "s": "confirmé", "couple": 1, "desc": "Une raison peut-elle vraiment causer un acte, en tant que raison ?", "ex": "J'agis « parce que » c'est juste, pas seulement par réflexe.", "q": "Les raisons ont-elles un pouvoir causal ?", "src": "Forme un couple contraint avec le déterminisme (question du libre arbitre).", "rel": "couple"}, {"n": "Commensurabilité inter-individuelle", "f": "Normative", "p": "Spécialisée", "d": "Cadre normatif", "s": "confirmé", "desc": "Peut-on comparer le bien-être de personnes différentes ?", "ex": "Additionner le bonheur de deux personnes.", "q": "Les valeurs individuelles sont-elles comparables ?", "src": "Utilitarisme, économie du bien-être."}, {"n": "Principe de raison suffisante", "f": "Métaphysique", "p": "Contextuelle", "d": "Aucune", "s": "candidat", "couple": 1, "desc": "Tout ce qui existe doit avoir une raison — rien n'est là sans pourquoi.", "ex": "Pourquoi y a-t-il quelque chose plutôt que rien ?", "q": "Tout a-t-il une raison suffisante ?", "src": "Leibniz. Candidat contesté (Hume, physique). Couple contraint conceptuel avec le refus de la régression infinie, non tranché.", "rel": "couple"}, {"n": "Refus de la régression infinie", "f": "Métaphysique", "p": "Contextuelle", "d": "Aucune", "s": "candidat", "couple": 1, "desc": "Une chaîne de causes ne peut remonter à l'infini — il faut un point d'arrêt.", "ex": "« Pourquoi ? — parce que… » doit s'arrêter un jour.", "q": "Faut-il une cause première ?", "src": "Argument cosmologique. Candidat contesté (les infinitistes le refusent). Couple contraint conceptuel avec la raison suffisante, non tranché.", "rel": "couple"}, {"n": "Théorème de Gödel", "f": "Métaphysique", "p": "Contextuelle", "d": "Aucune", "s": "validé", "desc": "Tout système formel assez riche contient des vérités qu'il ne peut prouver.", "ex": "Des énoncés vrais mais indémontrables dans le système.", "q": "La complétude formelle est-elle possible ?", "src": "Validé (chalutage dédié aveugle, panel local 4/4). Classé en métaphysique : il pose une limite interne des systèmes formels."}, {"n": "Indécidabilité algorithmique", "f": "Métaphysique", "p": "Contextuelle", "d": "Aucune", "s": "validé", "desc": "Certains problèmes ne peuvent être résolus par aucun algorithme.", "ex": "Le problème de l'arrêt (Turing).", "q": "Tout est-il calculable ?", "src": "Church-Turing. Validé (2 confirmations aveugles). Frère du théorème de Gödel."}, {"n": "Primauté de la relation sur la substance", "f": "Métaphysique", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "Ce qui est premier, ce sont les relations, pas les choses en soi.", "ex": "Une particule définie par ses liens, pas isolément.", "q": "La relation précède-t-elle la substance ?", "src": "Rovelli (mécanique quantique relationnelle), théorie des graphes, Deleuze/Latour.", "open": "Chantier laissé ouvert à dessein. La frontière avec le structuralisme classique est difficile à tracer au premier regard — on la montre plutôt que de la masquer. La ligne nette : le structuralisme fait EXISTER la chose d'abord puis la définit par ses relations ; la primauté nie l'existence même hors relation. Maintenu « Confirmé » exprès, comme exemple de frontière vive."}, {"n": "Fusion géométrie/causalité", "f": "Métaphysique", "p": "Générale", "d": "Aucune", "s": "reserve", "desc": "La géométrie de l'espace-temps EST la structure causale.", "ex": "La gravité = une courbure, pas une force.", "q": "Géométrie et causalité sont-elles une seule chose ?", "src": "Relativité générale. Candidat solide mais affaibli par la gravité entropique (Verlinde)."}, {"n": "Dissociation forme/sens (syntaxique)", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "candidat", "desc": "La forme d'un message peut être traitée sans son sens.", "ex": "Un texto arrive intact même s'il est incompréhensible.", "q": "Forme et sens sont-ils séparables ?", "src": "Shannon + formel. Volet syntaxique, scindé du volet sémantique."}, {"n": "Arbitraire du signe (sémantique)", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "candidat", "desc": "Le lien entre un mot et ce qu'il désigne est arbitraire.", "ex": "« chat », « cat », « neko » : même bête, formes différentes.", "q": "Le lien forme/sens est-il conventionnel ?", "src": "Saussure. Volet sémantique, issu de la scission forme/sens."}, {"n": "Physicalité de l'information", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "L'information n'est pas abstraite : effacer un bit coûte de l'énergie.", "ex": "Le principe de Landauer.", "q": "L'information est-elle physique ?", "src": "Présuppose sans dériver un socle nomologique (l'existence d'un ordre réglé).", "rel": "vert"}, {"n": "Clôture organisationnelle", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "Le vivant se produit lui-même — il trace sa propre frontière.", "ex": "Une cellule qui s'auto-entretient (autopoïèse).", "q": "Le vivant est-il auto-productif ?", "src": "Maturana & Varela. Distinct de la primauté de la relation."}, {"n": "Garantie d'optimalité", "f": "Descriptive", "p": "Spécialisée", "d": "Mécanisme (sélection/régulation)", "s": "candidat", "desc": "Un processus sans pilote aboutit non pas à un simple équilibre, mais au MEILLEUR équilibre.", "ex": "La « main invisible » — mais le clavier QWERTY, pourtant mauvais, s'est imposé quand même.", "q": "Le sans-pilote produit-il l'optimal ?", "src": "Adam Smith. Distinct de « l'équilibre sans régulation centrale ». Faille du verrouillage (lock-in). Chalutage transversal fait : optimalité non saillante (1/5), reste candidat.", "open": "La frontière entre « atteindre un équilibre » et « atteindre le MEILLEUR équilibre » est fragile : le panel dissout souvent l'optimalité dans la simple auto-organisation."}, {"n": "P ≠ NP", "f": "Métaphysique", "p": "Contextuelle", "d": "Aucune", "s": "candidat", "desc": "Vérifier une solution serait plus facile que la trouver.", "ex": "Un puzzle dur à résoudre, facile à contrôler.", "q": "Trouver = vérifier ?", "src": "Cryptographie. Axiome de travail, non démontré."}, {"n": "Existence d'un ordre nomologique", "f": "Métaphysique", "p": "Universelle", "d": "Aucune", "s": "candidat", "couple": 0, "desc": "Le monde suit des règles plutôt que d'être un pur chaos.", "ex": "Une pierre lâchée tombe, toujours, de la même façon.", "q": "Le monde est-il réglé ?", "src": "Candidat contesté. Distinct du réalisme (le monde existe) et de l'invariance (les règles sont partout les mêmes). Irréductible à la causalité (une règle n'est pas une cause).", "open": "Question de statut non tranchée (débat reconnu, y compris en littérature allemande) : le monde est-il ordonné parce qu'il y a des lois, ou y a-t-il des lois parce qu'il est ordonné ? L'outil expose ce débat, il ne l'arbitre pas."}];
+const GLOSS = {"Descriptive": "Famille descriptive — dit comment le monde EST (physique, biologie, cognition…). Son étalon : la preuve empirique.", "Normative": "Famille normative — dit ce qui a de la VALEUR, est légitime ou bon (morale, droit, esthétique). Son étalon : la cohérence de sa structure logique.", "Métaphysique": "Famille métaphysique — dit ce qui EXISTE au-delà de l'observable. Filet empirique très réduit : prudence maximale.", "Transversal": "Famille transversale — présente dans presque toutes les théories, quel que soit le domaine (causalité, réalisme…).", "Universelle": "Portée universelle — présent dans toute théorie, sans exception connue. Ce n'est pas un rang de valeur, juste un nombre de domaines.", "Générale": "Portée générale — revient dans la plupart des grands domaines, même très éloignés (≥ 4 domaines).", "Spécialisée": "Portée spécialisée — propre à une famille de théories.", "Contextuelle": "Portée contextuelle — ne se pose que dans des cas très précis.", "dep": "Dépendance — ce dont un axiome a besoin pour seulement apparaître : rien, ou un mécanisme, ou un agent réel, etc. Ce n'est pas un rang de valeur.", "Validé": "Validé — confirmé plusieurs fois, indépendamment, sans contre-exemple sérieux. Le plus solide.", "Établi": "Établi — socle admis, confirmé de longue date et sans contestation. Équivalent du validé pour les axiomes de base.", "Confirmé": "Confirmé — recoupé au moins une fois, mais pas encore éprouvé à fond.", "Candidat": "Candidat — repéré, une première confirmation, reste à creuser.", "Candidat contesté": "Candidat contesté — repéré, mais fait l'objet d'un vrai débat dans la littérature. L'outil expose le débat, il ne le tranche pas.", "En réserve": "En réserve — repéré mais pas encore travaillé, ou volontairement mis de côté.", "Dissous": "Dissous — après analyse, ce n'était pas un axiome indépendant mais la conséquence d'un autre.", "couple contraint": "Couple contraint — deux axiomes qui ne peuvent pas être vrais EN MÊME TEMPS. Aucun n'est faux : il faut choisir.", "présuppose sans dériver": "Présuppose sans dériver — un axiome a besoin d'un autre pour avoir un sens, mais ne s'en déduit pas. Relation à sens unique.", "déshabillage": "Déshabillage — prendre une théorie et retirer ses couches une à une pour trouver le présupposé nu en dessous. L'analyse de base, une théorie à la fois.", "chalutage": "Chalutage — passer des dizaines de théories en revue d'un coup, filet large, pour repérer les axiomes qui reviennent. Rapide, sert à repérer.", "sondage vertical": "Sondage vertical — descendre droit sur une question : cet axiome en présuppose-t-il un autre ? On mesure une profondeur en un point précis.", "carottage": "Carottage — prélever une carotte pour vérifier si les strates qu'on suppose (les familles, les catégories) sont réelles. L'outil qui teste l'architecture elle-même."};
+
+const FAM={"Descriptive":"var(--f-desc)","Normative":"var(--f-norm)","Métaphysique":"var(--f-meta)","Transversal":"var(--f-trans)"};
+const FAMLBL={"Descriptive":"Descriptive","Normative":"Normative","Métaphysique":"Métaphysique","Transversal":"Transversale"};
+const REACH={"Universelle":1,"Générale":0.666,"Spécialisée":0.333,"Contextuelle":0.08};
+const REACH_STEPS={"Universelle":4,"Générale":3,"Spécialisée":2,"Contextuelle":1};
+const S_CLASS={"établi":"s-etabli","validé":"s-valide","confirmé":"s-confirme","candidat":"s-candidat","reserve":"s-reserve","dissous":"s-dissous"};
+const S_LABEL={"établi":"Établi","validé":"Validé","confirmé":"Confirmé","candidat":"Candidat","reserve":"En réserve","dissous":"Dissous"};
+const CONTESTED=new Set(["Principe de raison suffisante","Refus de la régression infinie","Existence d'un ordre nomologique"]);
+
+function statusLabel(a){return CONTESTED.has(a.n)?"Candidat contesté":S_LABEL[a.s];}
+function statusClass(a){return CONTESTED.has(a.n)?"s-conteste":S_CLASS[a.s];}
+function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+/* ---- GLOSSARY TOOLTIPS : inject text + tap support ---- */
+function initGlossary(root){
+  (root||document).querySelectorAll('.term[data-g]').forEach(t=>{
+    if(t.dataset.done) return;
+    const key=t.dataset.g;
+    const def=GLOSS[key]||"";
+    const tip=document.createElement('span');
+    tip.className='tip'; tip.textContent=def;
+    t.appendChild(tip);
+    t.dataset.done="1";
+    t.addEventListener('click',e=>{
+      e.stopPropagation();
+      const wasOpen=t.classList.contains('tapped');
+      document.querySelectorAll('.term.tapped').forEach(x=>x.classList.remove('tapped'));
+      if(!wasOpen) t.classList.add('tapped');
+    });
+  });
+}
+document.addEventListener('click',()=>document.querySelectorAll('.term.tapped').forEach(x=>x.classList.remove('tapped')));
+
+/* ---- CARD RENDER ---- */
+function reachDots(p){let n=REACH_STEPS[p],o="";for(let i=0;i<4;i++)o+=`<i class="${i<n?'on':''}"></i>`;return o;}
+function cardTags(a){
+  let t="";
+  if(a.couple) t+=`<span class="minitag couple">⚑ couple contraint</span>`;
+  if(a.rel==="vert") t+=`<span class="minitag vert">↑ présuppose</span>`;
+  if(a.open) t+=`<span class="minitag open">⚑ frontière ouverte</span>`;
+  return t?`<div class="cardtags">${t}</div>`:"";
+}
+function cardHTML(a){
+  return `<div class="card" style="--fam:${FAM[a.f]};--reach:${REACH[a.p]}" data-i="${AX.indexOf(a)}" tabindex="0" role="button">
+      <div class="fam">${FAMLBL[a.f]}</div>
+      <div class="nm">${esc(a.n)}</div>
+      <div class="meta">
+        <div class="mrow"><span class="k">Portée</span><span class="reach">${reachDots(a.p)}</span></div>
+        <div class="mrow"><span class="k">Dépendance</span><span class="v">${a.d==="Aucune"?"—":esc(a.d)}</span></div>
+      </div>
+      <div class="pill ${statusClass(a)}">${statusLabel(a)}</div>
+      ${cardTags(a)}
+    </div>`;
+}
+const grid=document.getElementById('cardGrid');
+let fFam="all",fStat="all";
+function applyFilters(){
+  const list=AX.filter(a=>(fFam==="all"||a.f===fFam)&&(fStat==="all"||(fStat==="validé"?(a.s==="validé"||a.s==="établi"):a.s===fStat)));
+  grid.innerHTML=list.map(cardHTML).join('');
+  document.getElementById('visCount').textContent=list.length;
+}
+document.querySelectorAll('#famFilter .chip').forEach(c=>c.addEventListener('click',()=>{document.querySelectorAll('#famFilter .chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');fFam=c.dataset.fam;applyFilters();}));
+document.querySelectorAll('#statFilter .chip').forEach(c=>c.addEventListener('click',()=>{document.querySelectorAll('#statFilter .chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');fStat=c.dataset.stat;applyFilters();}));
+document.getElementById('totalTag').textContent=AX.length;
+
+/* ---- DEMO CARD (random among solid & parlant validated) ---- */
+const DEMO_POOL=["Réductionnisme / émergence forte","Équilibration locale sans sélection","Individualisme / Holisme","Invariance spatiale des lois","Invariance temporelle des lois","Réalisme moral / constructivisme"];
+(function(){
+  const pool=AX.filter(a=>DEMO_POOL.includes(a.n));
+  const pick=pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById('demoCard').innerHTML=cardHTML(pick);
+})();
+
+/* ---- MODAL / SHEET ---- */
+const modal=document.getElementById('modal'),sheet=document.getElementById('sheet');
+function openSheet(a){
+  const famcol=`hsl(${FAM[a.f]}/.95)`;
+  let openField = a.open?`<div class="field open"><div class="k">Ce qui reste ouvert</div><div class="t">${esc(a.open)}</div></div>`:"";
+  sheet.innerHTML=`
+    <div class="sheet-hd" style="border-bottom:1px solid hsl(${FAM[a.f]}/.4)">
+      <div class="fam" style="color:${famcol}">${FAMLBL[a.f]}</div>
+      <h3>${esc(a.n)}</h3>
+      <button class="x" aria-label="Fermer">✕</button>
+    </div>
+    <div class="sheet-bd">
+      <div class="tags">
+        <span class="tag">Portée · ${a.p}</span>
+        <span class="tag">Dépendance · ${a.d==="Aucune"?"aucune":esc(a.d)}</span>
+        <span class="pill ${statusClass(a)}" style="margin:0;width:auto;display:inline-block;padding:5px 10px">${statusLabel(a)}</span>
+        ${a.couple?'<span class="tag" style="color:#ff9a6a;border-color:rgba(255,120,80,.4)">⚑ couple contraint</span>':''}
+      </div>
+      <div class="field"><div class="k">En clair</div><div class="t">${esc(a.desc)}</div></div>
+      <div class="field"><div class="k">Exemple concret</div><div class="t">${esc(a.ex)}</div></div>
+      <div class="field"><div class="k">Question tranchée</div><div class="t">${esc(a.q)}</div></div>
+      ${openField}
+      <div class="field"><div class="k">Sources · notes</div><div class="t">${esc(a.src)}</div></div>
+    </div>`;
+  sheet.querySelector('.x').addEventListener('click',closeSheet);
+  modal.classList.add('on');
+}
+function closeSheet(){modal.classList.remove('on');}
+modal.addEventListener('click',e=>{if(e.target===modal)closeSheet();});
+document.addEventListener('keydown',e=>{if(e.key==="Escape")closeSheet();});
+function cardClickHandler(e){const c=e.target.closest('.card');if(c){openSheet(AX[+c.dataset.i]);}}
+grid.addEventListener('click',cardClickHandler);
+document.getElementById('demoCard').addEventListener('click',cardClickHandler);
+grid.addEventListener('keydown',e=>{if(e.key==="Enter"||e.key===" "){const c=e.target.closest('.card');if(c){e.preventDefault();openSheet(AX[+c.dataset.i]);}}});
+
+/* ---- CHARTS ---- */
+function countBy(key){const m={};AX.forEach(a=>m[a[key]]=(m[a[key]]||0)+1);return m;}
+const famCount=countBy('f');
+const famOrder=["Descriptive","Métaphysique","Normative","Transversal"];
+const famCls={"Descriptive":"desc","Métaphysique":"meta","Normative":"norm","Transversal":"trans"};
+const maxFam=Math.max(...Object.values(famCount));
+
+/* status bar segmentée : validé+établi groupés */
+const grouped={valide:0,confirme:0,candidat:0,reserve:0};
+AX.forEach(a=>{
+  if(a.s==="validé"||a.s==="établi")grouped.valide++;
+  else if(a.s==="confirmé")grouped.confirme++;
+  else if(a.s==="candidat")grouped.candidat++;
+  else grouped.reserve++;
+});
+const segs=[["valide","Validé / établi","seg-valide"],["confirme","Confirmé","seg-confirme"],["candidat","Candidat","seg-candidat"],["reserve","En réserve","seg-reserve"]];
+const totalAx=AX.length;
+document.getElementById('statusBar').innerHTML=segs.map(([k,l,c])=>`<div class="seg ${c}" style="flex:${grouped[k]}" title="${l} : ${grouped[k]}">${grouped[k]}</div>`).join('');
+document.getElementById('statusKey').innerHTML=segs.map(([k,l,c])=>`<div class="k"><i class="${c}" style="background:var(--_)"></i>${l} · ${grouped[k]}</div>`).join('').replace(/seg-valide" style="background:var\(--_\)/,'" style="background:#79e0a4').replace(/seg-confirme" style="background:var\(--_\)/,'" style="background:#7fc4ff').replace(/seg-candidat" style="background:var\(--_\)/,'" style="background:#ffce7a').replace(/seg-reserve" style="background:var\(--_\)/,'" style="background:#a6b3c0');
+
+/* MATRIX */
+const reaches=["Universelle","Générale","Spécialisée","Contextuelle"];
+const deps=[["Aucune","Aucune"],["Mécanisme (sélection/régulation)","Mécanisme"],["AGENT","Agent / plus"]];
+function depBucket(d){if(d==="Aucune")return"Aucune";if(d.startsWith("Mécanisme"))return"Mécanisme (sélection/régulation)";return"AGENT";}
+let mStat="solide";
+function inMatrix(a){return mStat==="all"?true:(a.s==="validé"||a.s==="établi"||a.s==="confirmé");}
+function renderMatrix(){
+  let mh=`<tr><th></th>${deps.map(d=>`<th>${d[1]}</th>`).join('')}</tr>`;
+  reaches.forEach(r=>{
+    mh+=`<tr><td class="axis">${r}</td>`+deps.map(d=>{
+      if(r==="Universelle"&&d[0]!=="Aucune")return`<td><div class="mcell void">∅</div></td>`;
+      const items=AX.filter(a=>a.p===r&&depBucket(a.d)===d[0]&&inMatrix(a));
+      const chips=items.map(a=>`<span class="mchip f-${a.f}" data-i="${AX.indexOf(a)}">${esc(a.n)}</span>`).join('');
+      return`<td><div class="mcell">${chips||'<span style="color:var(--ink-faint);font-size:11px;text-align:center">·</span>'}</div></td>`;
+    }).join('')+`</tr>`;
+  });
+  const M=document.getElementById('matrix');
+  M.innerHTML=mh;
+  M.querySelectorAll('.mchip').forEach(ch=>ch.addEventListener('click',()=>openSheet(AX[+ch.dataset.i])));
+}
+document.querySelectorAll('#mStatFilter .chip').forEach(c=>c.addEventListener('click',()=>{document.querySelectorAll('#mStatFilter .chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');mStat=c.dataset.mstat;renderMatrix();}));
+
+const reachCount=countBy('p');
+const maxR=Math.max(...Object.values(reachCount));
+document.getElementById('reachBars').innerHTML=reaches.map(r=>`<div class="bar-row"><span class="lbl">${r}</span><div class="bar-track"><div class="bar-fill cyan" style="width:${(reachCount[r]||0)/maxR*100}%"></div></div><span class="val">${reachCount[r]||0}</span></div>`).join('');
+const statBarOrder=[["valide","Validé / établi"],["confirme","Confirmé"],["candidat","Candidat"],["reserve","Réserve"]];
+const maxS=Math.max(...Object.values(grouped));
+document.getElementById('statBars').innerHTML=statBarOrder.map(([k,l])=>`<div class="bar-row"><span class="lbl">${l}</span><div class="bar-track"><div class="bar-fill cyan" style="width:${grouped[k]/maxS*100}%"></div></div><span class="val">${grouped[k]}</span></div>`).join('');
+
+/* ---- TABS : robust (click + touch) ---- */
+function switchView(id,btn){
+  document.querySelectorAll('nav.tabs button').forEach(x=>x.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  else{const b=document.querySelector(`nav.tabs button[data-view="${id}"]`);if(b)b.classList.add('on');}
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  const target=document.getElementById(id);
+  if(target)target.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('nav.tabs button').forEach(b=>{
+  b.addEventListener('click',()=>switchView(b.dataset.view,b));
+});
+
+/* ---- SECRET (le trésor caché — chut) ---- */
+(function(){
+  const a=document.getElementById('secretAnchor');
+  if(!a)return;
+  a.addEventListener('click',e=>{
+    e.stopPropagation();
+    sheet.innerHTML=`
+      <div class="sheet-hd" style="border-bottom:1px solid rgba(79,214,255,.4)">
+        <div class="fam" style="color:var(--cyan)">⚓ transmission · fréquence inconnue</div>
+        <h3>Capitaine Zéro</h3>
+        <button class="x" aria-label="Fermer">✕</button>
+      </div>
+      <div class="sheet-bd">
+        <div class="field"><div class="t" style="font-size:15px;line-height:1.7">Ah, vous voilà, moussaillon. Vous avez trouvé l'ancre — c'est déjà la preuve que vous savez fouiller là où les autres passent sans regarder.<br><br>Je suis le <b>Capitaine Zéro</b>. Là où le commun voit des théories bien lisses, moi je plonge dessous, dans les eaux noires des <b>présupposés</b> — ces évidences muettes sur lesquelles tout repose, et que personne ne songe à remonter à la surface.<br><br>Bientôt, je lèverai l'ancre avec un équipage : vous. Vous apprendrez à <b>déshabiller</b> une idée, à <b>chaluter</b> les profondeurs, à débusquer vos propres axiomes cachés. Non pas pour me croire — <b>surtout pas</b> — mais pour aller voir de vos propres yeux ce qu'il y a tout au fond.<br><br>Préparez votre scaphandre. La plongée n'a pas encore commencé… mais elle approche.</div></div>
+        <div class="field"><div class="k">statut de la traversée</div><div class="t" style="color:var(--amber)">Appareillage imminent — Capitaine Zéro n'a pas encore levé l'ancre pour le grand public.</div></div>
+      </div>`;
+    sheet.querySelector('.x').addEventListener('click',closeSheet);
+    modal.classList.add('on');
+  });
+})();
+
+/* ---- INIT ---- */
+applyFilters();
+renderMatrix();
+initGlossary(document);
+</script>
+</body>
+</html>
