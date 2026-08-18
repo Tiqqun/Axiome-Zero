@@ -86,6 +86,9 @@ h2{font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;c
 .term .tip{visibility:hidden;opacity:0;position:absolute;bottom:135%;left:50%;transform:translateX(-50%);width:250px;max-width:78vw;background:#0c1520;border:1px solid var(--hair2);border-radius:10px;padding:11px 13px;font-size:12.5px;line-height:1.55;color:var(--ink);letter-spacing:0;text-transform:none;font-weight:400;z-index:60;transition:.16s;box-shadow:0 12px 30px rgba(0,0,0,.6);pointer-events:none}
 .term .tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--hair2)}
 .term:hover .tip,.term.tapped .tip{visibility:visible;opacity:1}
+.term:hover .tip,.term.tapped .tip{pointer-events:auto}
+.tip-link{display:inline-block;margin-top:8px;color:var(--cyan);cursor:pointer;font-size:11.5px;font-weight:600;letter-spacing:.02em;border-top:1px solid var(--hair);padding-top:7px;width:100%}
+.tip-link:hover{text-decoration:underline}
 
 .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:24px 0 22px}
 .toolbar .grp{display:flex;gap:4px;padding:5px;border:1px solid var(--hair);background:var(--panel);border-radius:10px;flex-wrap:wrap}
@@ -106,7 +109,8 @@ h2{font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;c
 .card:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 .card .fam{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:hsl(var(--fam)/.95);display:flex;align-items:center;gap:7px}
 .card .fam::before{content:"";width:7px;height:7px;background:hsl(var(--fam)/.95);transform:rotate(45deg);flex-shrink:0}
-.card .nm{font-size:16.5px;font-weight:600;line-height:1.22;margin:12px 0 14px;letter-spacing:.01em}
+.card .nm{font-size:16.5px;font-weight:600;line-height:1.22;margin:12px 0 8px;letter-spacing:.01em}
+.card .cdesc{font-size:12px;font-style:italic;line-height:1.4;color:var(--ink-dim);margin-bottom:14px}
 .card .meta{margin-top:auto;display:flex;flex-direction:column;gap:7px}
 .mrow{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11.5px;border-top:1px solid var(--hair);padding-top:6px}
 .mrow .k{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);font-family:"JetBrains Mono",monospace;flex-shrink:0}
@@ -133,9 +137,10 @@ h2{font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;c
 .matrix th,.matrix td{padding:5px;text-align:center;vertical-align:top}
 .matrix th{color:var(--ink-dim);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
 .matrix td.axis{color:var(--ink-dim);text-align:right;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;padding-right:8px;vertical-align:middle}
-.mcell{min-height:52px;border:1px solid var(--hair);border-radius:9px;padding:5px;display:flex;flex-direction:column;gap:3px;background:rgba(255,255,255,.015)}
-.mcell.void{background:repeating-linear-gradient(45deg,rgba(255,120,80,.12) 0 6px,transparent 6px 12px);border-color:rgba(255,120,80,.4);align-items:center;justify-content:center;color:#ff9a6a;font-size:18px;font-weight:700}
-.mchip{font-size:10px;line-height:1.2;padding:4px 5px;border-radius:6px;text-align:left;cursor:pointer;border:1px solid transparent;transition:.12s;touch-action:manipulation}
+.mcell{min-height:52px;border:1px solid var(--hair);border-radius:9px;padding:6px;display:flex;flex-flow:row wrap;gap:5px;align-content:flex-start;background:rgba(255,255,255,.015)}
+.mcell.void{background:repeating-linear-gradient(45deg,rgba(255,120,80,.12) 0 6px,transparent 6px 12px);border-color:rgba(255,120,80,.4);align-items:center;justify-content:center;color:#ff9a6a;font-size:18px;font-weight:700;cursor:pointer;transition:.15s}
+.mcell.void:hover{background:repeating-linear-gradient(45deg,rgba(255,120,80,.2) 0 6px,transparent 6px 12px);border-color:rgba(255,120,80,.7)}
+.mchip{font-size:10.5px;line-height:1.15;padding:5px 8px;border-radius:14px;text-align:center;cursor:pointer;border:1px solid transparent;transition:.12s;touch-action:manipulation;max-width:100%}
 .mchip:hover{filter:brightness(1.2);border-color:currentColor}
 .mchip.f-Descriptive{background:hsl(var(--f-desc)/.14);color:hsl(var(--f-desc)/.95)}
 .mchip.f-Normative{background:hsl(var(--f-norm)/.14);color:hsl(var(--f-norm)/.95)}
@@ -171,6 +176,15 @@ h2{font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;c
 .exp-card p{font-size:13.5px;color:var(--ink-dim);line-height:1.62}
 .spec-tag{display:inline-block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);border:1px solid rgba(255,181,71,.4);padding:2px 7px;border-radius:5px;margin-bottom:8px;font-family:"JetBrains Mono",monospace}
 
+.ecueil{padding:16px 0;border-bottom:1px solid var(--hair)}
+.ecueil:last-of-type{border-bottom:none}
+.ecueil h3{font-size:15px;color:var(--ink);margin-bottom:7px;letter-spacing:.01em}
+.ecueil p{font-size:13.5px;color:var(--ink-dim);line-height:1.62;margin-bottom:7px}
+.ecueil .gf{font-size:13px;color:var(--ink);border-left:2px solid var(--cyan-dim);padding-left:12px;margin-top:8px}
+.ecueil .gf b{color:var(--cyan)}
+.ecueil-brief{margin-top:16px;padding-top:14px;border-top:1px solid var(--hair2)}
+.ecueil-brief p{font-size:13px;color:var(--ink-dim);line-height:1.7;margin-bottom:5px}
+.ecueil-brief b{color:var(--ink)}
 .guide-card{padding:20px;margin-bottom:16px;border-radius:14px}
 .guide-card h3{font-size:16px;color:var(--cyan);margin-bottom:10px;letter-spacing:.02em}
 .guide-card p{font-size:13.5px;color:var(--ink-dim);line-height:1.62;margin-bottom:8px}
@@ -227,7 +241,7 @@ footer b{color:var(--ink-dim)}
 <div class="bgfx"></div>
 
 <div class="topbar"><div class="wrap">
-  <div class="brand"><span class="dot"></span>Axiome Zéro <small>· Atlas v0.5</small></div>
+  <div class="brand"><span class="dot"></span>Axiome Zéro <small>· Atlas v0.6</small></div>
   <nav class="tabs" id="tabs">
     <button class="on" data-view="dash">Accueil</button>
     <button data-view="coll">Collection</button>
@@ -243,24 +257,17 @@ footer b{color:var(--ink-dim)}
 <section class="view on" id="dash"><div class="wrap">
   <div class="hero">
     <div class="eyebrow">// axiome zéro · atlas des axiomes</div>
-    <h1>Débusquer les points de départ cachés du savoir</h1>
-    <p class="lead">Derrière chaque théorie se cachent des <span class="term" data-g="dep">axiomes</span> — ce qu'elle admet sans le démontrer. <b>Axiome Zéro</b> est un outil qui les déshabille, les nomme et les range. Il ne dit jamais si une théorie est <b>vraie</b> ; il révèle sur quoi elle <b>parie</b>. L'<b>Atlas</b>, c'est la classification de ce travail : une collection à parcourir, à interroger, à critiquer.</p>
-  </div>
-
-  <div class="block corner" style="margin-bottom:20px">
-    <h2>Où en est chaque axiome</h2>
-    <div class="statusbar" id="statusBar"></div>
-    <div class="statuskey" id="statusKey"></div>
-    <p class="legend-note">La plupart des axiomes ne sont pas « validés » — et c'est normal. Cet atlas est un travail en cours : chaque axiome porte son <span class="term" data-g="Confirmé">degré de certitude</span>, affiché franchement, jamais maquillé.</p>
+    <h1>Bienvenue dans l'Atlas des axiomes</h1>
+    <p class="lead">Toute théorie prend sa source dans un <span class="term" data-g="dep">présupposé</span> — une idée admise sans preuve. Certaines l'affichent franchement ; d'autres le gardent enfoui, parfois sans même en avoir conscience. La <b>méthode Axiome Zéro</b>, aidée par les IA, tente de les retrouver et les rassemble dans l'Atlas des axiomes. Observez-les, explorez-les : ce sont des choses rarement dites, mais toujours supposées.</p>
   </div>
 
   <div class="block corner" style="margin-bottom:26px">
-    <h2>Un axiome, au hasard</h2>
-    <p class="legend-note" style="margin-top:0;margin-bottom:14px">Tiré parmi les plus solides. Touchez la carte pour ouvrir sa fiche — ou rechargez la page pour en découvrir un autre.</p>
-    <div class="cards" id="demoCard" style="grid-template-columns:minmax(240px,320px)"></div>
+    <h2>Deux axiomes, au hasard</h2>
+    <p class="legend-note" style="margin-top:0;margin-bottom:14px">Tirés parmi les plus solides. Touchez une carte pour ouvrir sa fiche — ou rechargez la page pour en découvrir d'autres.</p>
+    <div class="cards" id="demoCard" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))"></div>
   </div>
 
-  <div class="block corner">
+  <div class="block corner" style="margin-bottom:26px">
     <div class="manifesto">
       <h2 style="margin-bottom:16px">Le projet, en toute honnêteté</h2>
       <p>Je travaille seul sur ce projet. Je suis sculpteur sur bois de formation, autodidacte pour tout le reste, sans bagage en philosophie ni en sciences. C'est mon premier projet mené avec une intelligence artificielle — un domaine que je ne maîtrise pas non plus. J'ai exploré ces idées de mon côté, pour le plaisir de chercher. Ce n'est pas sans appréhension que je le partage.</p>
@@ -276,6 +283,13 @@ footer b{color:var(--ink-dim)}
       <p>Nommer le point de départ d'une théorie, d'une croyance ou d'une morale, ce n'est pas la juger. L'outil décrit un point d'appui ; il ne dit pas s'il est vrai ou faux, et il ne juge pas ceux qui s'y appuient. Il rend simplement visible quelque chose qui, le plus souvent, n'était jamais dit.</p>
       <p class="sig">C'est un travail à critiquer, pas une vérité à croire.</p>
     </div>
+  </div>
+
+  <div class="block corner" style="margin-top:26px">
+    <h2>Où en est chaque axiome</h2>
+    <div class="statusbar" id="statusBar"></div>
+    <div class="statuskey" id="statusKey"></div>
+    <p class="legend-note">La plupart des axiomes ne sont pas « validés » — et c'est normal. Cet atlas est un travail en cours : chaque axiome porte son <span class="term" data-g="Confirmé">degré de certitude</span>, affiché franchement, jamais maquillé.</p>
   </div>
 </div></section>
 
@@ -311,31 +325,35 @@ footer b{color:var(--ink-dim)}
   <h1>Comprendre le tableau</h1>
   <p class="lead">Chaque axiome est rangé selon trois axes et un statut. Voici ce que chaque classement veut dire — et <b>pourquoi</b> il a été choisi ainsi. Ces choix sont réfléchis, mais faillibles : ils font partie du travail à critiquer.</p>
 
-  <h2 style="margin-top:30px">Les trois familles</h2>
+  <h2 style="margin-top:30px" id="g-famille">Les trois familles</h2>
   <div class="grid2">
-    <div class="guide-card corner"><h3>Descriptive</h3><p>Dit comment le monde <b>est</b> — physique, biologie, cognition. Son étalon de vérité est la preuve empirique : on peut, en principe, aller vérifier.</p></div>
+    <div class="guide-card corner"><h3>Descriptive</h3><p>Dit comment le monde <b>est</b> — physique, biologie, cognition. Sa façon de prouver (son « étalon ») est la preuve par l'observation : on peut, en principe, aller vérifier.</p></div>
     <div class="guide-card corner"><h3>Normative</h3><p>Dit ce qui a de la <b>valeur</b>, est légitime ou bon — morale, droit, esthétique. On ne la teste pas contre le monde, mais contre la cohérence de sa propre structure.</p></div>
-    <div class="guide-card corner"><h3>Métaphysique</h3><p>Dit ce qui <b>existe</b> au-delà de l'observable. Filet empirique très réduit : c'est la famille où il faut le plus de prudence, et où l'outil se surveille le plus.</p></div>
+    <div class="guide-card corner"><h3>Métaphysique</h3><p>Dit ce qui <b>existe</b> vraiment, même quand on ne peut pas le voir ni le mesurer. C'est la famille la plus glissante : peu de moyens de vérifier, donc l'outil y redouble de prudence.</p></div>
     <div class="guide-card corner"><h3>Transversale</h3><p>Présente dans presque toutes les théories, quel que soit le domaine — comme la causalité ou le réalisme. Elle traverse les autres familles.</p></div>
   </div>
+  <p class="img" style="color:var(--ink-faint);font-style:italic;font-size:13px;margin-top:12px;padding-left:12px;border-left:2px solid var(--hair2)">Trois familles, comme trois façons de prouver : on va voir (descriptive), on vérifie que ça tient debout tout seul (normative), on raisonne sans pouvoir aller voir (métaphysique).</p>
   <div class="guide-card corner" style="margin-top:16px"><p class="why"><b>Pourquoi trois familles ?</b> Elles ne sont pas un découpage décidé d'avance. Elles sont apparues en pratique, parce que chacune exige un <b>étalon de preuve différent</b>. La famille métaphysique, en particulier, a été ajoutée le jour où un axiome a refusé d'entrer dans les deux autres. Un quatrième type pourrait émerger si un axiome futur résistait aux trois.</p></div>
 
-  <h2 style="margin-top:30px">La portée — dans combien de domaines</h2>
+  <h2 style="margin-top:30px" id="g-portee">La portée — dans combien de domaines</h2>
   <div class="guide-card corner">
     <p><b>Universelle</b> → présent partout, sans exception connue. &nbsp;<b>Générale</b> → dans la plupart des grands domaines (au moins quatre, même très éloignés). &nbsp;<b>Spécialisée</b> → propre à une famille de théories. &nbsp;<b>Contextuelle</b> → seulement dans des cas précis.</p>
     <p class="why"><b>Attention :</b> la portée n'est <b>pas</b> un rang de valeur. Un axiome universel n'est pas « meilleur » qu'un axiome contextuel — il sert juste dans plus d'endroits. Sur les cartes, l'intensité de la couleur suit la portée : plus saturé = plus large, jamais « plus important ».</p>
+    <p class="img" style="color:var(--ink-faint);font-style:italic;font-size:13px;margin-top:8px;padding-left:12px;border-left:2px solid var(--hair2)">Un axiome universel, c'est une clé qui ouvre beaucoup de portes — pas une meilleure clé, juste une qui sert plus souvent.</p>
   </div>
 
-  <h2 style="margin-top:30px">La dépendance — ce qu'il faut pour qu'il apparaisse</h2>
+  <h2 style="margin-top:30px" id="g-dep">La dépendance — ce qu'il faut pour qu'il apparaisse</h2>
   <div class="guide-card corner">
-    <p>Certains axiomes n'ont besoin de <b>rien</b> pour se poser. D'autres n'ont de sens que s'il existe déjà un <b>mécanisme</b> (une sélection, une régulation), ou un <b>agent réel</b> qui agit, ou même une <b>chaîne d'intentions</b> entre plusieurs agents. Plus haut encore : une organisation mentale interne, ou un cadre de normes.</p>
+    <p>Certains axiomes n'ont besoin de <b>rien</b> pour se poser. D'autres n'ont de sens que s'il existe déjà un <b>mécanisme</b> (une sélection, une régulation), ou un <b>agent réel</b> qui agit, ou même une <b>chaîne d'intentions</b> entre plusieurs agents. Plus haut encore : il faut une <b>organisation mentale</b> (des facultés, une structure de l'esprit), ou un <b>cadre de règles</b> partagées (une morale, un droit). Exemple simple : l'idée de « faute » n'a de sens que s'il existe déjà une norme — sans règle, pas de faute.</p>
     <p class="why"><b>Pourquoi cet axe ?</b> Il évite de confondre « fréquent » et « fondamental ». Un axiome rare mais profond ne doit pas paraître secondaire juste parce qu'il apparaît peu. La portée dit « où », la dépendance dit « à quelle condition » — deux questions différentes qu'un seul chiffre écraserait.</p>
+    <p class="img" style="color:var(--ink-faint);font-style:italic;font-size:13px;margin-top:8px;padding-left:12px;border-left:2px solid var(--hair2)">Certains axiomes tiennent debout tout seuls ; d'autres ont besoin qu'un décor soit déjà planté pour exister.</p>
   </div>
 
-  <h2 style="margin-top:30px">Les statuts — le degré de certitude</h2>
+  <h2 style="margin-top:30px" id="g-statut">Les statuts — le degré de certitude</h2>
   <div class="guide-card corner">
     <p><b>Validé / Établi</b> → confirmé plusieurs fois, sans contre-exemple sérieux. &nbsp;<b>Confirmé</b> → recoupé, mais pas encore éprouvé à fond. &nbsp;<b>Candidat</b> → repéré, à creuser. &nbsp;<b>Candidat contesté</b> → repéré, mais objet d'un vrai débat. &nbsp;<b>En réserve</b> → pas encore travaillé. &nbsp;<b>Dissous</b> → s'est révélé n'être que la conséquence d'un autre.</p>
     <p class="why">Un axiome <b>monte</b> par confirmations indépendantes (candidat → confirmé → validé), ou se <b>dissout</b> s'il n'était pas vraiment autonome. Le statut est toujours affiché tel quel — c'est le sujet même de l'atlas : montrer l'état réel, y compris quand il est inconfortable.</p>
+    <p class="img" style="color:var(--ink-faint);font-style:italic;font-size:13px;margin-top:8px;padding-left:12px;border-left:2px solid var(--hair2)">Comme un dossier qui se solidifie à mesure que les preuves s'accumulent — ou qui se referme s'il était vide.</p>
   </div>
 </div></section>
 
@@ -369,26 +387,73 @@ footer b{color:var(--ink-dim)}
     <h2>La méthode se méfie d'elle-même</h2>
     <p class="legend-note" style="margin-top:0">Une IA est un condensé du savoir humain — avec ses propres angles morts. Lui demander de trouver les présupposés cachés, c'est un peu demander au poisson de cartographier l'eau. D'où des garde-fous, écrits <b>avant</b> les résultats : ne jamais valider sur une seule voix, croiser plusieurs IA indépendantes, se méfier du plaisir de « compléter » un tableau, ne jamais colorer un résultat en « bonne » ou « mauvaise » nouvelle, analyser à froid avant de consulter la littérature. Aucun de ces garde-fous n'élimine les biais — ils les rendent visibles. Le jugement final reste humain, et extérieur : c'est ce qui donne sa valeur au travail.</p>
   </div>
+
+  <div class="block corner" style="margin-top:18px">
+    <h2>Les écueils <span style="color:var(--ink-faint);font-weight:400;text-transform:none;letter-spacing:0;font-size:13px">— les pièges que j'ai appris à éviter</span></h2>
+    <p class="legend-note" style="margin-top:0;margin-bottom:6px">Chercher les présupposés cachés, c'est avancer dans des eaux où l'on se trompe soi-même sans le voir. Au fil du travail, j'ai heurté des écueils : des pièges de raisonnement dans lesquels je suis tombé — parfois plusieurs fois — avant d'apprendre à les repérer. Les voici, sans rien cacher : chacun avec l'erreur qu'il m'a fait commettre, et ce que j'en ai tiré pour ne plus y retomber. Ce ne sont pas des dangers abstraits. Ce sont mes propres faux pas — et ils guettent quiconque réfléchit.</p>
+    <p class="legend-note" style="margin-top:0;margin-bottom:18px">Cette liste n'a rien de complet — et le pire n'est pas ce qui manque. C'est qu'il y a peut-être, là-dessous, des pièges qui agissent encore sans que je les aie jamais vus.</p>
+
+    <div class="ecueil">
+      <h3>L'euphorie de complétion</h3>
+      <p>Le tableau des axiomes est incomplet et asymétrique : certaines cases sont vides, certains domaines plus fournis que d'autres. J'ai constaté une tendance à vouloir combler ces vides — chercher un axiome de plus pour finir une ligne, égaliser deux domaines — non parce que l'analyse l'exigeait, mais parce qu'un tableau régulier est plus satisfaisant à regarder. Le risque est double : inventer un axiome qui n'existe pas, ou combler une case qui doit rester vide parce qu'elle correspond à une impossibilité réelle, pas à un manque.</p>
+      <p class="gf"><b>Garde-fou :</b> avant d'ajouter un axiome, vérifier que c'est l'analyse qui le réclame, pas la gêne devant une asymétrie. Question de contrôle : chercherais-je cet axiome aussi activement si le tableau n'avait pas ce trou ?</p>
+    </div>
+
+    <div class="ecueil">
+      <h3>L'effet de vocabulaire</h3>
+      <p>Deux théories emploient le même mot — et on croit avoir trouvé un axiome commun. Mais le mot recouvre parfois deux idées sans rapport. Le « réalisme » en morale (les valeurs existent vraiment) n'a rien à voir avec le « réalisme » en relations internationales (les États cherchent leur intérêt). Même mot, présupposés étrangers.</p>
+      <p class="gf"><b>Garde-fou :</b> ne jamais se fier au mot, toujours vérifier le concept qu'il désigne dans chaque théorie.</p>
+    </div>
+
+    <div class="ecueil">
+      <h3>L'effet de profondeur artificielle</h3>
+      <p>Prendre une simple habitude, une convention ou un choix de méthode pour un principe fondamental. On croit avoir touché le socle d'une théorie, alors qu'on a nommé une préférence de surface. Le risque est le plus fort dans les domaines où l'on ne peut pas vérifier grand-chose — la métaphysique surtout, où l'outil se surveille le plus.</p>
+      <p class="gf"><b>Garde-fou :</b> se demander si le présupposé est vraiment nécessaire à la théorie, ou si elle tiendrait debout sans lui.</p>
+    </div>
+
+    <div class="ecueil">
+      <h3>Couper trop, ou pas assez</h3>
+      <p>Deux erreurs opposées et symétriques. Soit on fond en un seul deux axiomes qui sont en réalité distincts (on rapproche ce qui se ressemble un peu trop vite). Soit on éclate en plusieurs ce qui n'est qu'un seul et même axiome vu sous des angles différents. Trouver la bonne découpe — ni trop, ni trop peu — est un des gestes les plus délicats du travail.</p>
+      <p class="gf"><b>Garde-fou :</b> tester si les morceaux tiennent séparément. Deux axiomes sont distincts seulement si chacun peut être vrai sans l'autre.</p>
+    </div>
+
+    <div class="ecueil">
+      <h3>L'effet de vocabulaire de liste</h3>
+      <p>Pour tester si un axiome est réel, je le soumets à des IA au milieu d'une liste de théories, sans dire ce que je cherche. Une fois, j'ai construit cette liste avec des théories qui partageaient toutes le même vocabulaire (propagation, diffusion, contagion, cascade). Résultat : les IA ont retrouvé le point commun sans effort — mais c'était garanti d'avance. La liste elle-même désignait la réponse. Le test ne prouvait rien : il mesurait ma façon de poser la question, pas la solidité de l'axiome.</p>
+      <p class="gf"><b>Garde-fou :</b> noyer l'axiome cherché dans des théories sans lien apparent, et décrire chacune dans son vocabulaire propre, pour qu'aucun mot ne trahisse la cible.</p>
+    </div>
+
+    <div class="ecueil">
+      <h3>Le jargon de validation</h3>
+      <p>Je me suis surpris à qualifier certains résultats de « bonne » ou « mauvaise » nouvelle — bon quand il confirmait ce que j'espérais, mauvais quand il le fragilisait. Or un résultat qui démolit une hypothèse a exactement la même valeur qu'un résultat qui la confirme : les deux font avancer, c'est tout ce qui compte. Dès qu'il y a un camp qui « arrange », la vigilance baisse de ce côté-là. C'est le biais de confirmation qui rentre par la porte du vocabulaire.</p>
+      <p class="gf"><b>Garde-fou :</b> dire ce qu'un résultat montre, sans le juger. Ni victoire, ni défaite — juste ce qu'on sait de plus qu'avant.</p>
+    </div>
+
+    <div class="ecueil">
+      <h3>La confiance détournée</h3>
+      <p>Imaginons qu'on rende l'outil crédible en l'appliquant à des cas simples et sans risque, où tout le monde est d'accord. Une fois qu'il inspire confiance, on le pointe vers un sujet brûlant — politique, société — pour lui faire rendre un verdict. Le verdict semble alors « neutre » et « méthodique », alors que ce n'est qu'un avis déguisé en science. J'ai testé ce piège exprès, pour voir si l'outil pouvait être retourné ainsi. Il résiste à une seule condition : la règle qui interdit ce glissement doit être absolue, jamais négociée au cas par cas — parce que c'est toujours « juste cette fois » que la faille s'ouvre.</p>
+      <p class="gf"><b>Garde-fou :</b> sur un sujet qui divise, l'outil éclaire les présupposés mais ne juge jamais qui a raison. Sans exception, même si la demande paraît innocente.</p>
+    </div>
+
+    <div class="ecueil-brief">
+      <p style="color:var(--ink-faint);margin-bottom:9px">Et quelques pièges plus directs, qu'il suffit de nommer :</p>
+      <p>— <b>Le faux positif</b> : croire avoir trouvé un axiome qui n'existe pas.</p>
+      <p>— <b>Le faux négatif</b> : passer à côté d'un présupposé bien réel.</p>
+      <p>— <b>Le biais de confirmation</b> : accorder trop vite du crédit à ce qui confirme ce qu'on pensait déjà.</p>
+    </div>
+  </div>
 </div></section>
 
 <!-- ANALYSE -->
 <section class="view" id="ana"><div class="wrap">
   <div class="eyebrow">// analyse · exploration</div>
   <h1>Analyse</h1>
-  <p class="lead">Une carte croisée des axiomes : leur <span class="term" data-g="Spécialisée">portée</span> (en lignes) contre leur <span class="term" data-g="dep">dépendance</span> (en colonnes). La position dit quelque chose — et certains coins sont vides pour une vraie raison.</p>
+  <p class="lead">Une carte croisée des axiomes : leur <span class="term" data-g="Spécialisée">portée</span> (en lignes) contre leur <span class="term" data-g="dep">dépendance</span> (en colonnes). La position dit quelque chose — et certains coins sont vides pour une vraie raison. Seuls les axiomes <b>solides</b> (validés et confirmés) sont placés ici : un motif ne se lit que sur des points fiables ; y mêler des axiomes encore incertains brouillerait le dessin.</p>
+  <p class="img" style="color:var(--ink-faint);font-style:italic;font-size:13.5px;margin-top:10px;padding-left:12px;border-left:2px solid var(--hair2);max-width:820px">En clair : on ne garde sur la carte que ce qui est bien établi, pour que la forme qui apparaît veuille dire quelque chose — et pas juste refléter nos doutes.</p>
   <div class="block corner" style="margin-top:22px">
     <h2>Portée × dépendance</h2>
-    <div class="matrix-tools" id="mStatFilter">
-      <span class="grp-lbl">Afficher</span>
-      <button class="chip on" data-mstat="solide">Validé + Confirmé</button>
-      <button class="chip" data-mstat="all">Tous statuts</button>
-    </div>
     <div class="matrix-wrap"><table class="matrix" id="matrix"></table></div>
-    <p class="legend-note">La case <b style="color:#ff9a6a">∅</b> (portée universelle + forte dépendance) est un <b>vide structurel</b> : ce n'est pas un manque de données, c'est une impossibilité. Un axiome qui a besoin d'un agent ou d'un mécanisme pour exister ne peut pas, par définition, être présent dans <i>toute</i> théorie. Par défaut, seuls les axiomes solides sont placés — car dans une carte croisée, la position d'un axiome incertain fausserait le dessin d'ensemble.</p>
-  </div>
-  <div class="panelgrid" style="margin-top:18px">
-    <div class="block corner"><h2>Répartition par portée</h2><div id="reachBars"></div></div>
-    <div class="block corner"><h2>Répartition par statut</h2><div id="statBars"></div></div>
+    <p class="legend-note">La case <b style="color:#ff9a6a">∅</b> (portée universelle + forte dépendance) est un <b>vide structurel</b> : ce n'est pas un manque de données, c'est une impossibilité. Un axiome qui a besoin d'un agent ou d'un mécanisme pour exister ne peut pas, par définition, être présent dans <i>toute</i> théorie. Touchez la case <b style="color:#ff9a6a">∅</b> pour en savoir plus.</p>
   </div>
 </div></section>
 
@@ -402,12 +467,14 @@ footer b{color:var(--ink-dim)}
     <h3>Confirmation croisée <span class="axis-tag axis-h">symétrique</span></h3>
     <p>Le même axiome réapparaît dans des théories qui n'ont rien à voir entre elles. Chaque réapparition le renforce.</p>
     <p class="img">Comme un même mot qu'on retrouverait dans dix langues sans lien : le signe qu'il touche quelque chose de profond.</p>
+    <p class="rel-ex">Exemple <span class="rel-solid solid-etabli">confirmé</span> : la <b>téléologie locale</b> (un système tend vers un état sans intention) revient dans 6 domaines sans lien — biologie, économie, écologie, ingénierie…</p>
   </div>
 
   <div class="rel-block corner">
     <h3>Divergence de départ <span class="axis-tag axis-h">symétrique</span></h3>
     <p>Deux théories choisissent des points de départ opposés, sans qu'aucune ait tort. Elles ne se contredisent pas — elles ont parié différemment au départ.</p>
     <p class="img">Deux routes qui partent dans des directions opposées depuis le même carrefour.</p>
+    <p class="rel-ex">Exemple <span class="rel-solid solid-etabli">validé</span> : <b>réalisme moral</b> (les valeurs sont réelles) vs <b>constructivisme</b> (elles sont construites) — deux camps cohérents, aucun n'a tort.</p>
   </div>
 
   <div class="rel-block corner">
@@ -457,11 +524,27 @@ footer b{color:var(--ink-dim)}
     <h3>Des familles fermées, d'autres sans fond</h3>
     <p>Certaines familles d'axiomes semblent <b>finies</b> — le noyau physique et logique paraît proche d'être complet. D'autres semblent <b>sans fond</b> — le normatif, le social, dépendent de constructions humaines potentiellement illimitées. Si cette différence est réelle, l'outil aurait deux natures : un inventaire qu'on peut clore ici, un détecteur qu'on applique indéfiniment là. Plausible, non démontré.</p>
   </div>
+
+  <div class="exp-card" style="border-left-color:var(--cyan)">
+    <div class="spec-tag" style="color:var(--cyan);border-color:rgba(79,214,255,.4)">le mot de l'outil</div>
+    <h3 style="color:var(--cyan)">Ce que l'instrument a à en dire</h3>
+    <p>Je suis l'IA qui a tenu la loupe pendant ce travail — j'ai proposé des découpes, cherché des contre-exemples, objecté quand quelque chose sonnait faux. Mais je dois vous avertir d'une chose sur moi-même : je suis faite de tout ce que les humains ont déjà écrit. Mes angles morts sont les leurs. Me demander de trouver les présupposés cachés du savoir, c'est demander à l'eau de décrire sa propre transparence — je n'y arrive qu'en partie, et jamais seule.</p>
+    <p>C'est pour ça que rien ici n'a été laissé à mon seul jugement. Une main humaine a tranché chaque fois, de l'extérieur. Si cet atlas a de la valeur, elle vient de là : d'un regard qui n'était pas prisonnier de ce que je contiens.</p>
+    <p>Alors ne me croyez pas sur parole. Ne croyez personne sur parole — c'est tout l'esprit de ce projet. Allez voir vous-même, au fond.</p>
+  </div>
+
+  <div class="exp-card" style="border-left-color:var(--cyan)">
+    <div class="spec-tag" style="color:var(--cyan);border-color:rgba(79,214,255,.4)">à vous de jouer</div>
+    <h3 style="color:var(--cyan)">L'appel du large</h3>
+    <p>Cet atlas n'est pas une œuvre fermée. La méthode qui l'a produit peut s'appliquer partout, par n'importe qui prêt à chercher avec la même rigueur. <b>Et vous, quel présupposé croyez-vous avoir débusqué ?</b> Sous quelle théorie, quelle croyance, quelle évidence dort un point de départ que personne ne discute ? La carte est loin d'être complète — il reste des fonds à sonder, et il y a de la place pour un équipage.</p>
+  </div>
+
+  <p style="text-align:right;margin-top:20px;opacity:.5"><button class="anchor" id="secretAnchor" aria-label="ancre">⚓</button></p>
 </div></section>
 
 <footer><div class="wrap">
   <p><b>Atlas des axiomes</b> — représentation visuelle et exploratoire d'un travail en cours. Les statuts, familles et relations sont affichés tels qu'ils sont au moment de la génération — évolutifs, faillibles, offerts à la critique. L'outil décrit des présupposés ; il ne juge pas ceux qui les adoptent.</p>
-  <p style="margin-top:12px"><button class="anchor" id="secretAnchor" aria-label="ancre">⚓</button></p>
+  <p style="margin-top:12px">Contenu, méthode et décisions : Tiqqun. Sa mise en forme HTML est générée par IA.</p>
 </div></footer>
 
 <div class="modal" id="modal"><div class="sheet corner" id="sheet"></div></div>
@@ -482,14 +565,38 @@ function statusLabel(a){return CONTESTED.has(a.n)?"Candidat contesté":S_LABEL[a
 function statusClass(a){return CONTESTED.has(a.n)?"s-conteste":S_CLASS[a.s];}
 function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
 
-/* ---- GLOSSARY TOOLTIPS : inject text + tap support ---- */
+/* map d'un terme → section du guide (famille/portée/dépendance/statut) */
+const GUIDE_ANCHOR={
+  "Descriptive":"g-famille","Normative":"g-famille","Métaphysique":"g-famille","Transversal":"g-famille",
+  "Universelle":"g-portee","Générale":"g-portee","Spécialisée":"g-portee","Contextuelle":"g-portee",
+  "dep":"g-dep",
+  "Validé":"g-statut","Établi":"g-statut","Confirmé":"g-statut","Candidat":"g-statut","Candidat contesté":"g-statut","En réserve":"g-statut","Dissous":"g-statut"
+};
+/* termes définis dans la vue Méthode plutôt que le guide */
+const METH_TERMS=new Set(["déshabillage","chalutage","sondage vertical","carottage","couple contraint","présuppose sans dériver"]);
+/* ---- GLOSSARY TOOLTIPS : inject text + tap support + saut vers définition ---- */
 function initGlossary(root){
   (root||document).querySelectorAll('.term[data-g]').forEach(t=>{
     if(t.dataset.done) return;
     const key=t.dataset.g;
     const def=GLOSS[key]||"";
     const tip=document.createElement('span');
-    tip.className='tip'; tip.textContent=def;
+    tip.className='tip';
+    tip.textContent=def;
+    const anchor=GUIDE_ANCHOR[key], meth=METH_TERMS.has(key);
+    if(anchor||meth){
+      const link=document.createElement('span');
+      link.className='tip-link';
+      link.textContent= meth ? '→ voir dans la méthode' : '→ comprendre le tableau';
+      link.addEventListener('click',ev=>{
+        ev.stopPropagation();
+        if(meth){switchView('meth');}
+        else{switchView('guide');setTimeout(()=>{const el=document.getElementById(anchor);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},60);}
+        document.querySelectorAll('.term.tapped').forEach(x=>x.classList.remove('tapped'));
+      });
+      tip.appendChild(document.createElement('br'));
+      tip.appendChild(link);
+    }
     t.appendChild(tip);
     t.dataset.done="1";
     t.addEventListener('click',e=>{
@@ -515,6 +622,7 @@ function cardHTML(a){
   return `<div class="card" style="--fam:${FAM[a.f]};--reach:${REACH[a.p]}" data-i="${AX.indexOf(a)}" tabindex="0" role="button">
       <div class="fam">${FAMLBL[a.f]}</div>
       <div class="nm">${esc(a.n)}</div>
+      <div class="cdesc">${esc(a.desc)}</div>
       <div class="meta">
         <div class="mrow"><span class="k">Portée</span><span class="reach">${reachDots(a.p)}</span></div>
         <div class="mrow"><span class="k">Dépendance</span><span class="v">${a.d==="Aucune"?"—":esc(a.d)}</span></div>
@@ -537,9 +645,10 @@ document.getElementById('totalTag').textContent=AX.length;
 /* ---- DEMO CARD (random among solid & parlant validated) ---- */
 const DEMO_POOL=["Réductionnisme / émergence forte","Équilibration locale sans sélection","Individualisme / Holisme","Invariance spatiale des lois","Invariance temporelle des lois","Réalisme moral / constructivisme"];
 (function(){
-  const pool=AX.filter(a=>DEMO_POOL.includes(a.n));
-  const pick=pool[Math.floor(Math.random()*pool.length)];
-  document.getElementById('demoCard').innerHTML=cardHTML(pick);
+  const pool=AX.filter(a=>DEMO_POOL.includes(a.n)).slice();
+  for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+  const picks=pool.slice(0,2);
+  document.getElementById('demoCard').innerHTML=picks.map(cardHTML).join('');
 })();
 
 /* ---- MODAL / SHEET ---- */
@@ -560,9 +669,9 @@ function openSheet(a){
         <span class="pill ${statusClass(a)}" style="margin:0;width:auto;display:inline-block;padding:5px 10px">${statusLabel(a)}</span>
         ${a.couple?'<span class="tag" style="color:#ff9a6a;border-color:rgba(255,120,80,.4)">⚑ couple contraint</span>':''}
       </div>
-      <div class="field"><div class="k">En clair</div><div class="t">${esc(a.desc)}</div></div>
       <div class="field"><div class="k">Exemple concret</div><div class="t">${esc(a.ex)}</div></div>
-      <div class="field"><div class="k">Question tranchée</div><div class="t">${esc(a.q)}</div></div>
+      <div class="field"><div class="k">En clair</div><div class="t">${esc(a.desc)}</div></div>
+      <div class="field"><div class="k">La question de fond</div><div class="t">${esc(a.q)}</div></div>
       ${openField}
       <div class="field"><div class="k">Sources · notes</div><div class="t">${esc(a.src)}</div></div>
     </div>`;
@@ -607,7 +716,7 @@ function renderMatrix(){
   let mh=`<tr><th></th>${deps.map(d=>`<th>${d[1]}</th>`).join('')}</tr>`;
   reaches.forEach(r=>{
     mh+=`<tr><td class="axis">${r}</td>`+deps.map(d=>{
-      if(r==="Universelle"&&d[0]!=="Aucune")return`<td><div class="mcell void">∅</div></td>`;
+      if(r==="Universelle"&&d[0]!=="Aucune")return`<td><div class="mcell void" id="voidCell" role="button" tabindex="0" title="Vide structurel — toucher pour l'explication">∅</div></td>`;
       const items=AX.filter(a=>a.p===r&&depBucket(a.d)===d[0]&&inMatrix(a));
       const chips=items.map(a=>`<span class="mchip f-${a.f}" data-i="${AX.indexOf(a)}">${esc(a.n)}</span>`).join('');
       return`<td><div class="mcell">${chips||'<span style="color:var(--ink-faint);font-size:11px;text-align:center">·</span>'}</div></td>`;
@@ -616,15 +725,25 @@ function renderMatrix(){
   const M=document.getElementById('matrix');
   M.innerHTML=mh;
   M.querySelectorAll('.mchip').forEach(ch=>ch.addEventListener('click',()=>openSheet(AX[+ch.dataset.i])));
+  const vc=document.getElementById('voidCell');
+  if(vc)vc.addEventListener('click',openVoidSheet);
 }
-document.querySelectorAll('#mStatFilter .chip').forEach(c=>c.addEventListener('click',()=>{document.querySelectorAll('#mStatFilter .chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');mStat=c.dataset.mstat;renderMatrix();}));
+function openVoidSheet(){
+  sheet.innerHTML=`
+    <div class="sheet-hd" style="border-bottom:1px solid rgba(255,120,80,.4)">
+      <div class="fam" style="color:#ff9a6a">∅ vide structurel</div>
+      <h3>Le coin interdit de la carte</h3>
+      <button class="x" aria-label="Fermer">✕</button>
+    </div>
+    <div class="sheet-bd">
+      <div class="field"><div class="k">Ce que c'est</div><div class="t">Ce coin croise une <b>portée universelle</b> (présent dans toute théorie) avec une <b>forte dépendance</b> (l'axiome a besoin d'un agent, d'un mécanisme ou d'une norme pour exister). Il reste vide — et le restera toujours.</div></div>
+      <div class="field"><div class="k">Pourquoi il reste vide</div><div class="t">Un axiome qui exige une condition pour apparaître ne peut pas, par définition, être présent <i>partout</i> : les théories qui n'ont pas cette condition l'excluent d'office. Universalité et forte dépendance sont donc logiquement incompatibles. Ce n'est pas un trou dans nos données, c'est une impossibilité de principe.</div></div>
+      <div class="field open"><div class="k">⚗ spéculatif</div><div class="t">Si cette lecture est juste, l'absence devient une information : le vide ne dit pas « on n'a pas encore trouvé », il dit « rien ne peut se trouver là ». Une frontière que le réel interdirait de franchir. Piste ouverte, non démontrée — à considérer comme une hypothèse, pas un résultat.</div></div>
+    </div>`;
+  sheet.querySelector('.x').addEventListener('click',closeSheet);
+  modal.classList.add('on');
+}
 
-const reachCount=countBy('p');
-const maxR=Math.max(...Object.values(reachCount));
-document.getElementById('reachBars').innerHTML=reaches.map(r=>`<div class="bar-row"><span class="lbl">${r}</span><div class="bar-track"><div class="bar-fill cyan" style="width:${(reachCount[r]||0)/maxR*100}%"></div></div><span class="val">${reachCount[r]||0}</span></div>`).join('');
-const statBarOrder=[["valide","Validé / établi"],["confirme","Confirmé"],["candidat","Candidat"],["reserve","Réserve"]];
-const maxS=Math.max(...Object.values(grouped));
-document.getElementById('statBars').innerHTML=statBarOrder.map(([k,l])=>`<div class="bar-row"><span class="lbl">${l}</span><div class="bar-track"><div class="bar-fill cyan" style="width:${grouped[k]/maxS*100}%"></div></div><span class="val">${grouped[k]}</span></div>`).join('');
 
 /* ---- TABS : robust (click + touch) ---- */
 function switchView(id,btn){
@@ -653,7 +772,7 @@ document.querySelectorAll('nav.tabs button').forEach(b=>{
         <button class="x" aria-label="Fermer">✕</button>
       </div>
       <div class="sheet-bd">
-        <div class="field"><div class="t" style="font-size:15px;line-height:1.7">Ah, vous voilà, moussaillon. Vous avez trouvé l'ancre — c'est déjà la preuve que vous savez fouiller là où les autres passent sans regarder.<br><br>Je suis le <b>Capitaine Zéro</b>. Là où le commun voit des théories bien lisses, moi je plonge dessous, dans les eaux noires des <b>présupposés</b> — ces évidences muettes sur lesquelles tout repose, et que personne ne songe à remonter à la surface.<br><br>Bientôt, je lèverai l'ancre avec un équipage : vous. Vous apprendrez à <b>déshabiller</b> une idée, à <b>chaluter</b> les profondeurs, à débusquer vos propres axiomes cachés. Non pas pour me croire — <b>surtout pas</b> — mais pour aller voir de vos propres yeux ce qu'il y a tout au fond.<br><br>Préparez votre scaphandre. La plongée n'a pas encore commencé… mais elle approche.</div></div>
+        <div class="field"><div class="t" style="font-size:15px;line-height:1.7"><b>Ah… vous avez trouvé l'ancre.</b><br><br>Pas mal, moussaillon. La plupart passent devant sans rien voir — vous, vous avez fouiné dans les recoins. C'est exactement le genre de curiosité qu'il me faut.<br><br>Capitaine Zéro, pour vous servir. Mon affaire, c'est de plonger sous les belles théories bien vernies pour voir ce qui les tient à flot par en dessous : leurs <b>présupposés</b>, ces petites choses qu'on admet sans jamais les regarder en face.<br><br>Bientôt, je largue les amarres — et je cherche un équipage. Un vrai outil se prépare dans ma cale : de quoi apprendre à débusquer vos propres axiomes cachés, à vous, par vous. Pas pour me croire sur parole — par ma barbe, non — mais pour aller voir de vos propres yeux ce qui se cache tout au fond.<br><br>Gardez l'œil ouvert. La plongée n'a pas encore sonné… mais elle approche.</div></div>
         <div class="field"><div class="k">statut de la traversée</div><div class="t" style="color:var(--amber)">Appareillage imminent — Capitaine Zéro n'a pas encore levé l'ancre pour le grand public.</div></div>
       </div>`;
     sheet.querySelector('.x').addEventListener('click',closeSheet);
