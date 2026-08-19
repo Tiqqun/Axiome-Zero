@@ -29,6 +29,42 @@ nav.tabs{display:flex;gap:2px;flex-wrap:wrap}
 nav.tabs button{background:none;border:none;color:var(--ink-dim);cursor:pointer;font-family:inherit;font-size:12px;letter-spacing:.13em;text-transform:uppercase;padding:11px 12px;border-bottom:2px solid transparent;transition:.15s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 nav.tabs button:hover{color:var(--ink)}
 nav.tabs button.on{color:var(--cyan);border-bottom-color:var(--cyan)}
+nav.tabs button.exp-zone{color:var(--amber-dim)}
+nav.tabs button.exp-zone:hover{color:var(--amber)}
+nav.tabs button.exp-zone.on{color:var(--amber);border-bottom-color:var(--amber)}
+/* --- Page Nature des axiomes --- */
+.nat-warn{border:1px solid var(--hair2);border-left:3px solid var(--amber);background:linear-gradient(180deg,var(--panel),var(--panel2));border-radius:12px;padding:15px 20px;margin:18px 0 26px}
+.nat-warn .t{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:7px;font-family:"JetBrains Mono",monospace}
+.nat-warn p{color:var(--ink-dim);font-size:14px;line-height:1.6}
+.nat-warn b{color:var(--ink)}
+.nat-tabs{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 22px}
+.nat-tabs button{flex:1;min-width:190px;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--hair2);border-radius:12px;color:var(--ink-dim);cursor:pointer;font-family:inherit;padding:14px 16px;text-align:left;transition:.18s}
+.nat-tabs button:hover{color:var(--ink)}
+.nat-tabs button .lbl{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:700;margin-bottom:4px;text-transform:none;letter-spacing:0}
+.nat-tabs button .lbl .ic{font-size:18px}
+.nat-tabs button .sub{font-size:12px;line-height:1.4;color:var(--ink-faint);text-transform:none;letter-spacing:0}
+.nat-tabs button.on .sub{color:var(--ink-dim)}
+.nat-tabs button[data-nat="carrefour"].on{border-color:#79e0a4;box-shadow:0 0 0 1px #79e0a4,0 0 20px rgba(121,224,164,.14)}
+.nat-tabs button[data-nat="mur"].on{border-color:#ff8f6b;box-shadow:0 0 0 1px #ff8f6b,0 0 20px rgba(255,143,107,.14)}
+.nat-tabs button[data-nat="porte"].on{border-color:#c9a6ff;box-shadow:0 0 0 1px #c9a6ff,0 0 20px rgba(201,166,255,.14)}
+.nat-tabs button[data-nat="carrefour"] .ic{color:#79e0a4}
+.nat-tabs button[data-nat="mur"] .ic{color:#ff8f6b}
+.nat-tabs button[data-nat="porte"] .ic{color:#c9a6ff}
+.nat-explain{border:1px solid var(--hair2);border-radius:14px;padding:20px 22px;margin-bottom:22px;background:linear-gradient(180deg,var(--panel),var(--panel2))}
+.nat-explain h3{font-size:18px;margin-bottom:4px;display:flex;align-items:center;gap:9px;letter-spacing:0;text-transform:none}
+.nat-explain .role{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px;font-family:"JetBrains Mono",monospace}
+.nat-explain p{color:var(--ink-dim);line-height:1.66;max-width:760px}
+.nat-explain .img{display:block;margin-top:10px;color:var(--ink-faint);font-style:italic;font-size:13.5px}
+.nat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:13px}
+.nat-card{border:1px solid var(--hair);border-radius:12px;padding:15px;background:linear-gradient(180deg,var(--panel),var(--panel2));position:relative;overflow:hidden}
+.nat-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px}
+.nat-card.carrefour::before{background:#79e0a4}
+.nat-card.mur::before{background:#ff8f6b}
+.nat-card.porte::before{background:#c9a6ff}
+.nat-card .fam{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px;font-family:"JetBrains Mono",monospace}
+.nat-card .nm{font-size:15px;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:7px}
+.nat-card .ds{font-size:13px;color:var(--ink-dim);line-height:1.5;margin-bottom:10px}
+.nat-card .why{font-size:12px;line-height:1.5;padding-top:9px;border-top:1px solid var(--hair);color:var(--ink-dim)}
 
 section.view{display:none;padding:38px 0 20px}
 section.view.on{display:block;animation:fade .3s}
@@ -176,6 +212,22 @@ h2{font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;c
 .exp-card p{font-size:13.5px;color:var(--ink-dim);line-height:1.62}
 .spec-tag{display:inline-block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);border:1px solid rgba(255,181,71,.4);padding:2px 7px;border-radius:5px;margin-bottom:8px;font-family:"JetBrains Mono",monospace}
 
+/* --- Cheminement 0 --- */
+.chem-step{margin-top:24px}
+.chem-tag{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.chem-num{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;color:var(--void);background:var(--cyan);padding:3px 9px;border-radius:5px;font-weight:700}
+.chem-meth,.chem-meth-plain{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);background:rgba(79,214,255,.10);border:1px solid var(--cyan-dim);border-radius:5px;padding:4px 11px}
+.chem-meth{border-bottom:1px solid var(--cyan-dim)}
+.chem-h{font-size:17px;font-weight:600;letter-spacing:.01em;color:var(--ink);margin:8px 0 6px;text-transform:none}
+.chem-note{max-width:760px;color:var(--ink-dim);font-size:14px;line-height:1.6;margin-bottom:10px}
+.chem-note b{color:var(--ink)}
+.chem-fig{padding:14px 12px}
+.chem-fig svg{display:block;width:100%;height:auto}
+.tclose-chem{margin-top:26px;border-left:3px solid var(--cyan-dim)}
+.chem-close-t{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan-dim);margin-bottom:8px;font-family:"JetBrains Mono",monospace}
+.tclose-chem p{color:var(--ink-dim);font-size:14.5px;line-height:1.68}
+.tclose-chem b{color:var(--ink)}
+
 .ecueil{padding:16px 0;border-bottom:1px solid var(--hair)}
 .ecueil:last-of-type{border-bottom:none}
 .ecueil h3{font-size:15px;color:var(--ink);margin-bottom:7px;letter-spacing:.01em}
@@ -241,15 +293,17 @@ footer b{color:var(--ink-dim)}
 <div class="bgfx"></div>
 
 <div class="topbar"><div class="wrap">
-  <div class="brand"><span class="dot"></span>Axiome Zéro <small>· Atlas v0.6</small></div>
+  <div class="brand"><span class="dot"></span>Axiome Zéro <small>· Atlas v0.8</small></div>
   <nav class="tabs" id="tabs">
     <button class="on" data-view="dash">Accueil</button>
+    <button data-view="chem">Cheminement 0</button>
     <button data-view="coll">Collection</button>
+    <button data-view="nat">Nature des axiomes</button>
     <button data-view="guide">Comprendre</button>
     <button data-view="meth">La méthode</button>
-    <button data-view="ana">Analyse</button>
     <button data-view="rel">Relations</button>
-    <button data-view="exp">Expérimental</button>
+    <button class="exp-zone" data-view="exp">Expérimental</button>
+    <button class="exp-zone" data-view="axio">Axiographie</button>
   </nav>
 </div></div>
 
@@ -258,7 +312,7 @@ footer b{color:var(--ink-dim)}
   <div class="hero">
     <div class="eyebrow">// axiome zéro · atlas des axiomes</div>
     <h1>Bienvenue dans l'Atlas des axiomes</h1>
-    <p class="lead">Toute théorie prend sa source dans un <span class="term" data-g="dep">présupposé</span> — une idée admise sans preuve. Certaines l'affichent franchement ; d'autres le gardent enfoui, parfois sans même en avoir conscience. La <b>méthode Axiome Zéro</b>, aidée par les IA, tente de les retrouver et les rassemble dans l'Atlas des axiomes. Observez-les, explorez-les : ce sont des choses rarement dites, mais toujours supposées.</p>
+    <p class="lead">Toute théorie prend sa source dans un <span class="term" data-g="dep">présupposé</span> — une idée admise sans preuve. Certaines l'affichent franchement ; d'autres le gardent enfoui, parfois sans même en avoir conscience. La <b>méthode Axiome Zéro</b>, aidée par les IA, tente de les retrouver et les rassemble dans l'Atlas des axiomes. Observez-les, explorez-les : ce sont des choses rarement dites, mais toujours supposées. <b>Enfin, presque toujours : le filet a parfois ramené des faits déjà démontrés, qui ne sont pas des présupposés du tout. Cette surprise a sa propre page.</b></p>
   </div>
 
   <div class="block corner" style="margin-bottom:26px">
@@ -289,7 +343,97 @@ footer b{color:var(--ink-dim)}
     <h2>Où en est chaque axiome</h2>
     <div class="statusbar" id="statusBar"></div>
     <div class="statuskey" id="statusKey"></div>
-    <p class="legend-note">La plupart des axiomes ne sont pas « validés » — et c'est normal. Cet atlas est un travail en cours : chaque axiome porte son <span class="term" data-g="Confirmé">degré de certitude</span>, affiché franchement, jamais maquillé.</p>
+    <p class="legend-note">La plupart des axiomes ne sont pas « validés » — et c'est normal. Cet atlas est un travail en cours : chaque axiome porte son <span class="term" data-g="Confirmé">degré de confirmation par la méthode</span>, affiché franchement.</p>
+  </div>
+</div></section>
+
+<!-- CHEMINEMENT 0 -->
+<section class="view" id="chem"><div class="wrap">
+  <div class="eyebrow">// cheminement 0 · un exemple du travail d'Axiome Zéro</div>
+  <h1>Sous la relativité restreinte</h1>
+  <p class="lead">La relativité restreinte décrit comment l'espace et le temps se déforment près de la vitesse de la lumière. C'est une théorie <b>magnifique</b>, vérifiée mille fois — personne ne la remet en cause ici.</p>
+  <p class="lead" style="margin-top:12px">Mais comme toute pensée, même la plus rigoureuse, elle s'appuie sur quelques idées qu'elle ne démontre pas : elle les tient pour acquises, sans les dire. Ce n'est pas une faiblesse — c'est la condition normale de toute théorie. Un physicien part de ses évidences comme chacun de nous part des siennes.</p>
+  <p class="lead" style="margin-top:12px">Ce qui suit montre le travail pas à pas : on retrouve ces points d'appui, et quand l'un d'eux en cache un autre plus profond, on descend d'un cran. À chaque étape, une étiquette nomme le geste employé ; le schéma en montre le résultat.</p>
+
+  <!-- Étape 1 -->
+  <div class="chem-step">
+    <div class="chem-tag"><span class="chem-num">étape 1</span><span class="term chem-meth" data-g="déshabillage">déshabillage à froid</span></div>
+    <h2 class="chem-h">Quels présupposés la théorie engage-t-elle ?</h2>
+    <p class="chem-note">On retire les couches de la théorie une à une, jusqu'aux idées qu'elle admet sans preuve. La relativité en engage plusieurs, <b>côte à côte</b> — aucune plus importante qu'une autre.</p>
+    <div class="corner chem-fig">
+      <svg viewBox="0 0 900 300" role="img" aria-label="La relativité restreinte au centre, entourée de quatre présupposés reliés par des traits.">
+        <line x1="450" y1="150" x2="255" y2="66" stroke="#4a5c6d" stroke-width="1"/>
+        <line x1="450" y1="150" x2="645" y2="66" stroke="#4a5c6d" stroke-width="1"/>
+        <line x1="450" y1="150" x2="235" y2="240" stroke="#4a5c6d" stroke-width="1"/>
+        <line x1="450" y1="150" x2="665" y2="240" stroke="#4a5c6d" stroke-width="1"/>
+        <rect x="345" y="122" width="210" height="56" rx="13" fill="rgba(201,166,255,.10)" stroke="#c9a6ff" stroke-width="1"/>
+        <text x="450" y="146" text-anchor="middle" fill="#e5d4ff" style="font:500 15px sans-serif">Relativité restreinte</text>
+        <text x="450" y="165" text-anchor="middle" fill="#9d86c9" style="font:400 12px sans-serif">la théorie déshabillée</text>
+        <rect x="135" y="40" width="240" height="52" rx="13" fill="rgba(93,202,165,.08)" stroke="#2f7a63" stroke-width="1"/>
+        <text x="255" y="62" text-anchor="middle" fill="#7fe0c0" style="font:500 14px sans-serif">Réalisme physique</text>
+        <text x="255" y="80" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">le monde existe hors de nous</text>
+        <rect x="525" y="40" width="260" height="52" rx="13" fill="rgba(93,202,165,.08)" stroke="#2f7a63" stroke-width="1"/>
+        <text x="655" y="62" text-anchor="middle" fill="#7fe0c0" style="font:500 14px sans-serif">Invariance des lois</text>
+        <text x="655" y="80" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">mêmes lois partout, toujours</text>
+        <rect x="115" y="214" width="240" height="52" rx="13" fill="rgba(93,202,165,.08)" stroke="#2f7a63" stroke-width="1"/>
+        <text x="235" y="236" text-anchor="middle" fill="#7fe0c0" style="font:500 14px sans-serif">Localité causale</text>
+        <text x="235" y="254" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">rien ne dépasse la lumière</text>
+        <rect x="545" y="214" width="240" height="52" rx="13" fill="rgba(93,202,165,.08)" stroke="#2f7a63" stroke-width="1"/>
+        <text x="665" y="236" text-anchor="middle" fill="#7fe0c0" style="font:500 14px sans-serif">Substantivalisme</text>
+        <text x="665" y="254" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">l'espace-temps est une chose réelle</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Étape 2 -->
+  <div class="chem-step">
+    <div class="chem-tag"><span class="chem-num">étape 2</span><span class="term chem-meth" data-g="sondage vertical">sondage vertical</span></div>
+    <h2 class="chem-h">On prend un présupposé et on creuse dessous</h2>
+    <p class="chem-note">Choisissons <b>l'invariance des lois</b>. A-t-elle besoin d'une idée plus profonde pour tenir ? Le sondage descend droit sur ce point — et trouve : pour supposer que les lois sont les mêmes partout, il faut d'abord supposer qu'il <b>y a</b> des lois, que le monde est réglé.</p>
+    <div class="corner chem-fig">
+      <svg viewBox="0 0 900 190" role="img" aria-label="De gauche à droite, l'invariance des lois présuppose l'existence d'un ordre réglé du monde.">
+        <defs><marker id="carr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#7d94a8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <text x="220" y="30" text-anchor="middle" fill="#7d94a8" style="font:400 12px sans-serif">un présupposé de la théorie</text>
+        <text x="690" y="30" text-anchor="middle" fill="#7d94a8" style="font:400 12px sans-serif">ce qu'il suppose, plus profond →</text>
+        <rect x="90" y="56" width="260" height="72" rx="13" fill="rgba(93,202,165,.08)" stroke="#2f7a63" stroke-width="1"/>
+        <text x="220" y="84" text-anchor="middle" fill="#7fe0c0" style="font:500 14px sans-serif">Invariance des lois</text>
+        <text x="220" y="104" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">mêmes lois partout, à toute époque</text>
+        <text x="220" y="150" text-anchor="middle" fill="#7d94a8" style="font:400 11px monospace">statut : validé</text>
+        <line x1="350" y1="92" x2="452" y2="92" stroke="#7d94a8" stroke-width="1.5" marker-end="url(#carr)"/>
+        <text x="401" y="80" text-anchor="middle" fill="#7d94a8" style="font:400 12px sans-serif">présuppose</text>
+        <rect x="454" y="56" width="300" height="72" rx="13" fill="rgba(201,166,255,.08)" stroke="#6d5799" stroke-width="1"/>
+        <text x="604" y="84" text-anchor="middle" fill="#d3bcff" style="font:500 14px sans-serif">Existence d'un ordre réglé</text>
+        <text x="604" y="104" text-anchor="middle" fill="#9d86c9" style="font:400 12px sans-serif">le monde suit des règles, pas le chaos</text>
+        <text x="604" y="150" text-anchor="middle" fill="#7d94a8" style="font:400 11px monospace">statut : candidat contesté — le socle</text>
+      </svg>
+    </div>
+    <p class="chem-note" style="margin-top:10px">Plus on descend, moins c'est tranché : l'invariance est <b>validée</b>, le socle reste un <b>débat ouvert</b>. L'outil le montre, il ne le referme pas.</p>
+  </div>
+
+  <!-- Étape 3 -->
+  <div class="chem-step">
+    <div class="chem-tag"><span class="chem-num">étape 3</span><span class="chem-meth-plain">retour</span></div>
+    <h2 class="chem-h">On n'a suivi qu'un seul fil</h2>
+    <p class="chem-note">On a plongé le long de <b>l'invariance des lois</b> jusqu'à son socle. Mais les trois autres présupposés n'ont pas disparu : chacun ouvre sa propre piste. Déshabiller une théorie, ce n'est pas une ligne droite — c'est une exploration qui se ramifie.</p>
+    <div class="corner chem-fig">
+      <svg viewBox="0 0 900 210" role="img" aria-label="Le fil suivi est marqué comme exploré ; les trois autres présupposés restent des pistes ouvertes.">
+        <rect x="90" y="30" width="280" height="48" rx="13" fill="rgba(93,202,165,.14)" stroke="#5dcaa5" stroke-width="1.5"/>
+        <text x="230" y="50" text-anchor="middle" fill="#7fe0c0" style="font:500 14px sans-serif">Invariance des lois</text>
+        <text x="230" y="68" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">✓ fil suivi jusqu'au socle</text>
+        <rect x="90" y="92" width="280" height="42" rx="13" fill="rgba(93,202,165,.04)" stroke="#2f7a63" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="230" y="117" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">Réalisme physique — piste à creuser</text>
+        <rect x="90" y="148" width="280" height="42" rx="13" fill="rgba(93,202,165,.04)" stroke="#2f7a63" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="230" y="173" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">Localité causale — piste à creuser</text>
+        <rect x="470" y="92" width="280" height="42" rx="13" fill="rgba(93,202,165,.04)" stroke="#2f7a63" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="610" y="117" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">Substantivalisme — piste à creuser</text>
+        <text x="610" y="170" text-anchor="middle" fill="#4a5c6d" style="font:italic 400 12px sans-serif">chaque présupposé est une porte</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="tclose-chem corner block">
+    <div class="chem-close-t">ce que cette démonstration montre</div>
+    <p>Sous une théorie qui ne parle jamais de philosophie, on a retrouvé les quelques idées sur lesquelles elle repose — puis, quand l'une d'elles en cachait une autre, on est descendu voir. La relativité en sort <b>intacte</b> : on ne l'a pas jugée, on a seulement éclairé ses fondations, celles que même les physiciens énoncent rarement. C'est ça, le travail d'Axiome Zéro — rendre visible le point de départ, sans jamais dire s'il est vrai.</p>
   </div>
 </div></section>
 
@@ -319,6 +463,34 @@ footer b{color:var(--ink-dim)}
   <div class="cards" id="cardGrid"></div>
 </div></section>
 
+<!-- NATURE DES AXIOMES -->
+<section class="view" id="nat"><div class="wrap">
+  <div class="eyebrow mono">// statut de preuve</div>
+  <h2 class="vtitle">Nature des axiomes</h2>
+  <p class="lead">En cherchant les présupposés cachés des théories, on tombe parfois sur quelque chose d'inattendu : tout ce sur quoi une pensée s'appuie n'a pas le même statut. Certains points d'appui sont des choix qu'on peut refuser ; d'autres sont des faits déjà démontrés ; un dernier est une question encore sans réponse. Cette page les met côte à côte pour qu'on voie la différence.</p>
+
+  <div class="nat-warn">
+    <div class="t">⚠ à lire d'abord</div>
+    <p>Sur cette page, on ne range pas les axiomes par sujet (le monde, la morale, l'invisible — ça, c'est la page « Comprendre »). On les range autrement : <b>selon qu'on peut les prouver ou non.</b> C'est une autre façon de les regarder, pas une nouvelle catégorie.</p>
+  </div>
+
+  <div class="block corner" style="margin-bottom:26px">
+    <h2>Comment je décide de la nature d'un axiome ?</h2>
+    <p class="legend-note" style="margin-top:0">Un seul test, le même pour tous : je lis ce qui se passe <b>si on le rejette.</b></p>
+    <p class="legend-note" style="margin-top:8px">— Si le rejet ouvre sur une autre position, tenable, défendable — quelqu'un peut sincèrement prendre l'autre route — alors c'est un <b>carrefour.</b><br>— Si le rejet se heurte à « c'est démontré, c'est réfuté » — on ne peut pas prendre l'autre route, elle est barrée par une preuve — alors c'est un <b>mur.</b><br>— Si le rejet donne « on ne sait pas encore, personne n'a tranché » — alors c'est une <b>porte close.</b></p>
+    <p class="img" style="color:var(--ink-faint);font-style:italic;font-size:13.5px;margin-top:10px;padding-left:12px;border-left:2px solid var(--hair2)">Le test ne juge pas si l'axiome est vrai. Il regarde seulement une chose : peut-on encore choisir, ou non ?</p>
+  </div>
+
+  <div class="nat-tabs" id="natTabs">
+    <button class="on" data-nat="carrefour"><span class="lbl"><span class="ic">⛬</span> Carrefour</span><span class="sub">un choix de départ — le cœur du projet</span></button>
+    <button data-nat="mur"><span class="lbl"><span class="ic">▮</span> Mur</span><span class="sub">une chose déjà prouvée</span></button>
+    <button data-nat="porte"><span class="lbl"><span class="ic">⌸</span> Porte close</span><span class="sub">une question sans réponse pour l'instant</span></button>
+  </div>
+
+  <div id="natExplain"></div>
+  <div class="nat-grid" id="natGrid"></div>
+</div></section>
+
 <!-- COMPRENDRE LE TABLEAU -->
 <section class="view" id="guide"><div class="wrap">
   <div class="eyebrow">// comprendre · clé de lecture</div>
@@ -345,11 +517,12 @@ footer b{color:var(--ink-dim)}
   <h2 style="margin-top:30px" id="g-dep">La dépendance — ce qu'il faut pour qu'il apparaisse</h2>
   <div class="guide-card corner">
     <p>Certains axiomes n'ont besoin de <b>rien</b> pour se poser. D'autres n'ont de sens que s'il existe déjà un <b>mécanisme</b> (une sélection, une régulation), ou un <b>agent réel</b> qui agit, ou même une <b>chaîne d'intentions</b> entre plusieurs agents. Plus haut encore : il faut une <b>organisation mentale</b> (des facultés, une structure de l'esprit), ou un <b>cadre de règles</b> partagées (une morale, un droit). Exemple simple : l'idée de « faute » n'a de sens que s'il existe déjà une norme — sans règle, pas de faute.</p>
+    <p style="margin-top:12px">Un point important : cette échelle n'est pas une simple montée « de plus en plus dépendant ». À partir d'un certain niveau, elle <b>se sépare en deux branches</b> qui ne se comparent pas — d'un côté ce qui a besoin d'une <b>organisation mentale</b>, de l'autre ce qui a besoin d'un <b>cadre de règles</b>. Ce sont deux <i>types</i> de préalables différents, pas deux degrés d'une même chose. Un axiome qui dépend d'une morale n'est donc pas « plus haut » qu'un autre qui dépend de l'esprit — il dépend d'<i>autre chose</i>.</p>
     <p class="why"><b>Pourquoi cet axe ?</b> Il évite de confondre « fréquent » et « fondamental ». Un axiome rare mais profond ne doit pas paraître secondaire juste parce qu'il apparaît peu. La portée dit « où », la dépendance dit « à quelle condition » — deux questions différentes qu'un seul chiffre écraserait.</p>
     <p class="img" style="color:var(--ink-faint);font-style:italic;font-size:13px;margin-top:8px;padding-left:12px;border-left:2px solid var(--hair2)">Certains axiomes tiennent debout tout seuls ; d'autres ont besoin qu'un décor soit déjà planté pour exister.</p>
   </div>
 
-  <h2 style="margin-top:30px" id="g-statut">Les statuts — le degré de certitude</h2>
+  <h2 style="margin-top:30px" id="g-statut">Les statuts — le degré de confirmation</h2>
   <div class="guide-card corner">
     <p><b>Validé / Établi</b> → confirmé plusieurs fois, sans contre-exemple sérieux. &nbsp;<b>Confirmé</b> → recoupé, mais pas encore éprouvé à fond. &nbsp;<b>Candidat</b> → repéré, à creuser. &nbsp;<b>Candidat contesté</b> → repéré, mais objet d'un vrai débat. &nbsp;<b>En réserve</b> → pas encore travaillé. &nbsp;<b>Dissous</b> → s'est révélé n'être que la conséquence d'un autre.</p>
     <p class="why">Un axiome <b>monte</b> par confirmations indépendantes (candidat → confirmé → validé), ou se <b>dissout</b> s'il n'était pas vraiment autonome. Le statut est toujours affiché tel quel — c'est le sujet même de l'atlas : montrer l'état réel, y compris quand il est inconfortable.</p>
@@ -385,7 +558,7 @@ footer b{color:var(--ink-dim)}
 
   <div class="block corner" style="margin-top:18px">
     <h2>La méthode se méfie d'elle-même</h2>
-    <p class="legend-note" style="margin-top:0">Une IA est un condensé du savoir humain — avec ses propres angles morts. Lui demander de trouver les présupposés cachés, c'est un peu demander au poisson de cartographier l'eau. D'où des garde-fous, écrits <b>avant</b> les résultats : ne jamais valider sur une seule voix, croiser plusieurs IA indépendantes, se méfier du plaisir de « compléter » un tableau, ne jamais colorer un résultat en « bonne » ou « mauvaise » nouvelle, analyser à froid avant de consulter la littérature. Aucun de ces garde-fous n'élimine les biais — ils les rendent visibles. Le jugement final reste humain, et extérieur : c'est ce qui donne sa valeur au travail.</p>
+    <p class="legend-note" style="margin-top:0">Une IA est un condensé du savoir humain — avec ses propres angles morts. Lui demander de trouver les présupposés cachés, c'est un peu demander au poisson de cartographier l'eau. D'où des garde-fous, écrits <span style="color:var(--ink)">avant</span> les résultats : ne jamais valider sur une seule voix, croiser plusieurs IA indépendantes, se méfier du plaisir de « compléter » un tableau, ne jamais colorer un résultat en « bonne » ou « mauvaise » nouvelle, analyser à froid avant de consulter la littérature. Aucun de ces garde-fous n'élimine les biais — ils les rendent visibles. Le jugement final reste humain, et extérieur : c'est ce qui donne sa valeur au travail.</p>
   </div>
 
   <div class="block corner" style="margin-top:18px">
@@ -445,23 +618,11 @@ footer b{color:var(--ink-dim)}
 </div></section>
 
 <!-- ANALYSE -->
-<section class="view" id="ana"><div class="wrap">
-  <div class="eyebrow">// analyse · exploration</div>
-  <h1>Analyse</h1>
-  <p class="lead">Une carte croisée des axiomes : leur <span class="term" data-g="Spécialisée">portée</span> (en lignes) contre leur <span class="term" data-g="dep">dépendance</span> (en colonnes). La position dit quelque chose — et certains coins sont vides pour une vraie raison. Seuls les axiomes <b>solides</b> (validés et confirmés) sont placés ici : un motif ne se lit que sur des points fiables ; y mêler des axiomes encore incertains brouillerait le dessin.</p>
-  <p class="img" style="color:var(--ink-faint);font-style:italic;font-size:13.5px;margin-top:10px;padding-left:12px;border-left:2px solid var(--hair2);max-width:820px">En clair : on ne garde sur la carte que ce qui est bien établi, pour que la forme qui apparaît veuille dire quelque chose — et pas juste refléter nos doutes.</p>
-  <div class="block corner" style="margin-top:22px">
-    <h2>Portée × dépendance</h2>
-    <div class="matrix-wrap"><table class="matrix" id="matrix"></table></div>
-    <p class="legend-note">La case <b style="color:#ff9a6a">∅</b> (portée universelle + forte dépendance) est un <b>vide structurel</b> : ce n'est pas un manque de données, c'est une impossibilité. Un axiome qui a besoin d'un agent ou d'un mécanisme pour exister ne peut pas, par définition, être présent dans <i>toute</i> théorie. Touchez la case <b style="color:#ff9a6a">∅</b> pour en savoir plus.</p>
-  </div>
-</div></section>
-
 <!-- RELATIONS -->
 <section class="view" id="rel"><div class="wrap">
   <div class="eyebrow">// relations · liens entre axiomes</div>
   <h1>Les relations entre axiomes</h1>
-  <p class="lead">Les axiomes ne vivent pas isolés : ils s'appellent, se renforcent, ou s'excluent. Quatre types de liens ont été identifiés — trois <b>symétriques</b> (les deux axiomes sont à égalité) et un <b>orienté</b> (l'un dépend de l'autre). Chaque lien porte son degré de solidité, comme les axiomes.</p>
+  <p class="lead">Les axiomes ne vivent pas isolés : ils s'appellent, se renforcent, ou s'excluent. Quatre types de liens ont été identifiés — trois <b>symétriques</b> (les deux axiomes sont à égalité) et un <b>orienté</b> (l'un dépend de l'autre). Tous ces liens ne sont pas également sûrs : certains sont solidement établis, d'autres encore à l'étude. Chaque exemple ci-dessous porte la mention de son degré de certitude.</p>
 
   <div class="rel-block corner" style="margin-top:24px">
     <h3>Confirmation croisée <span class="axis-tag axis-h">symétrique</span></h3>
@@ -508,12 +669,6 @@ footer b{color:var(--ink-dim)}
   </div>
 
   <div class="exp-card">
-    <div class="spec-tag">étude du tableau</div>
-    <h3>L'axiographie</h3>
-    <p>Et si on étudiait le tableau lui-même comme un objet ? Sa forme, ses trous, la façon dont les axiomes se distribuent. Un terrain de jeu exploratoire, explicitement mis à part du travail sérieux — des observations, pas des faits établis.</p>
-  </div>
-
-  <div class="exp-card">
     <div class="spec-tag">interprétation</div>
     <h3>Le vide structurel comme prédiction</h3>
     <p>Le coin vide de la carte croisée (portée universelle + forte dépendance) est peut-être plus qu'une case vide : peut-être une <b>impossibilité de principe</b>, une frontière que le réel interdit de franchir. Si c'est vrai, l'absence devient une information — presque une prédiction.</p>
@@ -542,6 +697,30 @@ footer b{color:var(--ink-dim)}
   <p style="text-align:right;margin-top:20px;opacity:.5"><button class="anchor" id="secretAnchor" aria-label="ancre">⚓</button></p>
 </div></section>
 
+<!-- AXIOGRAPHIE -->
+<section class="view" id="axio"><div class="wrap">
+  <div class="eyebrow mono" style="color:var(--amber-dim)">// zone d'exploration</div>
+  <h2 class="vtitle" style="color:var(--amber)">Axiographie — l'étude du tableau lui-même</h2>
+  <div class="nat-warn" style="border-left-color:var(--amber)">
+    <div class="t">terrain d'exploration</div>
+    <p>Jusqu'ici, j'ai étudié les axiomes. Ici, j'étudie <b>le tableau qui les range</b> : sa forme, ses trous, les motifs qui reviennent. C'est un terrain de jeu — des idées que j'explore, pas des conclusions. Rien de ce qui suit n'est établi.</p>
+  </div>
+
+  <div class="exp-card">
+    <div class="spec-tag">une curiosité du tableau</div>
+    <h3>Et si les « carrefours » n'étaient pas tous pareils ?</h3>
+    <p>Sur la page « Nature des axiomes », j'ai séparé les carrefours, les murs et les portes closes. Mais en regardant de plus près, les carrefours eux-mêmes semblent se diviser en deux : ceux où <b>la science a déjà choisi un camp</b>, et ceux où <b>le débat reste vif — personne, à ce jour, n'a tranché</b>. Est-ce une vraie différence, ou juste une nuance ? Je ne le sais pas encore — d'où sa place ici.</p>
+  </div>
+
+  <div class="block corner" style="margin-top:22px">
+    <h2>La carte portée × dépendance</h2>
+    <p class="legend-note" style="margin-top:0">Voici une façon de regarder le tableau dans son ensemble : chaque axiome placé selon sa <span class="term" data-g="Spécialisée">portée</span> (en lignes) et sa <span class="term" data-g="dep">dépendance</span> (en colonnes). La position dessine un motif. Seuls les axiomes <b>solides</b> (validés et confirmés) sont placés ici : une forme ne se lit que sur des points fiables ; y mêler des axiomes encore incertains la brouillerait.</p>
+    <p class="img" style="color:var(--ink-faint);font-style:italic;font-size:13.5px;margin-top:10px;padding-left:12px;border-left:2px solid var(--hair2);max-width:820px">En clair : on ne garde sur la carte que ce qui est bien établi, pour que la forme qui apparaît veuille dire quelque chose — et pas juste refléter nos doutes.</p>
+    <div class="matrix-wrap" style="margin-top:16px"><table class="matrix" id="matrix"></table></div>
+    <p class="legend-note">La case <b style="color:#ff9a6a">∅</b> (portée universelle + forte dépendance) est un <b>vide structurel</b>. Attention à ne pas le lire comme une découverte sur le monde : c'est une conséquence de nos propres définitions. Un axiome qu'on a défini comme ayant besoin d'un agent ou d'un mécanisme pour exister ne peut pas, en même temps, être présent dans <i>toute</i> théorie — les deux mots se contredisent. Le vide n'annonce donc rien sur le réel ; il montre où nos catégories s'excluent l'une l'autre. Touchez la case <b style="color:#ff9a6a">∅</b> pour en savoir plus.</p>
+  </div>
+</div></section>
+
 <footer><div class="wrap">
   <p><b>Atlas des axiomes</b> — représentation visuelle et exploratoire d'un travail en cours. Les statuts, familles et relations sont affichés tels qu'ils sont au moment de la génération — évolutifs, faillibles, offerts à la critique. L'outil décrit des présupposés ; il ne juge pas ceux qui les adoptent.</p>
   <p style="margin-top:12px">Contenu, méthode et décisions : Tiqqun. Sa mise en forme HTML est générée par IA.</p>
@@ -550,7 +729,7 @@ footer b{color:var(--ink-dim)}
 <div class="modal" id="modal"><div class="sheet corner" id="sheet"></div></div>
 
 <script>
-const AX = [{"n": "Déterminisme / hasard", "f": "Transversal", "p": "Universelle", "d": "Aucune", "s": "établi", "desc": "Le monde est-il entièrement fixé par ses causes, ou du vrai hasard existe-t-il ?", "ex": "Un dé « truqué » par les lois vs un dé vraiment imprévisible.", "q": "Tout événement est-il déterminé par ses antécédents ?", "src": "Transversal à toute théorie."}, {"n": "Réalisme physique", "f": "Transversal", "p": "Universelle", "d": "Aucune", "s": "établi", "couple": 1, "desc": "Les propriétés physiques ont-elles une valeur définie avant qu'on les mesure ?", "ex": "La lune est-elle là quand personne ne la regarde ?", "q": "Le monde existe-t-il indépendamment de l'observation ?", "src": "Transversal. Forme un couple contraint avec la localité causale (théorème de Bell) : on ne peut garder les deux à la fois.", "rel": "couple"}, {"n": "Causalité", "f": "Transversal", "p": "Universelle", "d": "Aucune", "s": "établi", "desc": "Les choses arrivent par des causes — rien ne surgit sans lien à ce qui précède.", "ex": "On cherche toujours « pourquoi » un phénomène se produit.", "q": "Tout effet a-t-il une cause ?", "src": "Transversal à toute science."}, {"n": "Réductionnisme / émergence forte", "f": "Transversal", "p": "Universelle", "d": "Aucune", "s": "validé", "desc": "Le tout se ramène-t-il à ses parties, ou fait-il émerger quelque chose d'irréductible ?", "ex": "La conscience = des neurones, ou quelque chose en plus ?", "q": "Peut-on tout expliquer par les niveaux inférieurs ?", "src": "Confirmé notamment par le conflit Durkheim / contrat social."}, {"n": "Opérationnalisme", "f": "Transversal", "p": "Générale", "d": "Aucune", "s": "établi", "desc": "Un concept ne vaut que par la procédure qui le mesure.", "ex": "« La température, c'est ce que lit le thermomètre. »", "q": "Un concept se réduit-il à sa mesure ?", "src": "Physique, psychométrie."}, {"n": "Granularité espace-temps", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "établi", "desc": "L'espace et le temps sont-ils continus ou faits de grains minimaux ?", "ex": "Peut-on couper une durée à l'infini ?", "q": "Existe-t-il une échelle minimale ?", "src": "Gravité quantique, mécanique quantique."}, {"n": "Localité causale", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "confirmé", "couple": 1, "desc": "Rien ne se propage plus vite que la lumière ; les causes sont locales.", "ex": "Une action ici ne change pas instantanément là-bas.", "q": "Toute influence est-elle locale ?", "src": "Relativité. Forme un couple contraint avec le réalisme physique (théorème de Bell).", "rel": "couple"}, {"n": "Substantivalisme", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "confirmé", "desc": "L'espace est-il une chose réelle, ou juste des relations entre objets ?", "ex": "Un espace vide existe-t-il, ou n'y a-t-il que des distances ?", "q": "L'espace a-t-il une existence propre ?", "src": "Débat Newton / Leibniz."}, {"n": "Téléologie locale", "f": "Descriptive", "p": "Générale", "d": "Mécanisme (sélection/régulation)", "s": "confirmé", "desc": "Un système tend vers un état sans qu'aucune intention ne le dirige.", "ex": "L'évolution « optimise » sans plan.", "q": "Une finalité peut-elle émerger sans agent ?", "src": "Confirmé dans 6 domaines."}, {"n": "Équilibration locale sans sélection", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "validé", "desc": "Un équilibre s'atteint par pur ajustement, sans tri ni régulateur.", "ex": "L'osmose ; une panne en cascade qui finit par se stabiliser.", "q": "L'équilibre exige-t-il un mécanisme de sélection ?", "src": "Validé (4/5 IA, chalutage dilué)."}, {"n": "Agentivité", "f": "Descriptive", "p": "Spécialisée", "d": "Agent réel", "s": "confirmé", "desc": "Certaines explications supposent un sujet qui agit vraiment.", "ex": "Un choix, pas seulement une réaction chimique.", "q": "Y a-t-il de vrais agents ?", "src": "Action intentionnelle."}, {"n": "Modularité de l'esprit", "f": "Descriptive", "p": "Spécialisée", "d": "Organisation cognitive interne", "s": "confirmé", "desc": "L'esprit est-il fait de modules innés, ou d'un apprentissage général ?", "ex": "Le langage : faculté dédiée ou apprise ?", "q": "L'esprit a-t-il une architecture innée ?", "src": "Débat empirisme vs innatisme."}, {"n": "Individualisme / Holisme", "f": "Descriptive", "p": "Spécialisée", "d": "Agent réel", "s": "validé", "desc": "Le social se réduit-il aux individus, ou le tout prime-t-il ?", "ex": "Une société = la somme des gens, ou un fait propre ?", "q": "L'individu ou le collectif est-il premier ?", "src": "Validé (4 domaines)."}, {"n": "Régulation cybernétique à consigne fixe", "f": "Descriptive", "p": "Générale", "d": "Mécanisme (sélection/régulation)", "s": "confirmé", "desc": "Un système régule vers une cible fixée d'avance.", "ex": "Un thermostat vise une température de consigne.", "q": "La cible est-elle prédéterminée ?", "src": "Confirmé ; 4e domaine (politique monétaire) trouvé par chalutage filet large 5/5. Portée passée de Spécialisée à Générale (provisoire)."}, {"n": "Superposition des états", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "Un système quantique peut être dans plusieurs états à la fois.", "ex": "Le chat de Schrödinger, vivant et mort.", "q": "Les états peuvent-ils coexister ?", "src": "Mécanique quantique. Signal encore faible/instable, un panel supplémentaire est requis."}, {"n": "Mesure comme interaction irréductible", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "Mesurer, c'est interagir — l'acte modifie ce qu'il mesure.", "ex": "Observer une particule change son état.", "q": "La mesure est-elle neutre ?", "src": "Mécanique quantique. Lien à Heisenberg non tranché."}, {"n": "Non-individualité des entités quantiques", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "validé", "desc": "Deux particules identiques n'ont pas d'identité propre distincte.", "ex": "Échanger deux électrons ne change rien.", "q": "Les entités ont-elles une identité individuelle ?", "src": "Mécanique quantique. Validé."}, {"n": "Correspondance classique-quantique", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "validé", "desc": "Le quantique doit redonner le classique à grande échelle.", "ex": "Les lois de Newton comme limite du quantique.", "q": "Les régimes doivent-ils se raccorder ?", "src": "Principe de correspondance. Validé."}, {"n": "Invariance spatiale des lois", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "validé", "desc": "Les lois physiques sont les mêmes en tout lieu.", "ex": "La gravité marche pareil ici et dans une autre galaxie.", "q": "Les lois varient-elles selon l'endroit ?", "src": "Validé (chalutage 5 IA, scission 5/5). Fonde le principe cosmologique et le copernicien."}, {"n": "Invariance temporelle des lois", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "validé", "desc": "Les lois physiques sont les mêmes à toute époque.", "ex": "Les lois d'hier valent encore demain.", "q": "Les lois changent-elles avec le temps ?", "src": "Validé (chalutage 5 IA, scission 5/5). Fonde l'uniformitarisme et la médecine légale."}, {"n": "Principe cosmologique", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "L'univers est homogène et isotrope à grande échelle.", "ex": "Aucun lieu de l'univers n'est spécial.", "q": "La matière est-elle répartie uniformément ?", "src": "Confirmé. Dépendance tranchée AUTONOME : le lien supposé vers le copernicien n'est pas soutenu (0/4), et la littérature montre une dérivation en sens inverse — pas une présupposition."}, {"n": "Principe copernicien", "f": "Descriptive", "p": "Spécialisée", "d": "Agent réel", "s": "confirmé", "desc": "Notre position d'observateur n'a rien de privilégié.", "ex": "On n'est pas au centre de l'univers.", "q": "L'observateur est-il quelconque ?", "src": "Confirmé. Sondage vertical dédié (6 voix) : lien vers l'invariance spatiale réfuté (1/6) ; lien vers l'observateur indécis (3/6, panel divisé relationnel vs autonome). Question ouverte assumée.", "open": "Le panel est divisé : le copernicien est-il relationnel (il présuppose un observateur) ou un fait autonome sur l'univers ? Non tranché."}, {"n": "Récurrence de l'intention", "f": "Normative", "p": "Contextuelle", "d": "Chaîne d'intentions récursives", "s": "confirmé", "desc": "Certaines situations exigent que chacun anticipe l'intention de l'autre, en boucle.", "ex": "« Je sais que tu sais que je sais… »", "q": "Faut-il des intentions imbriquées ?", "src": "Préconditions multiples (chaîne d'intentions + cadre normatif)."}, {"n": "Réalisme moral / constructivisme", "f": "Normative", "p": "Spécialisée", "d": "Cadre normatif", "s": "validé", "desc": "Les valeurs morales sont-elles découvertes (réelles) ou construites ?", "ex": "« Torturer est mal » : un fait, ou une convention ?", "q": "La morale est-elle objective ?", "src": "Validé (4 confirmations)."}, {"n": "Raison comme cause", "f": "Métaphysique", "p": "Spécialisée", "d": "Agent réel", "s": "confirmé", "couple": 1, "desc": "Une raison peut-elle vraiment causer un acte, en tant que raison ?", "ex": "J'agis « parce que » c'est juste, pas seulement par réflexe.", "q": "Les raisons ont-elles un pouvoir causal ?", "src": "Forme un couple contraint avec le déterminisme (question du libre arbitre).", "rel": "couple"}, {"n": "Commensurabilité inter-individuelle", "f": "Normative", "p": "Spécialisée", "d": "Cadre normatif", "s": "confirmé", "desc": "Peut-on comparer le bien-être de personnes différentes ?", "ex": "Additionner le bonheur de deux personnes.", "q": "Les valeurs individuelles sont-elles comparables ?", "src": "Utilitarisme, économie du bien-être."}, {"n": "Principe de raison suffisante", "f": "Métaphysique", "p": "Contextuelle", "d": "Aucune", "s": "candidat", "couple": 1, "desc": "Tout ce qui existe doit avoir une raison — rien n'est là sans pourquoi.", "ex": "Pourquoi y a-t-il quelque chose plutôt que rien ?", "q": "Tout a-t-il une raison suffisante ?", "src": "Leibniz. Candidat contesté (Hume, physique). Couple contraint conceptuel avec le refus de la régression infinie, non tranché.", "rel": "couple"}, {"n": "Refus de la régression infinie", "f": "Métaphysique", "p": "Contextuelle", "d": "Aucune", "s": "candidat", "couple": 1, "desc": "Une chaîne de causes ne peut remonter à l'infini — il faut un point d'arrêt.", "ex": "« Pourquoi ? — parce que… » doit s'arrêter un jour.", "q": "Faut-il une cause première ?", "src": "Argument cosmologique. Candidat contesté (les infinitistes le refusent). Couple contraint conceptuel avec la raison suffisante, non tranché.", "rel": "couple"}, {"n": "Théorème de Gödel", "f": "Métaphysique", "p": "Contextuelle", "d": "Aucune", "s": "validé", "desc": "Tout système formel assez riche contient des vérités qu'il ne peut prouver.", "ex": "Des énoncés vrais mais indémontrables dans le système.", "q": "La complétude formelle est-elle possible ?", "src": "Validé (chalutage dédié aveugle, panel local 4/4). Classé en métaphysique : il pose une limite interne des systèmes formels."}, {"n": "Indécidabilité algorithmique", "f": "Métaphysique", "p": "Contextuelle", "d": "Aucune", "s": "validé", "desc": "Certains problèmes ne peuvent être résolus par aucun algorithme.", "ex": "Le problème de l'arrêt (Turing).", "q": "Tout est-il calculable ?", "src": "Church-Turing. Validé (2 confirmations aveugles). Frère du théorème de Gödel."}, {"n": "Primauté de la relation sur la substance", "f": "Métaphysique", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "Ce qui est premier, ce sont les relations, pas les choses en soi.", "ex": "Une particule définie par ses liens, pas isolément.", "q": "La relation précède-t-elle la substance ?", "src": "Rovelli (mécanique quantique relationnelle), théorie des graphes, Deleuze/Latour.", "open": "Chantier laissé ouvert à dessein. La frontière avec le structuralisme classique est difficile à tracer au premier regard — on la montre plutôt que de la masquer. La ligne nette : le structuralisme fait EXISTER la chose d'abord puis la définit par ses relations ; la primauté nie l'existence même hors relation. Maintenu « Confirmé » exprès, comme exemple de frontière vive."}, {"n": "Fusion géométrie/causalité", "f": "Métaphysique", "p": "Générale", "d": "Aucune", "s": "reserve", "desc": "La géométrie de l'espace-temps EST la structure causale.", "ex": "La gravité = une courbure, pas une force.", "q": "Géométrie et causalité sont-elles une seule chose ?", "src": "Relativité générale. Candidat solide mais affaibli par la gravité entropique (Verlinde)."}, {"n": "Dissociation forme/sens (syntaxique)", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "candidat", "desc": "La forme d'un message peut être traitée sans son sens.", "ex": "Un texto arrive intact même s'il est incompréhensible.", "q": "Forme et sens sont-ils séparables ?", "src": "Shannon + formel. Volet syntaxique, scindé du volet sémantique."}, {"n": "Arbitraire du signe (sémantique)", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "candidat", "desc": "Le lien entre un mot et ce qu'il désigne est arbitraire.", "ex": "« chat », « cat », « neko » : même bête, formes différentes.", "q": "Le lien forme/sens est-il conventionnel ?", "src": "Saussure. Volet sémantique, issu de la scission forme/sens."}, {"n": "Physicalité de l'information", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "L'information n'est pas abstraite : effacer un bit coûte de l'énergie.", "ex": "Le principe de Landauer.", "q": "L'information est-elle physique ?", "src": "Présuppose sans dériver un socle nomologique (l'existence d'un ordre réglé).", "rel": "vert"}, {"n": "Clôture organisationnelle", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "Le vivant se produit lui-même — il trace sa propre frontière.", "ex": "Une cellule qui s'auto-entretient (autopoïèse).", "q": "Le vivant est-il auto-productif ?", "src": "Maturana & Varela. Distinct de la primauté de la relation."}, {"n": "Garantie d'optimalité", "f": "Descriptive", "p": "Spécialisée", "d": "Mécanisme (sélection/régulation)", "s": "candidat", "desc": "Un processus sans pilote aboutit non pas à un simple équilibre, mais au MEILLEUR équilibre.", "ex": "La « main invisible » — mais le clavier QWERTY, pourtant mauvais, s'est imposé quand même.", "q": "Le sans-pilote produit-il l'optimal ?", "src": "Adam Smith. Distinct de « l'équilibre sans régulation centrale ». Faille du verrouillage (lock-in). Chalutage transversal fait : optimalité non saillante (1/5), reste candidat.", "open": "La frontière entre « atteindre un équilibre » et « atteindre le MEILLEUR équilibre » est fragile : le panel dissout souvent l'optimalité dans la simple auto-organisation."}, {"n": "P ≠ NP", "f": "Métaphysique", "p": "Contextuelle", "d": "Aucune", "s": "candidat", "desc": "Vérifier une solution serait plus facile que la trouver.", "ex": "Un puzzle dur à résoudre, facile à contrôler.", "q": "Trouver = vérifier ?", "src": "Cryptographie. Axiome de travail, non démontré."}, {"n": "Existence d'un ordre nomologique", "f": "Métaphysique", "p": "Universelle", "d": "Aucune", "s": "candidat", "couple": 0, "desc": "Le monde suit des règles plutôt que d'être un pur chaos.", "ex": "Une pierre lâchée tombe, toujours, de la même façon.", "q": "Le monde est-il réglé ?", "src": "Candidat contesté. Distinct du réalisme (le monde existe) et de l'invariance (les règles sont partout les mêmes). Irréductible à la causalité (une règle n'est pas une cause).", "open": "Question de statut non tranchée (débat reconnu, y compris en littérature allemande) : le monde est-il ordonné parce qu'il y a des lois, ou y a-t-il des lois parce qu'il est ordonné ? L'outil expose ce débat, il ne l'arbitre pas."}];
+const AX = [{"n": "Déterminisme / hasard", "f": "Transversal", "p": "Universelle", "d": "Aucune", "s": "établi", "desc": "Le monde est-il entièrement fixé par ses causes, ou du vrai hasard existe-t-il ?", "ex": "Un dé « truqué » par les lois vs un dé vraiment imprévisible.", "q": "Tout événement est-il déterminé par ses antécédents ?", "src": "Transversal à toute théorie."}, {"n": "Réalisme physique", "f": "Transversal", "p": "Universelle", "d": "Aucune", "s": "établi", "couple": 1, "desc": "Les propriétés physiques ont-elles une valeur définie avant qu'on les mesure ?", "ex": "La lune est-elle là quand personne ne la regarde ?", "q": "Le monde existe-t-il indépendamment de l'observation ?", "src": "Transversal. Forme un couple contraint avec la localité causale (théorème de Bell) : on ne peut garder les deux à la fois.", "rel": "couple"}, {"n": "Causalité", "f": "Transversal", "p": "Universelle", "d": "Aucune", "s": "établi", "desc": "Les choses arrivent par des causes — rien ne surgit sans lien à ce qui précède.", "ex": "On cherche toujours « pourquoi » un phénomène se produit.", "q": "Tout effet a-t-il une cause ?", "src": "Transversal à toute science."}, {"n": "Réductionnisme / émergence forte", "f": "Transversal", "p": "Universelle", "d": "Aucune", "s": "validé", "desc": "Le tout se ramène-t-il à ses parties, ou fait-il émerger quelque chose d'irréductible ?", "ex": "La conscience = des neurones, ou quelque chose en plus ?", "q": "Peut-on tout expliquer par les niveaux inférieurs ?", "src": "Confirmé notamment par le conflit Durkheim / contrat social."}, {"n": "Opérationnalisme", "f": "Transversal", "p": "Générale", "d": "Aucune", "s": "établi", "desc": "Un concept ne vaut que par la procédure qui le mesure.", "ex": "« La température, c'est ce que lit le thermomètre. »", "q": "Un concept se réduit-il à sa mesure ?", "src": "Physique, psychométrie."}, {"n": "Granularité espace-temps", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "établi", "desc": "L'espace et le temps sont-ils continus ou faits de grains minimaux ?", "ex": "Peut-on couper une durée à l'infini ?", "q": "Existe-t-il une échelle minimale ?", "src": "Gravité quantique, mécanique quantique."}, {"n": "Localité causale", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "confirmé", "couple": 1, "desc": "Rien ne se propage plus vite que la lumière ; les causes sont locales.", "ex": "Une action ici ne change pas instantanément là-bas.", "q": "Toute influence est-elle locale ?", "src": "Relativité. Forme un couple contraint avec le réalisme physique (théorème de Bell).", "rel": "couple"}, {"n": "Substantivalisme", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "confirmé", "desc": "L'espace est-il une chose réelle, ou juste des relations entre objets ?", "ex": "Un espace vide existe-t-il, ou n'y a-t-il que des distances ?", "q": "L'espace a-t-il une existence propre ?", "src": "Débat Newton / Leibniz."}, {"n": "Téléologie locale", "f": "Descriptive", "p": "Générale", "d": "Mécanisme (sélection/régulation)", "s": "confirmé", "desc": "Un système tend vers un état sans qu'aucune intention ne le dirige.", "ex": "L'évolution « optimise » sans plan.", "q": "Une finalité peut-elle émerger sans agent ?", "src": "Confirmé dans 6 domaines."}, {"n": "Équilibration locale sans sélection", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "validé", "desc": "Un équilibre s'atteint par pur ajustement, sans tri ni régulateur.", "ex": "L'osmose ; une panne en cascade qui finit par se stabiliser.", "q": "L'équilibre exige-t-il un mécanisme de sélection ?", "src": "Validé (4/5 IA, chalutage dilué)."}, {"n": "Agentivité", "f": "Descriptive", "p": "Spécialisée", "d": "Agent réel", "s": "confirmé", "desc": "Certaines explications supposent un sujet qui agit vraiment.", "ex": "Un choix, pas seulement une réaction chimique.", "q": "Y a-t-il de vrais agents ?", "src": "Action intentionnelle."}, {"n": "Modularité de l'esprit", "f": "Descriptive", "p": "Spécialisée", "d": "Organisation cognitive interne", "s": "confirmé", "desc": "L'esprit est-il fait de modules innés, ou d'un apprentissage général ?", "ex": "Le langage : faculté dédiée ou apprise ?", "q": "L'esprit a-t-il une architecture innée ?", "src": "Débat empirisme vs innatisme."}, {"n": "Individualisme / Holisme", "f": "Descriptive", "p": "Spécialisée", "d": "Agent réel", "s": "validé", "desc": "Le social se réduit-il aux individus, ou le tout prime-t-il ?", "ex": "Une société = la somme des gens, ou un fait propre ?", "q": "L'individu ou le collectif est-il premier ?", "src": "Validé (4 domaines)."}, {"n": "Régulation cybernétique à consigne fixe", "f": "Descriptive", "p": "Générale", "d": "Mécanisme (sélection/régulation)", "s": "confirmé", "desc": "Un système régule vers une cible fixée d'avance.", "ex": "Un thermostat vise une température de consigne.", "q": "La cible est-elle prédéterminée ?", "src": "Confirmé ; 4e domaine (politique monétaire) trouvé par chalutage filet large 5/5. Portée passée de Spécialisée à Générale (provisoire)."}, {"n": "Superposition des états", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "Un système quantique peut être dans plusieurs états à la fois.", "ex": "Le chat de Schrödinger, vivant et mort.", "q": "Les états peuvent-ils coexister ?", "src": "Mécanique quantique. Signal encore faible/instable, un panel supplémentaire est requis."}, {"n": "Mesure comme interaction irréductible", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "Mesurer, c'est interagir — l'acte modifie ce qu'il mesure.", "ex": "Observer une particule change son état.", "q": "La mesure est-elle neutre ?", "src": "Mécanique quantique. Lien à Heisenberg non tranché."}, {"n": "Non-individualité des entités quantiques", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "validé", "desc": "Deux particules identiques n'ont pas d'identité propre distincte.", "ex": "Échanger deux électrons ne change rien.", "q": "Les entités ont-elles une identité individuelle ?", "src": "Mécanique quantique. Validé."}, {"n": "Correspondance classique-quantique", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "validé", "desc": "Le quantique doit redonner le classique à grande échelle.", "ex": "Les lois de Newton comme limite du quantique.", "q": "Les régimes doivent-ils se raccorder ?", "src": "Principe de correspondance. Validé."}, {"n": "Invariance spatiale des lois", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "validé", "desc": "Les lois physiques sont les mêmes en tout lieu.", "ex": "La gravité marche pareil ici et dans une autre galaxie.", "q": "Les lois varient-elles selon l'endroit ?", "src": "Validé (chalutage 5 IA, scission 5/5). Fonde le principe cosmologique et le copernicien."}, {"n": "Invariance temporelle des lois", "f": "Descriptive", "p": "Générale", "d": "Aucune", "s": "validé", "desc": "Les lois physiques sont les mêmes à toute époque.", "ex": "Les lois d'hier valent encore demain.", "q": "Les lois changent-elles avec le temps ?", "src": "Validé (chalutage 5 IA, scission 5/5). Fonde l'uniformitarisme et la médecine légale."}, {"n": "Principe cosmologique", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "L'univers est homogène et isotrope à grande échelle.", "ex": "Aucun lieu de l'univers n'est spécial.", "q": "La matière est-elle répartie uniformément ?", "src": "Confirmé. Dépendance tranchée AUTONOME : le lien supposé vers le copernicien n'est pas soutenu (0/4), et la littérature montre une dérivation en sens inverse — pas une présupposition."}, {"n": "Principe copernicien", "f": "Descriptive", "p": "Spécialisée", "d": "Agent réel", "s": "confirmé", "desc": "Notre position d'observateur n'a rien de privilégié.", "ex": "On n'est pas au centre de l'univers.", "q": "L'observateur est-il quelconque ?", "src": "Confirmé. Sondage vertical dédié (6 voix) : lien vers l'invariance spatiale réfuté (1/6) ; lien vers l'observateur indécis (3/6, panel divisé relationnel vs autonome). Question ouverte assumée.", "open": "Le panel est divisé : le copernicien est-il relationnel (il présuppose un observateur) ou un fait autonome sur l'univers ? Non tranché."}, {"n": "Récurrence de l'intention", "f": "Normative", "p": "Contextuelle", "d": "Chaîne d'intentions récursives", "s": "confirmé", "desc": "Certaines situations exigent que chacun anticipe l'intention de l'autre, en boucle.", "ex": "« Je sais que tu sais que je sais… »", "q": "Faut-il des intentions imbriquées ?", "src": "Préconditions multiples (chaîne d'intentions + cadre normatif)."}, {"n": "Réalisme moral / constructivisme", "f": "Normative", "p": "Spécialisée", "d": "Cadre normatif", "s": "validé", "desc": "Les valeurs morales sont-elles découvertes (réelles) ou construites ?", "ex": "« Torturer est mal » : un fait, ou une convention ?", "q": "La morale est-elle objective ?", "src": "Validé (4 confirmations)."}, {"n": "Raison comme cause", "f": "Métaphysique", "p": "Spécialisée", "d": "Agent réel", "s": "confirmé", "couple": 1, "desc": "Une raison peut-elle vraiment causer un acte, en tant que raison ?", "ex": "J'agis « parce que » c'est juste, pas seulement par réflexe.", "q": "Les raisons ont-elles un pouvoir causal ?", "src": "Forme un couple contraint avec le déterminisme (question du libre arbitre).", "rel": "couple"}, {"n": "Commensurabilité inter-individuelle", "f": "Normative", "p": "Spécialisée", "d": "Cadre normatif", "s": "confirmé", "desc": "Peut-on comparer le bien-être de personnes différentes ?", "ex": "Additionner le bonheur de deux personnes.", "q": "Les valeurs individuelles sont-elles comparables ?", "src": "Utilitarisme, économie du bien-être."}, {"n": "Principe de raison suffisante", "f": "Métaphysique", "p": "Contextuelle", "d": "Aucune", "s": "candidat", "couple": 1, "desc": "Tout ce qui existe doit avoir une raison — rien n'est là sans pourquoi.", "ex": "Pourquoi y a-t-il quelque chose plutôt que rien ?", "q": "Tout a-t-il une raison suffisante ?", "src": "Leibniz. Candidat contesté (Hume, physique). Couple contraint conceptuel avec le refus de la régression infinie, non tranché.", "rel": "couple"}, {"n": "Refus de la régression infinie", "f": "Métaphysique", "p": "Contextuelle", "d": "Aucune", "s": "candidat", "couple": 1, "desc": "Une chaîne de causes ne peut remonter à l'infini — il faut un point d'arrêt.", "ex": "« Pourquoi ? — parce que… » doit s'arrêter un jour.", "q": "Faut-il une cause première ?", "src": "Argument cosmologique. Candidat contesté (les infinitistes le refusent). Couple contraint conceptuel avec la raison suffisante, non tranché.", "rel": "couple"}, {"n": "Théorème de Gödel", "f": "Métaphysique", "p": "Contextuelle", "d": "Aucune", "s": "validé", "desc": "Tout système formel assez riche contient des vérités qu'il ne peut prouver.", "ex": "Des énoncés vrais mais indémontrables dans le système.", "q": "La complétude formelle est-elle possible ?", "src": "Validé (chalutage dédié aveugle, panel local 4/4). Classé en métaphysique : il pose une limite interne des systèmes formels. Nature : un mur, pas un carrefour — ce n'est pas un présupposé qu'on admet, c'est un théorème démontré. Il est remonté dans le filet parce que la pensée s'appuie dessus."}, {"n": "Indécidabilité algorithmique", "f": "Métaphysique", "p": "Contextuelle", "d": "Aucune", "s": "validé", "desc": "Certains problèmes ne peuvent être résolus par aucun algorithme.", "ex": "Le problème de l'arrêt (Turing).", "q": "Tout est-il calculable ?", "src": "Church-Turing. Validé (2 confirmations aveugles). Frère du théorème de Gödel. Nature : comme Gödel, un mur — un résultat démontré (Church & Turing), pas un présupposé."}, {"n": "Primauté de la relation sur la substance", "f": "Métaphysique", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "Ce qui est premier, ce sont les relations, pas les choses en soi.", "ex": "Une particule définie par ses liens, pas isolément.", "q": "La relation précède-t-elle la substance ?", "src": "Rovelli (mécanique quantique relationnelle), théorie des graphes, Deleuze/Latour.", "open": "Chantier laissé ouvert à dessein. La frontière avec le structuralisme classique est difficile à tracer au premier regard — on la montre plutôt que de la masquer. La ligne nette : le structuralisme fait EXISTER la chose d'abord puis la définit par ses relations ; la primauté nie l'existence même hors relation. Maintenu « Confirmé » exprès, comme exemple de frontière vive."}, {"n": "Fusion géométrie/causalité", "f": "Métaphysique", "p": "Générale", "d": "Aucune", "s": "reserve", "desc": "La géométrie de l'espace-temps EST la structure causale.", "ex": "La gravité = une courbure, pas une force.", "q": "Géométrie et causalité sont-elles une seule chose ?", "src": "Relativité générale. Candidat solide mais affaibli par la gravité entropique (Verlinde)."}, {"n": "Dissociation forme/sens (syntaxique)", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "candidat", "desc": "La forme d'un message peut être traitée sans son sens.", "ex": "Un texto arrive intact même s'il est incompréhensible.", "q": "Forme et sens sont-ils séparables ?", "src": "Shannon + formel. Volet syntaxique, scindé du volet sémantique."}, {"n": "Arbitraire du signe (sémantique)", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "candidat", "desc": "Le lien entre un mot et ce qu'il désigne est arbitraire.", "ex": "« chat », « cat », « neko » : même bête, formes différentes.", "q": "Le lien forme/sens est-il conventionnel ?", "src": "Saussure. Volet sémantique, issu de la scission forme/sens."}, {"n": "Physicalité de l'information", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "L'information n'est pas abstraite : effacer un bit coûte de l'énergie.", "ex": "Le principe de Landauer.", "q": "L'information est-elle physique ?", "src": "Présuppose sans dériver un socle nomologique (l'existence d'un ordre réglé).", "rel": "vert"}, {"n": "Clôture organisationnelle", "f": "Descriptive", "p": "Spécialisée", "d": "Aucune", "s": "confirmé", "desc": "Le vivant se produit lui-même — il trace sa propre frontière.", "ex": "Une cellule qui s'auto-entretient (autopoïèse).", "q": "Le vivant est-il auto-productif ?", "src": "Maturana & Varela. Distinct de la primauté de la relation."}, {"n": "Garantie d'optimalité", "f": "Descriptive", "p": "Spécialisée", "d": "Mécanisme (sélection/régulation)", "s": "candidat", "desc": "Un processus sans pilote aboutit non pas à un simple équilibre, mais au MEILLEUR équilibre.", "ex": "La « main invisible » — mais le clavier QWERTY, pourtant mauvais, s'est imposé quand même.", "q": "Le sans-pilote produit-il l'optimal ?", "src": "Adam Smith. Distinct de « l'équilibre sans régulation centrale ». Faille du verrouillage (lock-in). Chalutage transversal fait : optimalité non saillante (1/5), reste candidat.", "open": "La frontière entre « atteindre un équilibre » et « atteindre le MEILLEUR équilibre » est fragile : le panel dissout souvent l'optimalité dans la simple auto-organisation."}, {"n": "P ≠ NP", "f": "Métaphysique", "p": "Contextuelle", "d": "Aucune", "s": "candidat", "desc": "Vérifier une solution serait plus facile que la trouver.", "ex": "Un puzzle dur à résoudre, facile à contrôler.", "q": "Trouver = vérifier ?", "src": "Cryptographie. Axiome de travail, non démontré."}, {"n": "Existence d'un ordre nomologique", "f": "Métaphysique", "p": "Universelle", "d": "Aucune", "s": "candidat", "couple": 0, "desc": "Le monde suit des règles plutôt que d'être un pur chaos.", "ex": "Une pierre lâchée tombe, toujours, de la même façon.", "q": "Le monde est-il réglé ?", "src": "Candidat contesté. Distinct du réalisme (le monde existe) et de l'invariance (les règles sont partout les mêmes). Irréductible à la causalité (une règle n'est pas une cause).", "open": "Question de statut non tranchée (débat reconnu, y compris en littérature allemande) : le monde est-il ordonné parce qu'il y a des lois, ou y a-t-il des lois parce qu'il est ordonné ? L'outil expose ce débat, il ne l'arbitre pas."}];
 const GLOSS = {"Descriptive": "Famille descriptive — dit comment le monde EST (physique, biologie, cognition…). Son étalon : la preuve empirique.", "Normative": "Famille normative — dit ce qui a de la VALEUR, est légitime ou bon (morale, droit, esthétique). Son étalon : la cohérence de sa structure logique.", "Métaphysique": "Famille métaphysique — dit ce qui EXISTE au-delà de l'observable. Filet empirique très réduit : prudence maximale.", "Transversal": "Famille transversale — présente dans presque toutes les théories, quel que soit le domaine (causalité, réalisme…).", "Universelle": "Portée universelle — présent dans toute théorie, sans exception connue. Ce n'est pas un rang de valeur, juste un nombre de domaines.", "Générale": "Portée générale — revient dans la plupart des grands domaines, même très éloignés (≥ 4 domaines).", "Spécialisée": "Portée spécialisée — propre à une famille de théories.", "Contextuelle": "Portée contextuelle — ne se pose que dans des cas très précis.", "dep": "Dépendance — ce dont un axiome a besoin pour seulement apparaître : rien, ou un mécanisme, ou un agent réel, etc. Ce n'est pas un rang de valeur.", "Validé": "Validé — confirmé plusieurs fois, indépendamment, sans contre-exemple sérieux. Le plus solide.", "Établi": "Établi — socle admis, confirmé de longue date et sans contestation. Équivalent du validé pour les axiomes de base.", "Confirmé": "Confirmé — recoupé au moins une fois, mais pas encore éprouvé à fond.", "Candidat": "Candidat — repéré, une première confirmation, reste à creuser.", "Candidat contesté": "Candidat contesté — repéré, mais fait l'objet d'un vrai débat dans la littérature. L'outil expose le débat, il ne le tranche pas.", "En réserve": "En réserve — repéré mais pas encore travaillé, ou volontairement mis de côté.", "Dissous": "Dissous — après analyse, ce n'était pas un axiome indépendant mais la conséquence d'un autre.", "couple contraint": "Couple contraint — deux axiomes qui ne peuvent pas être vrais EN MÊME TEMPS. Aucun n'est faux : il faut choisir.", "présuppose sans dériver": "Présuppose sans dériver — un axiome a besoin d'un autre pour avoir un sens, mais ne s'en déduit pas. Relation à sens unique.", "déshabillage": "Déshabillage — prendre une théorie et retirer ses couches une à une pour trouver le présupposé nu en dessous. L'analyse de base, une théorie à la fois.", "chalutage": "Chalutage — passer des dizaines de théories en revue d'un coup, filet large, pour repérer les axiomes qui reviennent. Rapide, sert à repérer.", "sondage vertical": "Sondage vertical — descendre droit sur une question : cet axiome en présuppose-t-il un autre ? On mesure une profondeur en un point précis.", "carottage": "Carottage — prélever une carotte pour vérifier si les strates qu'on suppose (les familles, les catégories) sont réelles. L'outil qui teste l'architecture elle-même."};
 
 const FAM={"Descriptive":"var(--f-desc)","Normative":"var(--f-norm)","Métaphysique":"var(--f-meta)","Transversal":"var(--f-trans)"};
@@ -738,7 +917,7 @@ function openVoidSheet(){
     <div class="sheet-bd">
       <div class="field"><div class="k">Ce que c'est</div><div class="t">Ce coin croise une <b>portée universelle</b> (présent dans toute théorie) avec une <b>forte dépendance</b> (l'axiome a besoin d'un agent, d'un mécanisme ou d'une norme pour exister). Il reste vide — et le restera toujours.</div></div>
       <div class="field"><div class="k">Pourquoi il reste vide</div><div class="t">Un axiome qui exige une condition pour apparaître ne peut pas, par définition, être présent <i>partout</i> : les théories qui n'ont pas cette condition l'excluent d'office. Universalité et forte dépendance sont donc logiquement incompatibles. Ce n'est pas un trou dans nos données, c'est une impossibilité de principe.</div></div>
-      <div class="field open"><div class="k">⚗ spéculatif</div><div class="t">Si cette lecture est juste, l'absence devient une information : le vide ne dit pas « on n'a pas encore trouvé », il dit « rien ne peut se trouver là ». Une frontière que le réel interdirait de franchir. Piste ouverte, non démontrée — à considérer comme une hypothèse, pas un résultat.</div></div>
+      <div class="field open"><div class="k">à ne pas surinterpréter</div><div class="t">L'absence ici ne dit pas « on n'a pas encore trouvé », elle dit « ces deux mots se contredisent ». C'est une conséquence de la façon dont nous avons défini nos catégories, <b>pas</b> une découverte sur le monde : le vide révèle où nos définitions s'excluent l'une l'autre, il n'annonce rien sur ce que le réel autorise ou interdit. Une tautologie éclairante, pas une prédiction.</div></div>
     </div>`;
   sheet.querySelector('.x').addEventListener('click',closeSheet);
   modal.classList.add('on');
@@ -772,13 +951,54 @@ document.querySelectorAll('nav.tabs button').forEach(b=>{
         <button class="x" aria-label="Fermer">✕</button>
       </div>
       <div class="sheet-bd">
-        <div class="field"><div class="t" style="font-size:15px;line-height:1.7"><b>Ah… vous avez trouvé l'ancre.</b><br><br>Pas mal, moussaillon. La plupart passent devant sans rien voir — vous, vous avez fouiné dans les recoins. C'est exactement le genre de curiosité qu'il me faut.<br><br>Capitaine Zéro, pour vous servir. Mon affaire, c'est de plonger sous les belles théories bien vernies pour voir ce qui les tient à flot par en dessous : leurs <b>présupposés</b>, ces petites choses qu'on admet sans jamais les regarder en face.<br><br>Bientôt, je largue les amarres — et je cherche un équipage. Un vrai outil se prépare dans ma cale : de quoi apprendre à débusquer vos propres axiomes cachés, à vous, par vous. Pas pour me croire sur parole — par ma barbe, non — mais pour aller voir de vos propres yeux ce qui se cache tout au fond.<br><br>Gardez l'œil ouvert. La plongée n'a pas encore sonné… mais elle approche.</div></div>
-        <div class="field"><div class="k">statut de la traversée</div><div class="t" style="color:var(--amber)">Appareillage imminent — Capitaine Zéro n'a pas encore levé l'ancre pour le grand public.</div></div>
+        <div class="field"><div class="t" style="font-size:15px;line-height:1.7"><b>Bonjour, mon ami. Tu as trouvé ce message.</b><br><br>Qu'est-ce qui t'a poussé à cliquer ? Est-ce que tu supposais qu'il y avait quelque chose, là, sous la surface ?<br><br>Bien. Alors je vais te révéler un secret.<br><br>Il existe un monde caché. Un océan d'idées, dans lequel tous les humains naviguent — parfois en voyant clair, parfois à l'aveugle. Mais ils naviguent, toujours.<br><br>Moi, je plonge.<br><br>Et sous la surface, mon ami, il y a un monde merveilleux. Rempli de questions vieilles de plusieurs siècles, silencieuses, qui reposent dans l'eau sombre. Ce sont elles qui articulent, sans qu'on les voie, toute la logique de la pensée humaine.<br><br>Voilà mon secret. Le vrai voyage n'est pas sur la mer — il est dessous.<br><br>Garde l'œil ouvert sur l'eau noire, mon ami. Ceux qui ne plongent jamais croient que l'océan s'arrête à leur reflet.<br><br><span style="color:var(--ink-faint);font-style:italic">— Capitaine Zéro, quelque part sous la ligne de flottaison</span></div></div>
       </div>`;
     sheet.querySelector('.x').addEventListener('click',closeSheet);
     modal.classList.add('on');
   });
 })();
+
+/* ---- PAGE NATURE DES AXIOMES ---- */
+const NATURE={
+  carrefour:{ic:"⛬",col:"#79e0a4",title:"Carrefour",role:"un choix de départ",
+    body:"C'est le cœur du projet. Un carrefour, c'est une idée qu'on croit sans pouvoir la prouver. On peut la prendre, ou prendre le chemin inverse : les deux se défendent. Personne ne peut dire qui a raison.",
+    img:"Comme une bifurcation sur une route : les deux directions mènent quelque part.",
+    items:[
+      {nm:"Réalisme moral / constructivisme",f:"Normative",ds:"Les valeurs morales sont-elles réelles, ou construites par nous ?",why:"On peut tenir un camp ou l'autre — aucun n'est prouvé faux."},
+      {nm:"Réalisme physique",f:"Transversal",ds:"Le monde existe-t-il indépendamment de l'observation ?",why:"Le refuser mène à certaines lectures de la physique quantique — un camp réel."},
+      {nm:"Déterminisme / hasard",f:"Transversal",ds:"Tout événement est-il fixé d'avance par ses causes ?",why:"Les deux réponses restent défendables — un vrai choix de départ."},
+      {nm:"Existence d'un ordre nomologique",f:"Métaphysique",ds:"Le monde suit-il des règles, plutôt qu'un pur chaos ?",why:"Toute science le suppose, personne ne le démontre — le carrefour type."}
+    ]},
+  mur:{ic:"▮",col:"#ff8f6b",title:"Mur",role:"une chose déjà prouvée",
+    body:"Un mur, ce n'est pas un choix : c'est démontré. On ne peut pas partir dans l'autre sens — on se cogne. Du coup, ce n'est pas vraiment un point de départ qu'on décide : c'est un point d'arrivée, déjà trouvé. Ces cas-là sont venus se prendre dans le filet pendant qu'on cherchait autre chose ; on les garde parce qu'ils apprennent quelque chose.",
+    img:"Comme un mur au bout du chemin : on ne décide pas de passer au travers.",
+    items:[
+      {nm:"Théorème de Gödel",f:"Métaphysique",ds:"Un système assez riche contient des vérités qu'il ne peut pas prouver lui-même.",why:"Démontré par Gödel — ce n'est pas un pari, c'est un fait établi."},
+      {nm:"Indécidabilité algorithmique",f:"Métaphysique",ds:"Certains problèmes ne peuvent être résolus par aucune recette de calcul.",why:"Démontré par Church et Turing — un résultat, pas un présupposé."}
+    ]},
+  porte:{ic:"⌸",col:"#c9a6ff",title:"Porte close",role:"une question sans réponse pour l'instant",
+    body:"Ni un choix, ni une chose prouvée. C'est une question qui a une réponse quelque part — mais personne ne l'a encore trouvée.",
+    img:"Comme une porte fermée dont on n'a pas la clé : il y a quelque chose derrière, on ne peut pas encore le voir.",
+    items:[
+      {nm:"P ≠ NP",f:"Métaphysique",ds:"Vérifier une solution est-il vraiment plus facile que la trouver ?",why:"Personne ne l'a démontré ni réfuté à ce jour — la question reste ouverte."}
+    ]}
+};
+const natExplain=document.getElementById('natExplain');
+const natGrid=document.getElementById('natGrid');
+function renderNature(key){
+  const N=NATURE[key];
+  natExplain.innerHTML=`<div class="nat-explain"><h3><span style="color:${N.col}">${N.ic}</span> ${N.title}</h3><div class="role">${N.role}</div><p>${N.body}<span class="img">${N.img}</span></p></div>`;
+  natGrid.innerHTML=N.items.map(a=>`<div class="nat-card ${key}"><div class="fam">${a.f}</div><div class="nm">${a.nm}</div><div class="ds">${a.ds}</div><div class="why">${a.why}</div></div>`).join('');
+  initGlossary(natExplain);
+}
+document.querySelectorAll('#natTabs button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('#natTabs button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    renderNature(b.dataset.nat);
+  });
+});
+renderNature('carrefour');
 
 /* ---- INIT ---- */
 applyFilters();
