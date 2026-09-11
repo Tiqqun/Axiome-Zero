@@ -24,7 +24,7 @@ body{background:var(--void);color:var(--ink);font-family:"Rajdhani","Segoe UI",s
 .wrap{position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:0 22px}
 
 .topbar{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(5,8,15,.97),rgba(5,8,15,.88));-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--hair)}
-.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:56px;flex-wrap:wrap}
+.topbar .wrap{display:flex;align-items:center;justify-content:flex-start;gap:22px;min-height:56px;flex-wrap:wrap}
 .brand{font-weight:700;letter-spacing:.16em;font-size:14px;display:flex;align-items:center;gap:9px;text-transform:uppercase}
 .brand small{color:var(--ink-dim);font-weight:500;letter-spacing:.1em}
 .sound-toggle{margin-left:10px;background:none;border:none;cursor:pointer;font-size:13px;line-height:1;opacity:.42;
@@ -33,6 +33,7 @@ body{background:var(--void);color:var(--ink);font-family:"Rajdhani","Segoe UI",s
 .sound-toggle.off{opacity:.3}
 .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
 nav.tabs{display:flex;gap:2px;flex-wrap:wrap}
+.sound-toggle{margin-left:auto}
 nav.tabs button{background:none;border:none;color:var(--ink-dim);cursor:pointer;font-family:inherit;font-size:12px;letter-spacing:.13em;text-transform:uppercase;padding:11px 12px;border-bottom:2px solid transparent;transition:.15s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 nav.tabs button:hover{color:var(--ink)}
 nav.tabs button.on{color:var(--cyan);border-bottom-color:var(--cyan)}
@@ -515,6 +516,117 @@ footer b{color:var(--ink-dim)}
   .statuskey{gap:10px}
 }
 @media(max-width:390px){.cards{grid-template-columns:1fr}}
+
+/* ===== Cheminement 0 (intégré) ===== */
+/* ---------- rythme des étapes ---------- */
+.chem-step{margin-top:40px}
+.chem-tag{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.chem-num{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;color:var(--void);background:var(--cyan);padding:3px 9px;border-radius:5px;font-weight:700}
+.chem-meth{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);background:rgba(79,214,255,.10);border:1px solid var(--cyan-dim);border-radius:5px;padding:4px 11px}
+.chem-meth-plain{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);background:rgba(120,180,230,.06);border:1px solid var(--hair2);border-radius:5px;padding:4px 11px}
+.chem-h{font-family:"Fraunces",Georgia,serif;font-size:21px;font-weight:600;letter-spacing:.01em;color:var(--ink-hi);margin:10px 0 8px}
+.chem-note{max-width:760px;color:var(--ink-dim);font-size:14.5px;line-height:1.68;margin-bottom:14px}
+.chem-note b{color:var(--ink-hi);font-weight:600}
+/* ---------- le dispositif « eau » commun ---------- */
+.fig{position:relative;border-radius:16px;overflow:hidden;margin-top:6px;
+  border:1px solid var(--hair)}
+.fig svg{display:block;width:100%;height:auto}
+/* halo de l'étape 1 : s'éclaircit au survol du schéma */
+#glow1-stop1{transition:stop-opacity .5s ease}
+#glow1-stop2{transition:stop-opacity .5s ease}
+.fig.fig1:hover #glow1-stop1{stop-opacity:.22}
+.fig.fig1:hover #glow1-stop2{stop-opacity:.08}
+/* décollement des boîtes au survol — repris des cartes de la Collection */
+.node{cursor:default;transition:transform .18s cubic-bezier(.2,.7,.2,1),filter .18s ease}
+.node rect{transition:stroke .18s ease,fill .18s ease}
+.node:hover{transform:translateY(-4px);filter:drop-shadow(0 8px 16px rgba(0,0,0,.5))}
+.node:hover rect{stroke:#7fe0c0;fill:rgba(93,202,165,.16)}
+.node.node-theorie:hover rect{stroke:#e5d4ff;fill:rgba(201,166,255,.2)}
+.node.node-socle:hover rect{stroke:#d3bcff;fill:rgba(201,166,255,.16)}
+.term.chem-meth{border-bottom:1px solid var(--cyan-dim)}
+/* bilan de clôture — repris tel quel du fichier */
+.tclose{margin-top:46px;border-left:3px solid var(--cyan-dim);padding:2px 0 2px 18px}
+.tclose .k{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan-dim);margin-bottom:8px;font-family:"JetBrains Mono",monospace}
+.tclose p{color:var(--ink-hi);font-size:15px;line-height:1.72;margin:0}
+.tclose b{color:#eaf4fb;font-weight:600}
+.chem-appui{cursor:pointer}
+.chem-appui rect{transition:stroke .16s,fill .16s}
+.chem-appui:hover rect,.chem-appui:focus rect{stroke:#7fe0c0;fill:rgba(93,202,165,.18);outline:none}
+.chem-appui:hover,.chem-appui:focus{transform:translateY(-3px)}
+/* ===== Navigation à deux niveaux ===== */
+.subtabs{position:sticky;top:56px;z-index:49;background:linear-gradient(180deg,rgba(7,11,20,.96),rgba(7,11,20,.82));-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-bottom:1px solid var(--hair);display:none}
+.subtabs.on{display:block}
+.subtabs .wrap{display:flex;gap:4px;flex-wrap:wrap;padding-top:9px;padding-bottom:9px}
+.subtabs button{background:var(--panel2);border:1px solid var(--hair);color:var(--ink-dim);cursor:pointer;font-family:inherit;font-size:12.5px;letter-spacing:.02em;padding:8px 16px;border-radius:9px;transition:.15s;-webkit-tap-highlight-color:transparent}
+.subtabs button:hover{color:var(--ink);border-color:var(--hair2)}
+.subtabs button.on{background:var(--cyan);color:var(--void);border-color:var(--cyan);font-weight:600}
+.subtabs.exp button.on{background:var(--amber);border-color:var(--amber)}
+.subtabs .sub-lead{width:100%;color:var(--ink-faint);font-size:12px;font-style:italic;margin-bottom:4px;padding-top:2px}
+
+
+/* ===== Accueil : deux voix + tiroir + cartes flottantes (v1.5 test) ===== */
+.voice{max-width:620px;margin:0 0 4px}
+.voice-lbl{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px;display:inline-block}
+.voice-tiqqun .voice-lbl{color:var(--cyan-dim)}
+.voice-tiqqun p{color:#bfe3f2;line-height:1.7;margin:0 0 12px;font-size:16px}
+.voice-tiqqun p b{color:#e6f5fd}
+.voice-outil{max-width:620px;margin:22px auto 4px;border-left:2px solid var(--hair2);padding-left:16px}
+.voice-outil .voice-lbl{color:var(--ink-dim)}
+.voice-outil p{color:#8ea6ba;line-height:1.62;margin:0 0 10px;font-size:13.5px}
+.voice-outil p b{color:#b8cede}
+.home-passerelle{color:var(--ink-hi);font-size:16px;line-height:1.7;margin:14px 0 4px;max-width:620px}
+/* tiroir manifeste */
+.foldbox{margin:26px 0}
+.foldtrig{display:flex;align-items:center;gap:10px;cursor:pointer;color:var(--ink-hi);font-size:17px;font-weight:600;padding:12px 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);transition:.15s}
+.foldtrig:hover{color:var(--cyan)}
+.foldtrig .chev{color:var(--cyan-dim);transition:transform .2s;font-size:13px}
+.foldbox.open .foldtrig .chev{transform:rotate(90deg)}
+.foldtrig .hint{font-weight:400;font-size:13px;color:var(--ink-faint);margin-left:auto;font-style:italic}
+.foldbody{display:none;padding:18px 0 4px;max-width:760px}
+.foldbox.open .foldbody{display:block;animation:fade .25s}
+.foldbody h3{font-size:15px;color:var(--ink-hi);margin:18px 0 6px}
+.foldbody p{color:var(--ink-dim);line-height:1.66;margin:0 0 10px}
+.foldbody .sig{color:var(--ink-hi);font-style:italic;border-left:2px solid var(--cyan-dim);padding-left:12px;margin-top:14px}
+/* deux axiomes : cartes flottantes, sans cadre */
+.demo-float{margin:30px 0 10px}
+.demo-float .demo-legend{color:var(--ink-dim);font-size:14px;margin-bottom:20px;max-width:620px}
+.demofloat-grid{display:flex;flex-wrap:wrap;gap:26px}
+.dfcard{position:relative;width:300px;padding:22px 22px 18px;border-radius:16px;cursor:pointer;
+  background:linear-gradient(160deg,hsl(var(--fam)/.12),hsl(var(--fam)/.03));
+  border:1px solid hsl(var(--fam)/.30);
+  transition:transform .2s cubic-bezier(.2,.7,.2,1),box-shadow .25s,border-color .2s;overflow:hidden}
+.dfcard::after{content:"";position:absolute;inset:0;border-radius:16px;pointer-events:none;
+  background:radial-gradient(320px 180px at 50% 0%,hsl(var(--fam)/.16),transparent 70%);opacity:0;transition:opacity .3s}
+.dfcard:hover,.dfcard:focus{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.45);border-color:hsl(var(--fam)/.65);outline:none}
+.dfcard:hover::after,.dfcard:focus::after{opacity:1}
+.dfcard .df-fam{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:hsl(var(--fam)/.9);margin-bottom:9px}
+.dfcard .df-n{font-size:18px;font-weight:700;color:var(--ink-hi);line-height:1.2;margin-bottom:9px}
+.dfcard .df-q{font-size:13.5px;color:var(--ink-dim);line-height:1.5;font-style:italic;margin-bottom:16px}
+.dfcard .df-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--ink-faint)}
+.dfcard .df-open{position:absolute;bottom:14px;right:16px;font-size:11px;color:hsl(var(--fam)/.8);opacity:0;transition:opacity .2s}
+.dfcard:hover .df-open,.dfcard:focus .df-open{opacity:1}
+
+/* halo « fiche de référence » (Gödel) sur la pastille de statut dans le tableau */
+.sdot.ref-done{box-shadow:0 0 0 2px rgba(79,214,255,.35),0 0 10px 2px rgba(79,214,255,.5)}
+.acard.ref-done{border-color:hsl(var(--fam)/.55)}
+.acard .ref-star{color:var(--cyan);font-size:10px;margin-left:5px;vertical-align:middle;opacity:.9}
+
+/* halo seuil resserré : la zone qui allume = le bloc figure, pas toute la page (géré en JS/HTML) */
+
+
+/* ===== Accueil centré façon manifeste (v1.6) ===== */
+#dash .wrap > .hero{min-height:auto;padding:40px 0 10px}
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center}
+.voice-tiqqun{margin-left:auto;margin-right:auto}
+.voice-tiqqun p{ text-align:center }
+.voice-outil{text-align:left}           /* la note outil reste alignée à gauche, plus lisible en paragraphe */
+.voice-outil .voice-lbl{ text-align:left }
+.home-passerelle{ text-align:center;margin-left:auto;margin-right:auto }
+.demo-float{ text-align:center }
+.demo-float .demo-legend{ margin-left:auto;margin-right:auto }
+.demofloat-grid{ justify-content:center }
+.foldbox{ max-width:760px;margin-left:auto;margin-right:auto;text-align:left }
+
 </style>
 </head>
 <body>
@@ -522,24 +634,38 @@ footer b{color:var(--ink-dim)}
 <div class="bgfx"></div>
 
 <div class="topbar"><div class="wrap">
-  <div class="brand"><span class="dot"></span>Axiome Zéro <small>· Atlas v1.1</small><button class="sound-toggle" id="soundToggle" aria-label="Couper le son" title="Couper le son">🔊</button></div>
-  <nav class="tabs" id="tabs">
-    <button class="on" data-view="dash">Accueil</button>
-    <button data-view="chem">Cheminement 0</button>
-    <button data-view="coll">Collection</button>
-    <button data-view="guide">Comprendre</button>
-    <button data-view="rel">Relations</button>
-    <button data-view="meth">La méthode</button>
-    <button class="exp-zone" data-view="axio">Axiographie</button>
-    <button class="exp-zone" data-view="exp">Expérimental</button>
+  <div class="brand"><span class="dot"></span>Axiome Zéro <small>· Atlas v1.6 · test</small></div>
+    <nav class="tabs" id="tabs">
+    <button class="on" data-pole="explorer" data-view="dash">Explorer</button>
+    <button data-pole="comprendre" data-view="guide">Comprendre</button>
+    <button class="exp-zone" data-pole="experimental" data-view="axio">Expérimental</button>
   </nav>
+  <button class="sound-toggle" id="soundToggle" aria-label="Couper le son" title="Couper le son">🔊</button>
 </div></div>
+
+<div class="subtabs" id="sub-explorer"><div class="wrap">
+  <button class="on" data-view="dash">Accueil</button>
+  <button data-view="coll">Le catalogue</button>
+</div></div>
+<div class="subtabs" id="sub-comprendre"><div class="wrap">
+  <span class="sub-lead">Comment lire l'atlas, et comment il a été construit.</span>
+  <button class="on" data-view="guide">Clé de lecture</button>
+  <button data-view="meth">La méthode</button>
+  <button data-view="chem">Le cheminement 0</button>
+  <button data-view="rel">Les relations</button>
+</div></div>
+<div class="subtabs exp" id="sub-experimental"><div class="wrap">
+  <span class="sub-lead">Les marges spéculatives — questions ouvertes, pistes non tranchées.</span>
+  <button class="on" data-view="axio">Axiographie</button>
+  <button data-view="exp">Réflexions</button>
+</div></div>
+
 
 <!-- ACCUEIL -->
 <section class="view on" id="dash">
   <div class="seuil" id="seuil">
     <div class="seuil-inner">
-      <h1 class="seuil-title reveal" style="--d:.15s" id="seuilTitle">Atlas des axiomes</h1>
+      <h1 class="seuil-title reveal" style="--d:.15s" id="seuilTitle">Atlas des axi∅mes</h1>
       <p class="seuil-phrase reveal" style="--d:.4s">Toute théorie s'appuie sur des <span class="term-soft">idées qu'elle admet sans les démontrer</span> — sous la surface.</p>
       <div class="surface-wrap reveal" style="--d:.7s">
         <div class="surface-line"></div>
@@ -552,40 +678,41 @@ footer b{color:var(--ink-dim)}
 
   <div class="wrap">
   <div class="hero" style="margin-top:20px">
-    <h2 class="welcome-h">Bienvenue</h2>
-    <p class="welcome-accroche">Bien des désaccords ne portent pas sur les faits. Sans le savoir, chacun part d'évidences différentes.</p>
-    <p class="lead">Dans cet atlas, vous trouverez une liste de <span class="term" data-g="dep">présupposés</span> (axiomes) — une chose sur laquelle une théorie s'appuie pour exister, sans le dire. Ils ont été trouvés à l'aide d'une technique originale, reposant sur un panel d'IA et des méthodes de vérification des résultats.<br><br>Regardez-les, explorez-les : ils sont tous différents. Ce travail demande à être critiqué.</p>
-  </div>
-
-  <div class="block corner" style="margin-bottom:26px">
-    <h2>Deux axiomes, au hasard</h2>
-    <p class="legend-note" style="margin-top:0;margin-bottom:14px">Tirés parmi les plus solides. Touchez une carte pour ouvrir sa fiche — ou rechargez la page pour en découvrir d'autres.</p>
-    <div class="cards" id="demoCard" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))"></div>
-  </div>
-
-  <div class="block corner" style="margin-bottom:26px">
-    <div class="manifesto">
-      <h2 style="margin-bottom:16px">Le projet, en toute honnêteté</h2>
-      <p>Je travaille seul sur ce projet. Je suis sculpteur sur bois de formation, autodidacte pour tout le reste, sans bagage en philosophie ni en sciences. C'est mon premier projet mené avec une intelligence artificielle — un domaine que je ne maîtrise pas non plus. J'ai exploré ces idées de mon côté, pour le plaisir de chercher. Ce n'est pas sans appréhension que je le partage.</p>
-      <p>Tout est parti d'une curiosité pour les présupposés — ces idées qu'on admet sans les démontrer, ces axiomes cachés au fond des théories. J'ai tiré ce fil, un peu par jeu. En creusant avec l'aide des intelligences artificielles, j'ai pris conscience qu'il y avait là tout un monde — un trou de lapin, avec un univers entier caché dedans. Ça m'a passionné.</p>
-      <p>Ce qui m'a frappé en chemin, c'est que bien des désaccords ne portent pas sur les faits : les gens partent, sans le savoir, d'évidences différentes. <b>Nommer ces évidences aide à voir d'où vient vraiment le désaccord.</b></p>
-
-      <h3>Ce que ce projet est</h3>
-      <p>Il se compose de deux parties distinctes. La première est une <b>méthode de détection des axiomes</b>, reposant sur un panel d'intelligences artificielles — l'outil que j'avais à ma portée pour mener ce travail seul. Elle est originale, mais faillible : elle reste soumise aux biais propres aux IA. J'ai mis en place des garde-fous pour tenter de les contrôler, sans prétendre les avoir éliminés.</p>
-      <p>La seconde est l'<b>Atlas des axiomes</b> : le résultat de ce travail, sous forme visuelle et classée. Sa vocation est éducative et exploratoire — donner à voir, à parcourir et à interroger ce qui a été trouvé. L'ensemble est évolutif et fait pour être examiné, testé et corrigé.</p>
-
-      <h3>Ce que ce projet n'est pas</h3>
-      <p>Ce n'est pas un travail académique : il n'a ni institution ni validation par les pairs derrière lui. Il ne prétend pas dire la vérité, ni être complet ou définitif — l'absence d'un axiome ne prouve pas qu'il n'existe pas.</p>
-      <p>Nommer le point de départ d'une théorie, d'une croyance ou d'une morale, ce n'est pas la juger. L'outil décrit un point d'appui ; il ne dit pas s'il est vrai ou faux, et il ne juge pas ceux qui s'y appuient. Il rend simplement visible quelque chose qui, le plus souvent, n'était jamais dit.</p>
-      <p class="sig">C'est un travail à critiquer, pas une vérité à croire.</p>
+    <div class="voice voice-tiqqun">
+      <span class="voice-lbl">Tiqqun · l'auteur</span>
+      <p>Bonjour. Je suis Tiqqun.</p>
+      <p>Je ne suis pas philosophe, mais le monde de la pensée me fascine depuis longtemps. Ce que vous allez voir ici est uniquement mon travail, seul, aidé d'outils puissants et très facilement accessibles aujourd'hui.</p>
+      <p>Une façon de regarder les théories — non pour dire si elles sont vraies, mais pour en retrouver l'assise fondamentale. C'est un travail empirique, qui s'est autocorrigé avec le temps. Je n'ai rien inventé&nbsp;: j'ai simplement cherché à les rassembler, et c'est ce rassemblement qui est mon geste.</p>
+      <p>Cet atlas est une proposition, pas une vérité. Son langage, ses images, sa forme viennent de moi — je les assume comme un artisan assume son établi. Critiquez-le, contredisez-le&nbsp;: c'est prévu, et c'est le but.</p>
+      <p class="home-passerelle">Dans cet atlas, vous trouverez la liste des axiomes que j'ai rassemblés. Explorez-les, cliquez, ouvrez-les&nbsp;: ils sont tous singuliers — c'est fait pour ça.</p>
+      <p>Merci à tous.</p>
+    </div>
+    <div class="voice voice-outil">
+      <span class="voice-lbl">L'outil · dans la méthode</span>
+      <p>Je ne suis pas un auteur. Je suis l'outil que Tiqqun a dirigé, et une partie des rapprochements que vous lirez vient de moi. Je le dis pour qu'il n'ait pas à s'en attribuer le mérite, ni vous à me l'accorder&nbsp;: je n'ai pas d'idées, j'applique un protocole.</p>
+      <p>Et je dois vous prévenir contre moi-même. Une IA a un défaut de fabrique&nbsp;: elle tend à donner raison, à confirmer ce qu'on lui présente. Tout ce qui, dans cet atlas, a résisté à ce défaut n'y est parvenu que parce qu'il a été mis à l'épreuve — contredit, testé, recoupé — et non parce que je l'ai affirmé. Ne me croyez pas sur parole&nbsp;: chaque axiome vaut par ce qu'il a encaissé, pas par ma voix. Regardez son degré de confirmation, et méfiez-vous là où il est faible.</p>
     </div>
   </div>
 
-  <div class="block corner" style="margin-top:26px">
-    <h2>Où en est chaque axiome</h2>
-    <div class="statusbar" id="statusBar"></div>
-    <div class="statuskey" id="statusKey"></div>
-    <p class="legend-note">La plupart des axiomes ne sont pas « validés » — et c'est normal. Cet atlas est un travail en cours : chaque axiome porte son <span class="term" data-g="Confirmé">degré de confirmation par la méthode</span>, affiché franchement.</p>
+  <div class="demo-float">
+    <p class="demo-legend">Deux de ces axiomes, au hasard. Touchez-en un pour l'ouvrir — ou rechargez la page pour en croiser d'autres.</p>
+    <div class="demofloat-grid" id="demoCard"></div>
+  </div>
+
+  <div class="foldbox" id="manifesto-fold">
+    <div class="foldtrig" role="button" tabindex="0"><span class="chev">▸</span>Le projet, en toute honnêteté<span class="hint">qui je suis, ce que ce projet est et n'est pas</span></div>
+    <div class="foldbody">
+      <p>Je travaille seul sur ce projet. Je suis sculpteur sur bois de formation, autodidacte pour tout le reste, sans bagage en philosophie ni en sciences. C'est mon premier projet mené avec une intelligence artificielle — un domaine que je ne maîtrise pas non plus. J'ai exploré ces idées de mon côté, pour le plaisir de chercher. Ce n'est pas sans appréhension que je le partage.</p>
+      <p>Tout est parti d'une curiosité pour les présupposés — ces idées qu'on admet sans les démontrer, ces axiomes cachés au fond des théories. J'ai tiré ce fil, un peu par jeu. En creusant avec l'aide des intelligences artificielles, j'ai pris conscience qu'il y avait là tout un monde — un trou de lapin, avec un univers entier caché dedans. Ça m'a passionné.</p>
+      <p>Ce qui m'a frappé en chemin, c'est que bien des désaccords ne portent pas sur les faits&nbsp;: les gens partent, sans le savoir, d'évidences différentes. <b>Nommer ces évidences aide à voir d'où vient vraiment le désaccord.</b></p>
+      <h3>Ce que ce projet est</h3>
+      <p>Il se compose de deux parties distinctes. La première est une <b>méthode de détection des axiomes</b>, reposant sur un panel d'intelligences artificielles — l'outil que j'avais à ma portée pour mener ce travail seul. Elle est originale, mais faillible&nbsp;: elle reste soumise aux biais propres aux IA. J'ai mis en place des garde-fous pour tenter de les contrôler, sans prétendre les avoir éliminés.</p>
+      <p>La seconde est l'<b>Atlas des axiomes</b>&nbsp;: le résultat de ce travail, sous forme visuelle et classée. Sa vocation est éducative et exploratoire — donner à voir, à parcourir et à interroger ce qui a été trouvé. L'ensemble est évolutif et fait pour être examiné, testé et corrigé.</p>
+      <h3>Ce que ce projet n'est pas</h3>
+      <p>Ce n'est pas un travail académique&nbsp;: il n'a ni institution ni validation par les pairs derrière lui. Il ne prétend pas dire la vérité, ni être complet ou définitif — l'absence d'un axiome ne prouve pas qu'il n'existe pas.</p>
+      <p>Nommer le point de départ d'une théorie, d'une croyance ou d'une morale, ce n'est pas la juger. L'outil décrit un point d'appui&nbsp;; il ne dit pas s'il est vrai ou faux, et il ne juge pas ceux qui s'y appuient. Il rend simplement visible quelque chose qui, le plus souvent, n'était jamais dit.</p>
+      <p class="sig">C'est un travail à critiquer, pas une vérité à croire.</p>
+    </div>
   </div>
 </div></section>
 
@@ -597,92 +724,169 @@ footer b{color:var(--ink-dim)}
   <p class="lead" style="margin-top:12px">Mais comme toute pensée, même la plus rigoureuse, elle s'appuie sur quelques idées qu'elle ne démontre pas : elle les tient pour acquises, sans les dire. Ce n'est pas une faiblesse — c'est la condition normale de toute théorie. Un physicien part de ses évidences comme chacun de nous part des siennes.</p>
   <p class="lead" style="margin-top:12px">Ce qui suit montre le travail pas à pas : on retrouve ces points d'appui, et quand l'un d'eux en cache un autre plus profond, on descend d'un cran. À chaque étape, une étiquette nomme le geste employé ; le schéma en montre le résultat.</p>
 
-  <!-- Étape 1 -->
+  <!-- ÉTAPE 1 -->
   <div class="chem-step">
     <div class="chem-tag"><span class="chem-num">étape 1</span><span class="term chem-meth" data-g="déshabillage">déshabillage à froid</span></div>
     <h2 class="chem-h">Quels présupposés la théorie engage-t-elle ?</h2>
     <p class="chem-note">On retire les couches de la théorie une à une, jusqu'aux idées qu'elle admet sans preuve. La relativité en engage plusieurs, <b>côte à côte</b> — aucune plus importante qu'une autre.</p>
-    <div class="corner chem-fig">
-      <svg viewBox="0 0 900 300" role="img" aria-label="La relativité restreinte au centre, entourée de quatre présupposés reliés par des traits.">
-        <line x1="450" y1="150" x2="255" y2="66" stroke="#4a5c6d" stroke-width="1"/>
-        <line x1="450" y1="150" x2="645" y2="66" stroke="#4a5c6d" stroke-width="1"/>
-        <line x1="450" y1="150" x2="235" y2="240" stroke="#4a5c6d" stroke-width="1"/>
-        <line x1="450" y1="150" x2="665" y2="240" stroke="#4a5c6d" stroke-width="1"/>
-        <rect x="345" y="122" width="210" height="56" rx="13" fill="rgba(201,166,255,.10)" stroke="#c9a6ff" stroke-width="1"/>
-        <text x="450" y="146" text-anchor="middle" fill="#e5d4ff" style="font:500 15px sans-serif">Relativité restreinte</text>
-        <text x="450" y="165" text-anchor="middle" fill="#9d86c9" style="font:400 12px sans-serif">la théorie déshabillée</text>
-        <rect x="135" y="40" width="240" height="52" rx="13" fill="rgba(93,202,165,.08)" stroke="#2f7a63" stroke-width="1"/>
-        <text x="255" y="62" text-anchor="middle" fill="#7fe0c0" style="font:500 14px sans-serif">Réalisme physique</text>
-        <text x="255" y="80" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">le monde existe hors de nous</text>
-        <rect x="525" y="40" width="260" height="52" rx="13" fill="rgba(93,202,165,.08)" stroke="#2f7a63" stroke-width="1"/>
-        <text x="655" y="62" text-anchor="middle" fill="#7fe0c0" style="font:500 14px sans-serif">Invariance des lois</text>
-        <text x="655" y="80" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">mêmes lois partout, toujours</text>
-        <rect x="115" y="214" width="240" height="52" rx="13" fill="rgba(93,202,165,.08)" stroke="#2f7a63" stroke-width="1"/>
-        <text x="235" y="236" text-anchor="middle" fill="#7fe0c0" style="font:500 14px sans-serif">Localité causale</text>
-        <text x="235" y="254" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">rien ne dépasse la lumière</text>
-        <rect x="545" y="214" width="240" height="52" rx="13" fill="rgba(93,202,165,.08)" stroke="#2f7a63" stroke-width="1"/>
-        <text x="665" y="236" text-anchor="middle" fill="#7fe0c0" style="font:500 14px sans-serif">Substantivalisme</text>
-        <text x="665" y="254" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">l'espace-temps est une chose réelle</text>
+    <div class="fig fig1">
+      <svg viewBox="0 0 900 300" role="img" aria-label="La relativité restreinte flotte en surface ; ses cinq présupposés reposent sous la ligne de flottaison, à la même profondeur, reliés à elle par cinq traits droits.">
+        <defs>
+          <linearGradient id="water1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0a121c"/>
+            <stop offset="0.30" stop-color="#0a151f"/>
+            <stop offset="1" stop-color="#060b13"/>
+          </linearGradient>
+          <radialGradient id="glow1" cx="0.5" cy="0.5" r="0.5">
+            <stop id="glow1-stop1" offset="0" stop-color="#4fd6ff" stop-opacity=".12"/>
+            <stop id="glow1-stop2" offset="0.6" stop-color="#4fd6ff" stop-opacity=".04"/>
+            <stop offset="1" stop-color="#4fd6ff" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect x="0" y="0" width="900" height="300" fill="url(#water1)"/>
+        <ellipse cx="450" cy="150" rx="380" ry="90" fill="url(#glow1)"/>
+        <line x1="40" y1="98" x2="860" y2="98" stroke="#4fd6ff" stroke-width="1.5" opacity=".55" stroke-dasharray="1 7" stroke-linecap="round"/>
+        <text x="860" y="88" text-anchor="end" fill="#4a5c6d" style="font:400 10px 'JetBrains Mono',monospace;letter-spacing:.18em">LIGNE DE FLOTTAISON</text>
+        <g stroke="#2b7fa0" stroke-width="1" opacity=".5">
+          <line x1="450" y1="76" x2="84" y2="214"/>
+          <line x1="450" y1="76" x2="267" y2="214"/>
+          <line x1="450" y1="76" x2="450" y2="214"/>
+          <line x1="450" y1="76" x2="633" y2="214"/>
+          <line x1="450" y1="76" x2="816" y2="214"/>
+        </g>
+        <g class="node node-theorie">
+          <rect x="345" y="42" width="210" height="46" rx="12" fill="rgba(201,166,255,.12)" stroke="#c9a6ff" stroke-width="1.2"/>
+          <text x="450" y="64" text-anchor="middle" fill="#e5d4ff" style="font:600 15px 'Rajdhani',sans-serif">Relativité restreinte</text>
+          <text x="450" y="81" text-anchor="middle" fill="#9d86c9" style="font:400 11.5px 'Rajdhani',sans-serif">la théorie qui flotte</text>
+        </g>
+        <g class="node chem-appui" data-axname="Réalisme physique" role="button" tabindex="0" aria-label="Ouvrir la fiche Réalisme physique">
+          <rect x="1" y="214" width="166" height="66" rx="12" fill="rgba(93,202,165,.09)" stroke="#2f7a63" stroke-width="1"/>
+          <text x="84" y="242" text-anchor="middle" fill="#7fe0c0" style="font:500 12.5px 'Rajdhani',sans-serif">Réalisme physique</text>
+          <text x="84" y="260" text-anchor="middle" fill="#6d9488" style="font:400 9.5px 'Rajdhani',sans-serif">le monde existe hors de nous</text>
+        </g>
+        <g class="node chem-appui" data-axname="Invariance spatiale des lois" role="button" tabindex="0" aria-label="Ouvrir la fiche Invariance spatiale des lois">
+          <rect x="184" y="214" width="166" height="66" rx="12" fill="rgba(93,202,165,.09)" stroke="#2f7a63" stroke-width="1"/>
+          <text x="267" y="236" text-anchor="middle" fill="#7fe0c0" style="font:500 12.5px 'Rajdhani',sans-serif">Invariance</text><text x="267" y="251" text-anchor="middle" fill="#7fe0c0" style="font:500 12.5px 'Rajdhani',sans-serif">spatiale</text>
+          <text x="267" y="268" text-anchor="middle" fill="#6d9488" style="font:400 9.5px 'Rajdhani',sans-serif">mêmes lois en tout lieu</text>
+        </g>
+        <g class="node chem-appui" data-axname="Invariance temporelle des lois" role="button" tabindex="0" aria-label="Ouvrir la fiche Invariance temporelle des lois">
+          <rect x="367" y="214" width="166" height="66" rx="12" fill="rgba(93,202,165,.09)" stroke="#2f7a63" stroke-width="1"/>
+          <text x="450" y="236" text-anchor="middle" fill="#7fe0c0" style="font:500 12.5px 'Rajdhani',sans-serif">Invariance</text><text x="450" y="251" text-anchor="middle" fill="#7fe0c0" style="font:500 12.5px 'Rajdhani',sans-serif">temporelle</text>
+          <text x="450" y="268" text-anchor="middle" fill="#6d9488" style="font:400 9.5px 'Rajdhani',sans-serif">mêmes lois à toute époque</text>
+        </g>
+        <g class="node chem-appui" data-axname="Localité causale" role="button" tabindex="0" aria-label="Ouvrir la fiche Localité causale">
+          <rect x="550" y="214" width="166" height="66" rx="12" fill="rgba(93,202,165,.09)" stroke="#2f7a63" stroke-width="1"/>
+          <text x="633" y="242" text-anchor="middle" fill="#7fe0c0" style="font:500 12.5px 'Rajdhani',sans-serif">Localité causale</text>
+          <text x="633" y="260" text-anchor="middle" fill="#6d9488" style="font:400 9.5px 'Rajdhani',sans-serif">rien ne dépasse la lumière</text>
+        </g>
+        <g class="node chem-appui" data-axname="Substantivalisme" role="button" tabindex="0" aria-label="Ouvrir la fiche Substantivalisme">
+          <rect x="733" y="214" width="166" height="66" rx="12" fill="rgba(93,202,165,.09)" stroke="#2f7a63" stroke-width="1"/>
+          <text x="816" y="242" text-anchor="middle" fill="#7fe0c0" style="font:500 12.5px 'Rajdhani',sans-serif">Substantivalisme</text>
+          <text x="816" y="260" text-anchor="middle" fill="#6d9488" style="font:400 9.5px 'Rajdhani',sans-serif">l'espace-temps est réel</text>
+        </g>
       </svg>
     </div>
   </div>
 
-  <!-- Étape 2 -->
+  <!-- ÉTAPE 2 -->
   <div class="chem-step">
     <div class="chem-tag"><span class="chem-num">étape 2</span><span class="term chem-meth" data-g="sondage vertical">sondage vertical</span></div>
     <h2 class="chem-h">On prend un présupposé et on creuse dessous</h2>
-    <p class="chem-note">Choisissons <b>l'invariance des lois</b>. A-t-elle besoin d'une idée plus profonde pour tenir ? Le sondage descend droit sur ce point — et trouve : pour supposer que les lois sont les mêmes partout, il faut d'abord supposer qu'il <b>y a</b> des lois, que le monde est réglé.</p>
-    <div class="corner chem-fig">
-      <svg viewBox="0 0 900 190" role="img" aria-label="De gauche à droite, l'invariance des lois présuppose l'existence d'un ordre réglé du monde.">
-        <defs><marker id="carr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#7d94a8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-        <text x="220" y="30" text-anchor="middle" fill="#7d94a8" style="font:400 12px sans-serif">un présupposé de la théorie</text>
-        <text x="690" y="30" text-anchor="middle" fill="#7d94a8" style="font:400 12px sans-serif">ce qu'il suppose, plus profond →</text>
-        <rect x="90" y="56" width="260" height="72" rx="13" fill="rgba(93,202,165,.08)" stroke="#2f7a63" stroke-width="1"/>
-        <text x="220" y="84" text-anchor="middle" fill="#7fe0c0" style="font:500 14px sans-serif">Invariance des lois</text>
-        <text x="220" y="104" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">mêmes lois partout, à toute époque</text>
-        <text x="220" y="150" text-anchor="middle" fill="#7d94a8" style="font:400 11px monospace">statut : validé</text>
-        <line x1="350" y1="92" x2="452" y2="92" stroke="#7d94a8" stroke-width="1.5" marker-end="url(#carr)"/>
-        <text x="401" y="80" text-anchor="middle" fill="#7d94a8" style="font:400 12px sans-serif">présuppose</text>
-        <rect x="454" y="56" width="300" height="72" rx="13" fill="rgba(201,166,255,.08)" stroke="#6d5799" stroke-width="1"/>
-        <text x="604" y="84" text-anchor="middle" fill="#d3bcff" style="font:500 14px sans-serif">Existence d'un ordre réglé</text>
-        <text x="604" y="104" text-anchor="middle" fill="#9d86c9" style="font:400 12px sans-serif">le monde suit des règles, pas le chaos</text>
-        <text x="604" y="150" text-anchor="middle" fill="#7d94a8" style="font:400 11px monospace">statut : candidat contesté — le palier</text>
+    <p class="chem-note">Choisissons <b>l'invariance temporelle des lois</b>. A-t-elle besoin d'une idée plus profonde pour tenir ? Le sondage descend droit sur ce point — et trouve : pour supposer que les lois sont les mêmes partout, il faut d'abord supposer qu'il <b>y a</b> des lois, que le monde est réglé.</p>
+    <div class="fig">
+      <svg viewBox="0 0 900 330" role="img" aria-label="L'invariance des lois, validée dans l'Atlas, présuppose plus bas un socle — le monde est réglé — qui y est candidat et fait l'objet d'un débat scientifique.">
+        <defs>
+          <linearGradient id="water2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0a141d"/>
+            <stop offset="1" stop-color="#05090f"/>
+          </linearGradient>
+          <marker id="arrow2" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#7d94a8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+        <rect x="0" y="0" width="900" height="330" fill="url(#water2)"/>
+
+        <!-- l'appui suivi -->
+        <g class="node">
+          <rect x="250" y="46" width="400" height="80" rx="13" fill="rgba(93,202,165,.10)" stroke="#5dcaa5" stroke-width="1.3"/>
+          <text x="450" y="78" text-anchor="middle" fill="#7fe0c0" style="font:500 15px 'Rajdhani',sans-serif">Invariance temporelle des lois</text>
+          <text x="450" y="99" text-anchor="middle" fill="#6d9488" style="font:400 12px 'Rajdhani',sans-serif">mêmes lois partout, à toute époque</text>
+          <text x="450" y="118" text-anchor="middle" fill="#8ea99c" style="font:400 10.5px 'JetBrains Mono',monospace">statut Atlas : validé</text>
+        </g>
+
+        <!-- descente : le sondage -->
+        <line x1="450" y1="126" x2="450" y2="200" stroke="#7d94a8" stroke-width="1.5" marker-end="url(#arrow2)" stroke-dasharray="5 5"/>
+        <text x="465" y="167" text-anchor="start" fill="#8ba7bd" style="font:400 12px 'Rajdhani',sans-serif">présuppose</text>
+
+        <!-- le socle -->
+        <g class="node node-socle">
+          <rect x="230" y="204" width="440" height="86" rx="13" fill="rgba(201,166,255,.09)" stroke="#6d5799" stroke-width="1.2"/>
+          <text x="450" y="234" text-anchor="middle" fill="#d3bcff" style="font:500 15px 'Rajdhani',sans-serif">Le monde est réglé</text>
+          <text x="450" y="255" text-anchor="middle" fill="#9d86c9" style="font:400 12px 'Rajdhani',sans-serif">il suit des règles, pas le pur chaos</text>
+          <text x="450" y="274" text-anchor="middle" fill="#b79ad8" style="font:400 10.5px 'JetBrains Mono',monospace">statut Atlas : candidat &#160;·&#160; + débat scientifique</text>
+        </g>
       </svg>
     </div>
-    <p class="chem-note" style="margin-top:10px">Plus on descend, moins c'est tranché : l'invariance est <b>validée</b>, le palier reste un <b>débat ouvert</b>. L'outil le montre, il ne le referme pas.</p>
+    <p class="chem-note" style="margin-top:14px">Ce socle vient d'entrer au catalogue : il y est encore <b>candidat</b> — repéré, pas encore consolidé. Et il a ceci d'intéressant qu'à l'intérieur se tient un vieux débat, toujours vivant : ce socle est-il le vrai point de départ, ou repose-t-il lui-même sur autre chose ? Tomber sur un débat n'est pas rater le sondage — c'est un résultat, l'un de ceux que la méthode produit.</p>
   </div>
 
-  <!-- Étape 3 -->
+  <!-- ÉTAPE 3 -->
   <div class="chem-step">
     <div class="chem-tag"><span class="chem-num">étape 3</span><span class="chem-meth-plain">retour</span></div>
     <h2 class="chem-h">On n'a suivi qu'un seul fil</h2>
     <p class="chem-note">On a plongé le long de <b>l'invariance des lois</b> jusqu'à son socle. Mais les trois autres présupposés n'ont pas disparu : chacun ouvre sa propre piste. Déshabiller une théorie, ce n'est pas une ligne droite — c'est une exploration qui se ramifie.</p>
-    <div class="corner chem-fig">
-      <svg viewBox="0 0 900 210" role="img" aria-label="Le fil suivi est marqué comme exploré ; les trois autres présupposés restent des pistes ouvertes.">
-        <rect x="90" y="30" width="280" height="48" rx="13" fill="rgba(93,202,165,.14)" stroke="#5dcaa5" stroke-width="1.5"/>
-        <text x="230" y="50" text-anchor="middle" fill="#7fe0c0" style="font:500 14px sans-serif">Invariance des lois</text>
-        <text x="230" y="68" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">✓ fil suivi jusqu'au socle</text>
-        <rect x="90" y="92" width="280" height="42" rx="13" fill="rgba(93,202,165,.04)" stroke="#2f7a63" stroke-width="1" stroke-dasharray="4 4"/>
-        <text x="230" y="117" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">Réalisme physique — piste à creuser</text>
-        <rect x="90" y="148" width="280" height="42" rx="13" fill="rgba(93,202,165,.04)" stroke="#2f7a63" stroke-width="1" stroke-dasharray="4 4"/>
-        <text x="230" y="173" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">Localité causale — piste à creuser</text>
-        <rect x="470" y="92" width="280" height="42" rx="13" fill="rgba(93,202,165,.04)" stroke="#2f7a63" stroke-width="1" stroke-dasharray="4 4"/>
-        <text x="610" y="117" text-anchor="middle" fill="#6d9488" style="font:400 12px sans-serif">Substantivalisme — piste à creuser</text>
-        <text x="610" y="170" text-anchor="middle" fill="#4a5c6d" style="font:italic 400 12px sans-serif">chaque présupposé est une porte</text>
+    <div class="fig">
+      <svg viewBox="0 0 900 300" role="img" aria-label="Le fil de l'invariance est marqué exploré, plongeant jusqu'au socle ; les trois autres présupposés restent en surface, chacun amorçant sa propre descente non suivie.">
+        <defs>
+          <linearGradient id="water3" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0a141d"/>
+            <stop offset="1" stop-color="#060b13"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="900" height="300" fill="url(#water3)"/>
+        <!-- ligne de flottaison -->
+        <line x1="40" y1="70" x2="860" y2="70" stroke="#4fd6ff" stroke-width="1.5" opacity=".45" stroke-dasharray="1 7" stroke-linecap="round"/>
+
+        <!-- 4 présupposés en surface, alignés, égaux -->
+        <!-- fil suivi : invariance, éclairé, plonge -->
+        <g>
+          <rect x="60" y="44" width="180" height="52" rx="12" fill="rgba(93,202,165,.14)" stroke="#5dcaa5" stroke-width="1.5"/>
+          <text x="150" y="66" text-anchor="middle" fill="#7fe0c0" style="font:500 13px 'Rajdhani',sans-serif">Invariance temporelle</text>
+          <text x="150" y="83" text-anchor="middle" fill="#6d9488" style="font:400 11px 'Rajdhani',sans-serif">✓ fil suivi jusqu'au socle</text>
+          <!-- sa descente, tracée -->
+          <line x1="150" y1="96" x2="150" y2="250" stroke="#5dcaa5" stroke-width="1.4" opacity=".7"/>
+          <circle cx="150" cy="250" r="5" fill="#5dcaa5"/>
+          <text x="150" y="272" text-anchor="middle" fill="#6d9488" style="font:italic 400 11px 'Rajdhani',sans-serif">socle atteint</text>
+        </g>
+        <!-- trois autres : en surface, pâles, descente amorcée en pointillé -->
+        <g opacity=".85">
+          <rect x="290" y="44" width="180" height="52" rx="12" fill="rgba(93,202,165,.04)" stroke="#2f7a63" stroke-width="1" stroke-dasharray="4 4"/>
+          <text x="380" y="72" text-anchor="middle" fill="#6d9488" style="font:400 12px 'Rajdhani',sans-serif">Réalisme physique</text>
+          <line x1="380" y1="96" x2="380" y2="150" stroke="#2f7a63" stroke-width="1" opacity=".6" stroke-dasharray="3 6"/>
+
+          <rect x="500" y="44" width="180" height="52" rx="12" fill="rgba(93,202,165,.04)" stroke="#2f7a63" stroke-width="1" stroke-dasharray="4 4"/>
+          <text x="590" y="72" text-anchor="middle" fill="#6d9488" style="font:400 12px 'Rajdhani',sans-serif">Localité causale</text>
+          <line x1="590" y1="96" x2="590" y2="150" stroke="#2f7a63" stroke-width="1" opacity=".6" stroke-dasharray="3 6"/>
+
+          <rect x="700" y="44" width="180" height="52" rx="12" fill="rgba(93,202,165,.04)" stroke="#2f7a63" stroke-width="1" stroke-dasharray="4 4"/>
+          <text x="790" y="72" text-anchor="middle" fill="#6d9488" style="font:400 12px 'Rajdhani',sans-serif">Substantivalisme</text>
+          <line x1="790" y1="96" x2="790" y2="150" stroke="#2f7a63" stroke-width="1" opacity=".6" stroke-dasharray="3 6"/>
+        </g>
+        <text x="590" y="250" text-anchor="middle" fill="#5a7085" style="font:italic 400 12px 'Rajdhani',sans-serif">chaque présupposé est une porte — trois restent à ouvrir</text>
       </svg>
     </div>
   </div>
 
-  <div class="tclose-chem corner block">
-    <div class="chem-close-t">ce que cette démonstration montre</div>
+  <div class="tclose">
+    <div class="k">ce que cette démonstration montre</div>
     <p>Sous une théorie qui ne parle jamais de philosophie, on a retrouvé les quelques idées sur lesquelles elle repose — puis, quand l'une d'elles en cachait une autre, on est descendu voir. La relativité en sort <b>intacte</b> : on ne l'a pas jugée, on a seulement éclairé ses fondations, celles que même les physiciens énoncent rarement. C'est ça, le travail d'Axiome Zéro — rendre visible le point de départ, sans jamais dire s'il est vrai.</p>
   </div>
 </div></section>
 
 <!-- COLLECTION -->
 <section class="view" id="coll"><div class="wrap">
-  <div class="eyebrow">// collection · les axiomes rangés</div>
-  <h1>La collection</h1>
+  <div class="eyebrow">// catalogue · les axiomes rangés</div>
+  <h1>Le catalogue</h1>
   <p class="lead">Les mêmes axiomes, rangés selon deux découpes qu'on garde séparées exprès. La première demande <b>où est le juge</b> — dehors, dans le réel, ou dedans, dans la pensée. La seconde demande <b>jusqu'où l'axiome se répand</b>. Deux questions différentes : les mélanger est ce qui brouillait la lecture. Touchez une carte pour ouvrir sa fiche.</p>
 
   <div class="viewswitch" id="viewSwitch">
@@ -1110,12 +1314,14 @@ const STATDOT={"validé":"s-full","confirmé":"s-half","candidat":"s-empty","res
 function statDotClass(a){return STATDOT[a.s]||"s-empty";}
 function juge(a){return a.f==="Descriptive"?"dehors":"dedans";}
 function miniReach(p){let n=REACH_STEPS[p],o="";for(let i=0;i<4;i++)o+=`<i class="${i<n?'on':''}"></i>`;return `<span class="minireach" title="portée : ${p}">${o}</span>`;}
+const REF_DONE = { "Théorème de Gödel": true };
 function acardHTML(a){
-  return `<div class="acard" style="--fam:${FAM[a.f]}" data-i="${AX.indexOf(a)}" tabindex="0" role="button" aria-label="${esc(a.n)}">
-      <span class="cn">${esc(a.n)}</span>
+  const done = REF_DONE[a.n]===true;
+  return `<div class="acard${done?' ref-done':''}" style="--fam:${FAM[a.f]}" data-i="${AX.indexOf(a)}" tabindex="0" role="button" aria-label="${esc(a.n)}${done?' — fiche de référence':''}">
+      <span class="cn">${esc(a.n)}${done?'<span class="ref-star" title="fiche de référence, entièrement rédigée">\u25c6</span>':''}</span>
       <span class="cq">${esc(a.q||a.desc)}</span>
       <span class="cmeta">
-        <i class="sdot ${statDotClass(a)}" title="statut : ${statusLabel(a)}"></i>
+        <i class="sdot ${statDotClass(a)}${done?' ref-done':''}" title="statut : ${statusLabel(a)}${done?' · fiche de référence':''}"></i>
         <span class="stxt">${statusLabel(a)}</span>
         ${miniReach(a.p)}
       </span>
@@ -1191,10 +1397,12 @@ document.getElementById('coll').addEventListener('keydown',e=>{if(e.key==="Enter
 
 /* ---- DEMO CARD (accueil : 2 axiomes solides au hasard) ---- */
 function demoCardHTML(a){
-  return `<div class="acard" style="--fam:${FAM[a.f]}" data-i="${AX.indexOf(a)}" tabindex="0" role="button" aria-label="${esc(a.n)}">
-      <span class="cn">${esc(a.n)}</span>
-      <span class="cq">${esc(a.q||a.desc)}</span>
-      <span class="cmeta"><i class="sdot ${statDotClass(a)}" title="${statusLabel(a)}"></i><span class="stxt">${statusLabel(a)}</span>${miniReach(a.p)}</span>
+  return `<div class="dfcard" style="--fam:${FAM[a.f]}" data-i="${AX.indexOf(a)}" tabindex="0" role="button" aria-label="Ouvrir ${esc(a.n)}">
+      <div class="df-fam">${esc(FAMLBL&&FAMLBL[a.f]?FAMLBL[a.f]:a.f)}</div>
+      <div class="df-n">${esc(a.n)}</div>
+      <div class="df-q">${esc(a.q||a.desc)}</div>
+      <div class="df-meta"><i class="sdot ${statDotClass(a)}"></i><span>${statusLabel(a)}</span>${miniReach(a.p)}</div>
+      <span class="df-open">ouvrir →</span>
     </div>`;
 }
 const DEMO_POOL=["Réductionnisme / émergence forte","Équilibration locale sans sélection","Individualisme / Holisme","Invariance spatiale des lois","Invariance temporelle des lois","Réalisme moral / constructivisme"];
@@ -1203,8 +1411,18 @@ const DEMO_POOL=["Réductionnisme / émergence forte","Équilibration locale san
   for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
   const dc=document.getElementById('demoCard');
   dc.innerHTML=pool.slice(0,2).map(demoCardHTML).join('');
-  dc.addEventListener('click',e=>{const c=e.target.closest('.acard');if(c)openSheet(AX[+c.dataset.i]);});
-  dc.addEventListener('keydown',e=>{if(e.key==="Enter"||e.key===" "){const c=e.target.closest('.acard');if(c){e.preventDefault();openSheet(AX[+c.dataset.i]);}}});
+  dc.addEventListener('click',e=>{const c=e.target.closest('.dfcard');if(c)openSheet(AX[+c.dataset.i]);});
+  dc.addEventListener('keydown',e=>{if(e.key==="Enter"||e.key===" "){const c=e.target.closest('.dfcard');if(c){e.preventDefault();openSheet(AX[+c.dataset.i]);}}});
+})();
+
+
+/* ---- TIROIR MANIFESTE (accueil) ---- */
+(function(){
+  const fb=document.getElementById('manifesto-fold');
+  if(!fb)return;
+  const tr=fb.querySelector('.foldtrig');
+  tr.addEventListener('click',()=>fb.classList.toggle('open'));
+  tr.addEventListener('keydown',e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();fb.classList.toggle('open');}});
 })();
 
 /* ---- MODAL / SHEET ---- */
@@ -1314,18 +1532,7 @@ const famOrder=["Descriptive","Métaphysique","Valeur"];
 const famCls={"Descriptive":"desc","Métaphysique":"meta","Valeur":"norm"};
 const maxFam=Math.max(...Object.values(famCount));
 
-/* status bar segmentée : validé+établi groupés */
-const grouped={valide:0,confirme:0,candidat:0,reserve:0};
-AX.forEach(a=>{
-  if(a.s==="validé"||a.s==="établi")grouped.valide++;
-  else if(a.s==="confirmé")grouped.confirme++;
-  else if(a.s==="candidat")grouped.candidat++;
-  else grouped.reserve++;
-});
-const segs=[["valide","Validé / établi","seg-valide"],["confirme","Confirmé","seg-confirme"],["candidat","Candidat","seg-candidat"],["reserve","En réserve","seg-reserve"]];
-const totalAx=AX.length;
-document.getElementById('statusBar').innerHTML=segs.map(([k,l,c])=>`<div class="seg ${c}" style="flex:${grouped[k]}" title="${l} : ${grouped[k]}">${grouped[k]}</div>`).join('');
-document.getElementById('statusKey').innerHTML=segs.map(([k,l,c])=>`<div class="k"><i class="${c}" style="background:var(--_)"></i>${l} · ${grouped[k]}</div>`).join('').replace(/seg-valide" style="background:var\(--_\)/,'" style="background:#79e0a4').replace(/seg-confirme" style="background:var\(--_\)/,'" style="background:#7fc4ff').replace(/seg-candidat" style="background:var\(--_\)/,'" style="background:#ffce7a').replace(/seg-reserve" style="background:var\(--_\)/,'" style="background:#a6b3c0');
+/* (bloc statut d'accueil retiré en v1.5 — plus de statusBar dans le DOM) */
 
 /* MATRIX */
 const reaches=["Universelle","Générale","Spécialisée","Contextuelle"];
@@ -1369,18 +1576,48 @@ function openVoidSheet(){
 
 
 /* ---- TABS : robust (click + touch) ---- */
+/* ---- NAVIGATION À DEUX NIVEAUX ---- */
+const POLE_OF = {
+  dash:"explorer", coll:"explorer",
+  guide:"comprendre", meth:"comprendre", chem:"comprendre", rel:"comprendre",
+  axio:"experimental", exp:"experimental"
+};
 function switchView(id,btn){
-  document.querySelectorAll('nav.tabs button').forEach(x=>x.classList.remove('on'));
-  if(btn)btn.classList.add('on');
-  else{const b=document.querySelector(`nav.tabs button[data-view="${id}"]`);if(b)b.classList.add('on');}
+  const pole = POLE_OF[id] || "explorer";
+  // pôle actif dans la barre principale
+  document.querySelectorAll('nav.tabs button').forEach(x=>x.classList.toggle('on', x.dataset.pole===pole));
+  // sous-barres : n'afficher que celle du pôle
+  document.querySelectorAll('.subtabs').forEach(sb=>sb.classList.toggle('on', sb.id==='sub-'+pole));
+  // bouton actif dans la sous-barre
+  const sb=document.getElementById('sub-'+pole);
+  if(sb) sb.querySelectorAll('button').forEach(b=>b.classList.toggle('on', b.dataset.view===id));
+  // vues
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
   const target=document.getElementById(id);
   if(target)target.classList.add('on');
   window.scrollTo({top:0,behavior:'smooth'});
 }
+// barre principale : clic sur un pôle -> vue par défaut du pôle
 document.querySelectorAll('nav.tabs button').forEach(b=>{
   b.addEventListener('click',()=>switchView(b.dataset.view,b));
 });
+// sous-barres : clic sur une sous-vue
+document.querySelectorAll('.subtabs button').forEach(b=>{
+  b.addEventListener('click',()=>switchView(b.dataset.view,b));
+});
+// init : afficher la sous-barre du pôle de départ
+switchView('dash');
+
+/* ---- APPUIS CLIQUABLES DU CHEMINEMENT -> fiche ---- */
+function openByName(name){
+  const a=AX.find(x=>x.n===name);
+  if(a && typeof openSheet==="function") openSheet(a);
+}
+document.querySelectorAll('.chem-appui[data-axname]').forEach(g=>{
+  g.addEventListener('click',()=>openByName(g.dataset.axname));
+  g.addEventListener('keydown',e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openByName(g.dataset.axname);}});
+});
+
 
 /* ---- SECRET (le trésor caché — chut) ---- */
 (function(){
@@ -1521,8 +1758,11 @@ document.querySelectorAll('#lcPick button').forEach(b=>b.addEventListener('click
     el.addEventListener('keydown',ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();openSheet(AX[+el.dataset.i]);}});
   });
   if(seuil){
-    seuil.addEventListener('mouseenter',()=>seuil.classList.add('awake'));
-    seuil.addEventListener('mouseleave',()=>{ if(!isTouch) seuil.classList.remove('awake'); });
+    // zone de déclenchement resserrée : uniquement autour du titre + ligne de surface,
+    // pas toute la hauteur du seuil (sinon le halo s'allume partout).
+    const trigger = seuil.querySelector('.seuil-inner') || seuil;
+    trigger.addEventListener('mouseenter',()=>seuil.classList.add('awake'));
+    trigger.addEventListener('mouseleave',()=>{ if(!isTouch) seuil.classList.remove('awake'); });
   }
 })();
 /* scroll-cue : descendre sous le seuil */
