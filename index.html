@@ -1742,36 +1742,104 @@ let mStat="solide";
 function inMatrix(a){return mStat==="all"?true:(a.s==="validé"||a.s==="établi"||a.s==="confirmé");}
 function renderMatrix(){
   let mh=`<tr><th></th>${deps.map(d=>`<th>${d[1]}</th>`).join('')}</tr>`;
-  reaches.forEach((r,ri)=>{
-    mh+=`<tr><td class="axis">${r}</td>`+deps.map((d,ci)=>{
-      if(r==="Universelle"&&d[0]!=="Aucune")return`<td><div class="mcell void" role="button" tabindex="0" title="Vide structurel — toucher pour l'explication">∅</div></td>`;
+  reaches.forEach(r=>{
+    mh+=`<tr><td class="axis">${r}</td>`+deps.map(d=>{
+      if(r==="Universelle"&&d[0]!=="Aucune")return`<td><div class="mcell void" role="button" tabindex="0" title="Vide par nécessité — toucher pour l'explication">∅</div></td>`;
       const items=AX.filter(a=>a.p===r&&depBucket(a.d)===d[0]&&inMatrix(a));
+      if(!items.length)return`<td><div class="mcell none" role="button" tabindex="0" data-r="${r}" data-d="${d[1]}" title="Vide pour l'instant — toucher pour l'explication">aucun<br>pour l'instant</div></td>`;
       const chips=items.map(a=>`<span class="mchip f-${a.f}" data-i="${AX.indexOf(a)}">${esc(a.n)}</span>`).join('');
-      return`<td><div class="mcell">${chips||'<span style="color:var(--ink-faint);font-size:11px;text-align:center">·</span>'}</div></td>`;
+      return`<td><div class="mcell">${chips}</div></td>`;
     }).join('')+`</tr>`;
   });
   const M=document.getElementById('matrix');
   M.innerHTML=mh;
-  M.querySelectorAll('.mchip').forEach(ch=>ch.addEventListener('click',()=>openSheet(AX[+ch.dataset.i])));
-  M.querySelectorAll('.mcell.void').forEach(vc=>{
-    vc.addEventListener('click',openVoidSheet);
-    vc.addEventListener('keydown',e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openVoidSheet();}});
+  wireCells(M);
+  const n=AX.filter(inMatrix).length;
+  const c=document.getElementById('matrixCount');
+  if(c)c.textContent=`${n} axiomes solides placés`;
+}
+
+/* --- carte 2 : juge × monde ou pensée --- */
+const MP_COLS=[["trouvé","Trouvé"],["carrefour","Carrefour"],["posé","Posé"],["sans objet","Sans objet"]];
+const JUGE_ROWS=[["dehors","Juge dehors"],["dedans","Juge dedans"]];
+function inMatrix2(a){return inMatrix(a)&&MP_COLS.some(c=>c[0]===a.mp);}
+function renderMatrix2(){
+  let mh=`<tr><th></th>${MP_COLS.map(c=>`<th>${c[1]}</th>`).join('')}</tr>`;
+  JUGE_ROWS.forEach(j=>{
+    mh+=`<tr><td class="axis">${j[1]}</td>`+MP_COLS.map(c=>{
+      const items=AX.filter(a=>juge(a)===j[0]&&a.mp===c[0]&&inMatrix2(a));
+      if(!items.length){
+        if(j[0]==="dedans"&&c[0]==="trouvé")return`<td><div class="mcell quest" role="button" tabindex="0" title="Vide — mais on ne sait pas pourquoi">∅&nbsp;?</div></td>`;
+        return`<td><div class="mcell none">aucun<br>pour l'instant</div></td>`;
+      }
+      const chips=items.map(a=>`<span class="mchip f-${a.f}" data-i="${AX.indexOf(a)}">${esc(a.n)}</span>`).join('');
+      return`<td><div class="mcell">${chips}</div></td>`;
+    }).join('')+`</tr>`;
   });
+  const M=document.getElementById('matrix2');
+  if(!M)return;
+  M.innerHTML=mh;
+  wireCells(M);
+  const n=AX.filter(inMatrix2).length;
+  const c=document.getElementById('matrix2Count');
+  if(c)c.textContent=`${n} axiomes solides placés`;
+}
+
+function wireCells(M){
+  M.querySelectorAll('.mchip').forEach(ch=>ch.addEventListener('click',()=>openSheet(AX[+ch.dataset.i])));
+  const bind=(sel,fn)=>M.querySelectorAll(sel).forEach(el=>{
+    el.addEventListener('click',()=>fn(el));
+    el.addEventListener('keydown',e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();fn(el);}});
+  });
+  bind('.mcell.void',openVoidSheet);
+  bind('.mcell.none[role]',el=>openNoneSheet(el.dataset.r,el.dataset.d));
+  bind('.mcell.quest',openQuestSheet);
+}
+
+function showSheet(html){
+  sheet.innerHTML=html;
+  sheet.querySelector('.x').addEventListener('click',closeSheet);
+  modal.classList.add('on');
 }
 function openVoidSheet(){
-  sheet.innerHTML=`
+  showSheet(`
     <div class="sheet-hd" style="border-bottom:1px solid rgba(255,120,80,.4)">
-      <div class="fam" style="color:#ff9a6a">∅ vide structurel</div>
+      <div class="fam" style="color:#ff9a6a">∅ vide par nécessité</div>
       <h3>Le coin interdit de la carte</h3>
       <button class="x" aria-label="Fermer">✕</button>
     </div>
     <div class="sheet-bd">
       <div class="field"><div class="k">Ce que c'est</div><div class="t">Ce coin croise une <b>portée universelle</b> (présent dans toute théorie) avec une <b>forte dépendance</b> (l'axiome a besoin d'un agent, d'un mécanisme ou d'une norme pour exister). Il reste vide — et le restera toujours.</div></div>
       <div class="field"><div class="k">Pourquoi il reste vide</div><div class="t">Un axiome qui exige une condition pour apparaître ne peut pas, par définition, être présent <i>partout</i> : les théories qui n'ont pas cette condition l'excluent d'office. Universalité et forte dépendance sont donc logiquement incompatibles. Ce n'est pas un trou dans nos données, c'est une impossibilité de principe.</div></div>
-      <div class="field open"><div class="k">à ne pas surinterpréter</div><div class="t">L'absence ici ne dit pas « on n'a pas encore trouvé », elle dit « ces deux mots se contredisent ». C'est une conséquence de la façon dont nous avons défini nos catégories, <b>pas</b> une découverte sur le monde : le vide révèle où nos définitions s'excluent l'une l'autre, il n'annonce rien sur ce que le réel autorise ou interdit. Une tautologie éclairante, pas une prédiction.</div></div>
-    </div>`;
-  sheet.querySelector('.x').addEventListener('click',closeSheet);
-  modal.classList.add('on');
+      <div class="field open"><div class="k">à ne pas surinterpréter</div><div class="t">L'absence ici ne dit pas « on n'a pas encore trouvé », elle dit « ces deux mots se contredisent ». C'est une conséquence de la façon dont nous avons défini nos catégories, <b>pas</b> une découverte sur le monde. Une tautologie éclairante, pas une prédiction.</div></div>
+    </div>`);
+}
+function openNoneSheet(r,d){
+  showSheet(`
+    <div class="sheet-hd">
+      <div class="fam" style="color:var(--ink-faint)">case vide</div>
+      <h3>${esc(r||'')}${r?' × ':''}${esc(d||'')}</h3>
+      <button class="x" aria-label="Fermer">✕</button>
+    </div>
+    <div class="sheet-bd">
+      <div class="field"><div class="k">Ce que ça veut dire</div><div class="t">Aucun axiome solide du catalogue n'occupe cette case aujourd'hui. Rien n'interdit qu'un axiome s'y loge : ce croisement est parfaitement cohérent.</div></div>
+      <div class="field"><div class="k">À distinguer du vide hachuré</div><div class="t">Le coin marqué <b style="color:#ff9a6a">∅</b> est vide <i>par nécessité</i> : deux de nos définitions s'y contredisent. Cette case-ci est vide <i>par contingence</i> : elle attend peut-être un occupant, ou bien ce croisement est rare dans les théories qu'on a déshabillées. Les deux silences se ressemblent à l'œil, ils n'ont rien à voir.</div></div>
+      <div class="field open"><div class="k">ce qu'on n'en conclut pas</div><div class="t">Une case vide ne prouve ni l'impossibilité, ni la rareté. Le catalogue compte une quarantaine d'entrées et un seul domaine à peu près complet : à cette échelle, une absence est d'abord une absence de travail.</div></div>
+    </div>`);
+}
+function openQuestSheet(){
+  showSheet(`
+    <div class="sheet-hd" style="border-bottom:1px solid rgba(255,181,71,.4)">
+      <div class="fam" style="color:var(--amber)">∅ ? vide non expliqué</div>
+      <h3>Juge dedans, et pourtant trouvé</h3>
+      <button class="x" aria-label="Fermer">✕</button>
+    </div>
+    <div class="sheet-bd">
+      <div class="field"><div class="k">Le constat</div><div class="t">Huit axiomes du catalogue portent la mention <b>trouvé</b> : leur vérité semblait déjà là, indépendante de nous. Les huit ont un <b>juge dehors</b> — le réel peut les démentir. Aucun axiome à juge dedans n'a été marqué trouvé. Pas un seul.</div></div>
+      <div class="field"><div class="k">Première lecture</div><div class="t">Elle est tentante : une vérité ne se <i>trouve</i> que là où quelque chose d'extérieur peut la confirmer. Là où seule la cohérence juge, on ne découvre pas — on pose un point de départ, ou on reste devant un carrefour. Si c'est vrai, la carte montre quelque chose sur la nature même des présupposés.</div></div>
+      <div class="field"><div class="k">La réserve</div><div class="t">Mais ce vide a exactement la forme de l'autre, celui du coin hachuré de la première carte — qui, lui, s'est révélé n'être qu'une contradiction entre deux de nos mots. Si « juge dedans » signifie que rien d'extérieur ne tranche, et si « trouvé » signifie qu'une vérité était déjà là indépendamment de nous, alors il est peut-être logiquement impossible de cocher les deux. Auquel cas la carte ne découvre rien : elle redit que nos catégories s'excluent.</div></div>
+      <div class="field open"><div class="k">ce qu'il faudrait faire</div><div class="t">Reprendre les deux définitions et vérifier si l'une interdit l'autre, ou si un contre-exemple est concevable — un axiome qu'aucune mesure ne pourrait démentir, et dont la vérité serait pourtant là avant nous. Tant que ce travail n'est pas fait, cette case reste une curiosité, pas un résultat. Elle est publiée ici pour cette raison : pour qu'on puisse la contredire.</div></div>
+    </div>`);
 }
 
 
@@ -1980,6 +2048,7 @@ document.querySelectorAll('#lcPick button').forEach(b=>b.addEventListener('click
 })();
 renderColl();
 renderMatrix();
+renderMatrix2();
 initGlossary(document);
 
 /* ===== SONS — trois toques synthétisés, aucun fichier chargé ===== */
